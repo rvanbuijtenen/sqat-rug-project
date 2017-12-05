@@ -7,4 +7,4 @@ function sayHello(name) {
 }
 
 sayHello("World");
-sayHello("Earth");
+sayHello("Earth"); 

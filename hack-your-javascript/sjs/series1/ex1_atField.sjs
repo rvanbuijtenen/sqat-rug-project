@@ -10,7 +10,7 @@ var myObj = {
 	set : function(val) {
 		@x = val;
 	}
-};
+}; 
 myObj.set(2);
 
 var myOtherObj = {

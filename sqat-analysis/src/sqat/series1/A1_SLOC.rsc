@@ -4,8 +4,9 @@ import IO;
 import ParseTree;
 import String;
 import util::FileSystem;
-import sqat::series1::Comments;
-
+import Java17ish;
+import lang::java::m3::AST;
+import lang::java::m3::Core;
 /* 
 
 Count Source Lines of Code (SLOC) per file:
@@ -32,14 +33,25 @@ Bonus:
 - write a hierarchical tree map visualization using vis::Figure and 
   vis::Render quickly see where the large files are. 
   (https://en.wikipedia.org/wiki/Treemapping) 
-
 */
 
 alias SLOC = map[loc file, int sloc];
 
 SLOC sloc(loc project) {
   SLOC result = ();
-  // implement here
+  for (f <- files(|project://jpacman-framework/src|), f.extension == "java") {
+	try {
+      start[CompilationUnit] m = parseJava(f);
+      
+      for (l <- m) {
+      	println(l);
+      }
+      println(isMethod(f));
+    }
+    catch ParseError(loc l): {
+      println("Parse error: <l>");
+    }
+  }
   return result;
-}             
-             
+}
+     

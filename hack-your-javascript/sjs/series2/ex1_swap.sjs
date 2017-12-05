@@ -1,5 +1,5 @@
 var x = 1;
-var y = 2;
+var y = 2; 
 
 debug 'Original: x = ' + x + ' & y = ' + y;
 

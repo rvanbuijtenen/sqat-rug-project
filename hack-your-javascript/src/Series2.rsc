@@ -92,9 +92,9 @@ test bool testForeach()
 
 Expression desugar((Expression)`<Id param> =\> <Expression body>`)
   = (Expression)`(function (_this) { 
-                 '   return function (<Id param>) { 
-                 '      return <Expression body2>; 
-                 '   }; 
+                 '   return function (<Id param>) {
+                 '      return <Expression body2>;
+                 '   };
                  '})(this)`
       when Expression body2 := replaceThis(body);
 
@@ -128,16 +128,12 @@ test bool testArrowWithThis()
  */
  
 Expression desugar((Expression)`[ <Expression r> | <{Generator ","}+ gens> ]`) {
-	return (Expression)`function() {
-				       '   console.log("test");
-				       '}()`;
+	return (Expression)``;
 } 
 
 test bool testListComprehension()
 	= desugar((Expression)`[x | x in [1,2,3], x % 2 === 0]`)
-	== (Expression)`function() {
-				   '   console.log("test");
-				   '}`;
+	== (Expression)``;
  
 Expression dummyExp() = (Expression)`NOT_YET_IMPLEMENTED`;
 Statement dummyStat() = (Statement)`NOT_YET_IMPLEMENTED;`;

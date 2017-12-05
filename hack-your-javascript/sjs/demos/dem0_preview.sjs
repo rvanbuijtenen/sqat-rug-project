@@ -8,7 +8,7 @@ var myList = [{FirstName:"Chris",LastName:"Pearson"},
               {FirstName:"Steve",LastName:"Pinkerton"}];
   
 
-  
+ 
 var q = select FirstName, LastName 
         from myList 
         where FirstName === "Chris";

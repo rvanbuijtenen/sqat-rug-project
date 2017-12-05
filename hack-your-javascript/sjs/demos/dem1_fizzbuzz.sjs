@@ -3,7 +3,7 @@ function fizzBuzz(n) {
   unless (n) {
     n = 100;
   }
-  
+ 
   assert n > 0: "n should be > 0";
   
   todo "Make ranges extension";
