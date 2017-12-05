@@ -39,14 +39,13 @@ alias SLOC = map[loc file, int sloc];
 
 SLOC sloc(loc project) {
   SLOC result = ();
-  for (f <- files(|project://jpacman-framework/src|), f.extension == "java") {
+  for (f <- files(project), f.extension == "java") {
 	try {
+	  list[str] lines = readFileLines(f);
       start[CompilationUnit] m = parseJava(f);
+      println(lines);
       
-      for (l <- m) {
-      	println(l);
-      }
-      println(isMethod(f));
+      
     }
     catch ParseError(loc l): {
       println("Parse error: <l>");
@@ -54,4 +53,14 @@ SLOC sloc(loc project) {
   }
   return result;
 }
+
+
+public int countComment(list[str] file){	
+  n = 0;
+  for(s <- file)
+    if(/\*(.|[\r\n])*?\*/ := s)  
+      n +=1;
+  return n;
+}
+
      
