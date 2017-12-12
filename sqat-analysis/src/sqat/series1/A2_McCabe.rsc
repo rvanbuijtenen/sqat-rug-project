@@ -62,15 +62,18 @@ alias CC = rel[loc method, int cc];
 CC cc(set[Declaration] decls) {	
   CC result = {};
   int cnt = 0;
-  result = {<dec.src, 1 + cntDecl(dec)>| dec <- getMethodDecls(decls)};
-  for(r <- result) {
-  	if(r.cc > 10) {
-  		println(r);
-  	}
+  list[CC] res = [cntDecl(dec) | dec <- decls];
+  for(r <- res) {
+  	//if(r.cc > 10) {
+  		//println(r);
+  	//}
+  	result += r;
   	cnt += 1;
   }
   return result;
 }
+
+
 
 /* Returns a list containing all method declarations */
 list[Declaration] getMethodDecls(set[Declaration] modules) {
@@ -79,18 +82,19 @@ list[Declaration] getMethodDecls(set[Declaration] modules) {
 	for(decl_list <- decls_list) {
 		method_decls += decl_list;
 	}
+	//println(method_decls);
 	return method_decls;
 }
 
 list[Declaration] getMethodDecls(Declaration moduleDecl) {
-	method_decls = [];
+	list[Declaration] method_decls = [];
 	visit(moduleDecl) {
 		case m:\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
 	    	method_decls += m;
 	    }
-	    case m:\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions): {
+	    /*case m:\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions): {
 	    	method_decls += m;
-	    }
+	    }*/
 	    case m:\constructor(str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
 	    	method_decls += m;
 	    }
@@ -120,14 +124,14 @@ CC computeCC(Declaration dec) {
 }
 
 
-int cntDecl(list[Declaration] decls) {
+/*int cntDecl(list[Declaration] decls) {
 	return sum([0] + [cntDecl(x) | x <- decls]);
-}
+}*/
 
-int cntDecl(Declaration decl) {
-	int cnt = 0;
+CC cntDecl(Declaration decl) {
+	CC result = {};
 	visit(decl) {
-		case \compilationUnit(list[Declaration] imports, list[Declaration] types): {
+		/*case \compilationUnit(list[Declaration] imports, list[Declaration] types): {
 			cnt += cntDecl(imports);
 			cnt += cntDecl(types);
 		}
@@ -161,21 +165,31 @@ int cntDecl(Declaration decl) {
 	    }
 	    case \initializer(Statement initializerBody): {
 	    	cnt += cntStmt(initializerBody);
-	    }
-	    /*case \method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
-	    	cnt += cntDecl(parameters);
-	    	cnt += cntExpr(exceptions);
-	    	cnt += cntStmt(impl);
-	    }
-	    case \method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions): {
-	    	cnt += cntDecl(parameters);
-	    	cnt += cntExpr(exceptions);
-	    }
-	    case \constructor(str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
-	    	cnt += cntDecl(parameters);
-	    	cnt += cntExpr(exceptions);
-	    	cnt += cntStmt(impl);
 	    }*/
+	    case m:\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
+	    	cnt = 1;
+	    	//cnt += cntDecl(parameters);
+	    	cnt += cntExpr(exceptions);
+	    	cnt += cntStmt(impl);
+	    	if(cnt > 100) {
+	    		println(m.src);
+	    		println(cnt);
+	    	}
+	    	result += <m.src, cnt>;
+	    }
+	    case m:\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions): {
+	    	cnt = 1;
+	    	//cnt += cntDecl(parameters);
+	    	cnt += cntExpr(exceptions);
+	    	result += <m.src, cnt>;
+	    }
+	    case m:\constructor(str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
+	    	cnt = 1;
+	    	//cnt += cntDecl(parameters);
+	    	cnt += cntExpr(exceptions);
+	    	cnt += cntStmt(impl);	    	
+	    	result += <m.src, cnt>;
+	    }/*
 	    case \package(Declaration parentPackage, str name): {
 	    	cnt += cntDecl(parentPackage);
 	    }
@@ -188,9 +202,9 @@ int cntDecl(Declaration decl) {
 	    }
 	    case \annotationTypeMember(Type \type, str name, Expression defaultBlock): {
 	    	cnt += cntExpr(defaultBlock);
-	    }
+	    }*/
 	}
-	return cnt;
+	return result;
 }
 
 int cntStmt(list[Statement] stmts) {
@@ -208,9 +222,9 @@ int cntStmt(Statement stmt) {
     		cnt += cntExpr(expression);
     		cnt += cntExpr(message);
     	}
-    	case \block(list[Statement] statements): {
+    	/*case \block(list[Statement] statements): {
     		cnt += cntStmt(statements);
-    	}
+    	}*/
     	case \break(): {
     		cnt += 1;
     	}
@@ -230,7 +244,7 @@ int cntStmt(Statement stmt) {
     	case \foreach(Declaration parameter, Expression collection, Statement body): {
 			// +1 for foreach
 			cnt += 1;
-			cnt += cntDecl(parameter);
+			//cnt += cntDecl(parameter);
 			cnt += cntExpr(collection);
 			cnt += cntStmt(body);
     	}
@@ -262,9 +276,9 @@ int cntStmt(Statement stmt) {
     		cnt += cntStmt(thenBranch);
     		cnt += cntStmt(elseBranch);
     	}
-    	case \label(str name, Statement body): {
+    	/*case \label(str name, Statement body): {
     		cnt += cntStmt(body);
-    	}
+    	}*/
     	case \return(Expression expression): {
     		cnt += cntExpr(expression);
     		return_cnt += 1;
@@ -285,10 +299,10 @@ int cntStmt(Statement stmt) {
     		// +1 for case
     		cnt += 1;
     	}
-    	case \synchronizedStatement(Expression lock, Statement body): {
+    	/*case \synchronizedStatement(Expression lock, Statement body): {
     		cnt += cntExpr(lock);
     		cnt += cntStmt(body);
-    	}
+    	}*/
     	case \throw(Expression expression): {
     		// +1 for throw
     		cnt += 1;
@@ -308,11 +322,8 @@ int cntStmt(Statement stmt) {
     	case \catch(Declaration exception, Statement body): {
     		// +1 for catch
     		cnt += 1;
-    		cnt += cntDecl(exception);
+    		//cnt += cntDecl(exception);
     		cnt += cntStmt(body);
-    	}
-    	case \declarationStatement(Declaration declaration): {
-    		cnt += cntDecl(declaration);
     	}
     	case \while(Expression condition, Statement body): {
 			// +1 for while
@@ -333,6 +344,7 @@ int cntStmt(Statement stmt) {
     }
     return return_cnt > 0 ? cnt + return_cnt : cnt;
 }
+
 int cntOperator(str operator) {
 	cnt = 0;
 	cnt += (operator == "AND"|| operator == "&&") ? 1 : 0;
@@ -340,6 +352,7 @@ int cntOperator(str operator) {
 	cnt += (operator == "?" || operator == ":") ? 1 : 0;
 	return cnt;
 }
+
 int cntExpr(list[Expression] exprs) {
 	return sum([0] + [cntExpr(x) | x <- exprs]);
 }
@@ -371,7 +384,7 @@ int cntExpr(Expression expr) {
 	    case \newObject(Expression expr, Type \type, list[Expression] args, Declaration class): {
 	    	cnt += cntExpr(expr);
 	    	cnt += cntExpr(args);
-	    	cnt += cntDecl(class);
+	    	//cnt += cntDecl(class);
 	    }
 	    case \newObject(Expression expr, Type \type, list[Expression] args): {
 	    	cnt += cntExpr(expr);
@@ -379,7 +392,7 @@ int cntExpr(Expression expr) {
 	    }
 	    case \newObject(Type \type, list[Expression] args, Declaration class): {
 	    	cnt += cntExpr(args);
-	    	cnt += cntDecl(class);
+	    	//cnt += cntDecl(class);
 	    }
 	    case \newObject(Type \type, list[Expression] args): {
 	    	cnt += cntExpr(args);
@@ -411,9 +424,6 @@ int cntExpr(Expression expr) {
 	    }
 	    case \this(Expression thisExpression): {
 	    	cnt += cntExpr(thisExpression);
-	    }
-	    case \declarationExpression(Declaration decl): {
-	    	cnt += cntDecl(decl);
 	    }
 	    case \infix(Expression lhs, str operator, Expression rhs): {
 	    	cnt += cntExpr(lhs);
