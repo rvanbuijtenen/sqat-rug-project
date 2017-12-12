@@ -92,9 +92,9 @@ list[Declaration] getMethodDecls(Declaration moduleDecl) {
 		case m:\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
 	    	method_decls += m;
 	    }
-	    /*case m:\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions): {
+	    case m:\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions): {
 	    	method_decls += m;
-	    }*/
+	    }
 	    case m:\constructor(str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
 	    	method_decls += m;
 	    }
@@ -131,56 +131,11 @@ CC computeCC(Declaration dec) {
 CC cntDecl(Declaration decl) {
 	CC result = {};
 	visit(decl) {
-		/*case \compilationUnit(list[Declaration] imports, list[Declaration] types): {
-			cnt += cntDecl(imports);
-			cnt += cntDecl(types);
-		}
-    	case \compilationUnit(Declaration package, list[Declaration] imports, list[Declaration] types): {
-    		cnt += cntDecl(package);
-    		cnt += cntDecl(imports);
-			cnt += cntDecl(types);
-    	}
-	    case \enum(str name, list[Type] implements, list[Declaration] constants, list[Declaration] body): {
-	    	cnt += cntDecl(constants);
-	    	cnt += cntDecl(body);
-	    }
-	    case \enumConstant(str name, list[Expression] arguments, Declaration class): {
-	    	cnt += cntExpr(arguments);
-	    	cnt += cntDecl(class);
-	    }
-	    case \enumConstant(str name, list[Expression] arguments): {
-	    	cnt += cntExpr(arguments);
-	    }
-	    case \class(str name, list[Type] extends, list[Type] implements, list[Declaration] body): {
-	    	cnt += cntDecl(body);
-	    }
-	    case \class(list[Declaration] body): {
-	    	cnt += cntDecl(body);
-	    }
-	    case \interface(str name, list[Type] extends, list[Type] implements, list[Declaration] body): {
-	    	cnt += cntDecl(body);
-	    }
-	    case \field(Type \type, list[Expression] fragments): {
-	    	cnt += cntExpr(fragments);
-	    }
-	    case \initializer(Statement initializerBody): {
-	    	cnt += cntStmt(initializerBody);
-	    }*/
 	    case m:\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
 	    	cnt = 1;
 	    	//cnt += cntDecl(parameters);
-	    	cnt += cntExpr(exceptions);
+	    	//cnt += cntExpr(exceptions);
 	    	cnt += cntStmt(impl);
-	    	if(cnt > 100) {
-	    		println(m.src);
-	    		println(cnt);
-	    	}
-	    	result += <m.src, cnt>;
-	    }
-	    case m:\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions): {
-	    	cnt = 1;
-	    	//cnt += cntDecl(parameters);
-	    	cnt += cntExpr(exceptions);
 	    	result += <m.src, cnt>;
 	    }
 	    case m:\constructor(str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
@@ -189,20 +144,7 @@ CC cntDecl(Declaration decl) {
 	    	cnt += cntExpr(exceptions);
 	    	cnt += cntStmt(impl);	    	
 	    	result += <m.src, cnt>;
-	    }/*
-	    case \package(Declaration parentPackage, str name): {
-	    	cnt += cntDecl(parentPackage);
 	    }
-	    case \variables(Type \type, list[Expression] \fragments): {
-	    	// fragments?
-	    	cnt = cnt;
-	    }
-	    case \annotationType(str name, list[Declaration] body): {
-	    	cnt += cntDecl(body);
-	    }
-	    case \annotationTypeMember(Type \type, str name, Expression defaultBlock): {
-	    	cnt += cntExpr(defaultBlock);
-	    }*/
 	}
 	return result;
 }
@@ -215,141 +157,60 @@ int cntStmt(Statement stmt) {
 	int cnt = 0;
 	int return_cnt = -1;
    	visit (stmt) {
-   		case \assert(Expression expression): {
-   			cnt += cntExpr(expression);
-   		}
-    	case \assert(Expression expression, Expression message): {
-    		cnt += cntExpr(expression);
-    		cnt += cntExpr(message);
-    	}
-    	/*case \block(list[Statement] statements): {
-    		cnt += cntStmt(statements);
-    	}*/
-    	case \break(): {
-    		cnt += 1;
-    	}
-    	case \break(str label): {
-    		cnt += 1;
-    	}
-    	case \continue(): {
-    		cnt += 1;
-    	}
-    	case \continue(str label): {
-    		cnt +=1;
-    	}
-    	case \do(Statement body, Expression condition): {
-    		cnt += cntStmt(body);
-    		cnt += cntExpr(condition);
-    	}
     	case \foreach(Declaration parameter, Expression collection, Statement body): {
 			// +1 for foreach
 			cnt += 1;
-			//cnt += cntDecl(parameter);
-			cnt += cntExpr(collection);
-			cnt += cntStmt(body);
     	}
     	case \for(list[Expression] initializers, Expression condition, list[Expression] updaters, Statement body): {
     		// +1 for for
     		cnt += 1;
-    		cnt += cntExpr(initializers);
-    		cnt += cntExpr(condition);
-    		cnt += cntExpr(updaters);
-    		cnt += cntStmt(body);
     	}
     	case \for(list[Expression] initializers, list[Expression] updaters, Statement body): {
     		// +1 for for
     		cnt += 1;
-    		cnt += cntExpr(initializers);
-    		cnt += cntExpr(updaters);
-    		cnt += cntStmt(body);
     	}
     	case \if(Expression condition, Statement thenBranch): {
     		// +1 for if
     		cnt += 1;
-    		cnt += cntExpr(condition);
-    		cnt += cntStmt(thenBranch);
     	}
     	case \if(Expression condition, Statement thenBranch, Statement elseBranch): {
     		// +1 for if, +1 for else
-    		cnt += 2;
-    		cnt += cntExpr(condition);
-    		cnt += cntStmt(thenBranch);
-    		cnt += cntStmt(elseBranch);
-    	}
-    	/*case \label(str name, Statement body): {
-    		cnt += cntStmt(body);
-    	}*/
-    	case \return(Expression expression): {
-    		cnt += cntExpr(expression);
-    		return_cnt += 1;
-    	}
-    	case \return(): {
-    		return_cnt += 1;
-    	}
-    	case \switch(Expression expression, list[Statement] statements): {
-    		cnt += cntExpr(expression);
-    		cnt += cntStmt(statements);
+    		cnt += 1;
     	}
     	case \case(Expression expression): {
 			// +1 for case
 			cnt += 1;
-			cnt += cntExpr(expression);
     	}
     	case \defaultCase(): {
-    		// +1 for case
     		cnt += 1;
-    	}
-    	/*case \synchronizedStatement(Expression lock, Statement body): {
-    		cnt += cntExpr(lock);
-    		cnt += cntStmt(body);
-    	}*/
-    	case \throw(Expression expression): {
-    		// +1 for throw
-    		cnt += 1;
-    		cnt += cntExpr(expression);
-    	}
-    	case \try(Statement body, list[Statement] catchClauses): {
-    		cnt += cntStmt(body);
-    		cnt += cntStmt(catchClauses);
-    	}
-    	case \try(Statement body, list[Statement] catchClauses, Statement \finally): {
-    		// +1 for finally
-    		cnt += 1;
-    		cnt += cntStmt(body);
-    		cnt += cntStmt(catchClauses);
-    		// finally?
-    	}                                        
-    	case \catch(Declaration exception, Statement body): {
-    		// +1 for catch
-    		cnt += 1;
-    		//cnt += cntDecl(exception);
-    		cnt += cntStmt(body);
     	}
     	case \while(Expression condition, Statement body): {
 			// +1 for while
 			cnt += 1;
-			cnt += cntExpr(condition);
-			cnt += cntStmt(body);
     	}
-    	case \expressionStatement(Expression stmt): {
-    		cnt += cntExpr(stmt);
-    	}
-    	case \constructorCall(bool isSuper, Expression expr, list[Expression] arguments): {
-    		cnt += cntExpr(expr);
-    		cnt += cntExpr(arguments);
-    	}
-    	case \constructorCall(bool isSuper, list[Expression] arguments): {
-    		cnt += cntExpr(arguments);
-    	}
+		case \conditional(Expression expression, Expression thenBranch, Expression elseBranch): {
+	    	cnt += 1;
+	    }
+		case \infix(Expression lhs, str operator, Expression rhs): {
+	    	cnt += cntOperator(operator);
+	    }
+	    case \postfix(Expression operand, str operator): {
+	    	cnt += cntOperator(operator);
+	    }
+	    case \prefix(str operator, Expression operand): {
+	    	cnt += cntOperator(operator);
+	    }
+	    case \catch(Declaration exception, Statement body): {
+	    	cnt += 1;
+	    }
     }
-    return return_cnt > 0 ? cnt + return_cnt : cnt;
+    return cnt;
 }
 
 int cntOperator(str operator) {
 	cnt = 0;
-	cnt += (operator == "AND"|| operator == "&&") ? 1 : 0;
-	cnt += (operator == "OR" || operator == "||") ? 1 : 0;
-	cnt += (operator == "?" || operator == ":") ? 1 : 0;
+	cnt += (operator == "&&") ? 1 : 0;
+	cnt += (operator == "||") ? 1 : 0;
 	return cnt;
 }
 
@@ -402,6 +263,7 @@ int cntExpr(Expression expr) {
 	    	cnt += cntExpr(expression);
 	    }
 	    case \conditional(Expression expression, Expression thenBranch, Expression elseBranch): {
+	    	// ? :
 	    	cnt += cntExpr(expression);
 	    	cnt += cntExpr(thenBranch);
 	    	cnt += cntExpr(elseBranch);
