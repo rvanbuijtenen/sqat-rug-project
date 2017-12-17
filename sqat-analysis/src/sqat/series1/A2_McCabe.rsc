@@ -251,7 +251,7 @@ test bool testCntStmtPrefix()
 test bool testCntStmtPostfix()
 	= false;
 	
-test bool testCntStmtCatcjh()
+test bool testCntStmtCatch()
 	= testCntStmtBase("try{} catch(Exception e) {}", 1);
 
 // cc = 1 + condStmt + condOp ---> 3 test cases
