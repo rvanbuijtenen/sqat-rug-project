@@ -44,67 +44,36 @@ void main() {
 	println(dists);
 }
 
-//CC cc(set[Declaration] decls) {
-
-//}
-
-// CCDist(CC cc) {
-	
-//}
-
-
-
-
 set[Declaration] jpacmanASTs() = createAstsFromEclipseProject(|project://jpacman-framework/src/main/java/nl/tudelft/jpacman|, true); 
 
 alias CC = rel[loc method, int cc];
 
+// cc = 1 + for ---> 2 test cases
 CC cc(set[Declaration] decls) {	
   CC result = {};
   int cnt = 0;
   list[CC] res = [cntDecl(dec) | dec <- decls];
   for(r <- res) {
-  	//if(r.cc > 10) {
-  		//println(r);
-  	//}
   	result += r;
   	cnt += 1;
   }
   return result;
 }
 
+test bool testCcNone()
+	= cc({}) == {};
 
-
-/* Returns a list containing all method declarations */
-list[Declaration] getMethodDecls(set[Declaration] modules) {
-	method_decls = [];
-	decls_list = [getMethodDecls(decl) | decl <- modules];	
-	for(decl_list <- decls_list) {
-		method_decls += decl_list;
-	}
-	//println(method_decls);
-	return method_decls;
-}
-
-list[Declaration] getMethodDecls(Declaration moduleDecl) {
-	list[Declaration] method_decls = [];
-	visit(moduleDecl) {
-		case m:\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
-	    	method_decls += m;
-	    }
-	    case m:\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions): {
-	    	method_decls += m;
-	    }
-	    case m:\constructor(str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
-	    	method_decls += m;
-	    }
-	}
-	return method_decls;
-}
+test bool testCcMany()
+	= cc({
+		createAstFromString(|file://Test1.java|, "class Test1() {public int test() {}}", true),
+		createAstFromString(|file://Test2.java|, "class Test2() {public int test() {}}", true),
+		createAstFromString(|file://Test3.java|, "class Test3() {public int test() {}}", true)		
+	}) == {<|file://Test3.java|(15,20,<1,15>,<1,35>),1>,<|file://Test2.java|(15,20,<1,15>,<1,35>),1>,<|file://Test1.java|(15,20,<1,15>,<1,35>),1>};
 
 
 alias CCDist = map[int cc, int freq];
 
+// 1 + for + ifelse ---> 3 test cases
 CCDist ccDist(CC cc) {
 	CCDist result = ();
 	for(<m, c> <- cc) {
@@ -117,31 +86,26 @@ CCDist ccDist(CC cc) {
 	return result;
 }
 
-CC computeCC(Declaration dec) {
-	CC result = {};
-	return result;
-	//return method_complexity;
-}
+test bool testCcDistNone()
+	= ccDist({}) == ();
+	
+test bool testCcDistOne()
+	= ccDist({<|file://Test.java|,1>}) == (1:1);
 
-
-/*int cntDecl(list[Declaration] decls) {
-	return sum([0] + [cntDecl(x) | x <- decls]);
-}*/
-
+test bool testCcDistMany()
+	= ccDist({<|file://Test.java|,1>, <|file://Test2.java|,1>}) == (1:2);
+// 1 + 2x case ---> 3 test cases
 CC cntDecl(Declaration decl) {
 	CC result = {};
 	visit(decl) {
 	    case m:\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
 	    	cnt = 1;
-	    	//cnt += cntDecl(parameters);
-	    	//cnt += cntExpr(exceptions);
 	    	cnt += cntStmt(impl);
+	    	println(m.src);
 	    	result += <m.src, cnt>;
 	    }
 	    case m:\constructor(str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
 	    	cnt = 1;
-	    	//cnt += cntDecl(parameters);
-	    	cnt += cntExpr(exceptions);
 	    	cnt += cntStmt(impl);	    	
 	    	result += <m.src, cnt>;
 	    }
@@ -149,13 +113,18 @@ CC cntDecl(Declaration decl) {
 	return result;
 }
 
-int cntStmt(list[Statement] stmts) {
-	return sum([0] + [cntStmt(x) | x <- stmts]); 
-}
+test bool testCntDeclNone()
+	= cntDecl(createAstFromString(|file://Test.java|, "class Test{}", true)) == {};
 
+test bool testCntDeclMethod()
+	= cntDecl(createAstFromString(|file://Test.java|, "class Test {public void test() {}}", true)) == {<|file://Test.java|(12,21,<1,12>,<1,33>),1>};
+
+test bool testCntDeclConstructor()
+	= cntDecl(createAstFromString(|file://Test.java|, "class Test {public Test() {}}", true)) == {<|file://Test.java|(12,16,<1,12>,<1,28>),1>};
+
+// cc = 1 + 13x case ---> 14 test cases
 int cntStmt(Statement stmt) {
 	int cnt = 0;
-	int return_cnt = -1;
    	visit (stmt) {
     	case \foreach(Declaration parameter, Expression collection, Statement body): {
 			// +1 for foreach
@@ -163,18 +132,22 @@ int cntStmt(Statement stmt) {
     	}
     	case \for(list[Expression] initializers, Expression condition, list[Expression] updaters, Statement body): {
     		// +1 for for
+    		println("for1");
     		cnt += 1;
     	}
     	case \for(list[Expression] initializers, list[Expression] updaters, Statement body): {
     		// +1 for for
+    		println("for2");
     		cnt += 1;
     	}
     	case \if(Expression condition, Statement thenBranch): {
     		// +1 for if
+    		println("ifthen");
     		cnt += 1;
     	}
     	case \if(Expression condition, Statement thenBranch, Statement elseBranch): {
     		// +1 for if, +1 for else
+    		println("ifthenelse");
     		cnt += 1;
     	}
     	case \case(Expression expression): {
@@ -207,102 +180,91 @@ int cntStmt(Statement stmt) {
     return cnt;
 }
 
-int cntOperator(str operator) {
+bool testCntStmtBase(str body, int expected_cnt) {
+	input = "class test { public int main(String [] argv {"+body+"}}";
+	Declaration d = createAstFromString(|file://Test.java|, input, true);
 	cnt = 0;
-	cnt += (operator == "&&") ? 1 : 0;
-	cnt += (operator == "||") ? 1 : 0;
-	return cnt;
-}
-
-int cntExpr(list[Expression] exprs) {
-	return sum([0] + [cntExpr(x) | x <- exprs]);
-}
-
-int cntExpr(Expression expr) {
-	cnt = 0;
-	visit(expr) {
-		case \arrayAccess(Expression array, Expression index): {
-			cnt += cntExpr(array);
-			cnt += cntExpr(index);
-		}
-	    case \newArray(Type \type, list[Expression] dimensions, Expression init): {
-	    	cnt += cntExpr(dimensions);
-	    	cnt += cntExpr(init);
-	    }
-	    case \newArray(Type \type, list[Expression] dimensions): {
-	    	cnt += cntExpr(dimensions);
-	    }
-	    case \arrayInitializer(list[Expression] elements): {
-	    	cnt += cntExpr(elements);
-	    }
-	    case \assignment(Expression lhs, str operator, Expression rhs): {
-	    	cnt += cntOperator(operator);
-	    	cnt += cntExpr(rhs);
-	    }
-	    case \cast(Type \type, Expression expression): {
-	    	cnt += cntExpr(expression);
-	    }
-	    case \newObject(Expression expr, Type \type, list[Expression] args, Declaration class): {
-	    	cnt += cntExpr(expr);
-	    	cnt += cntExpr(args);
-	    	//cnt += cntDecl(class);
-	    }
-	    case \newObject(Expression expr, Type \type, list[Expression] args): {
-	    	cnt += cntExpr(expr);
-	    	cnt + cntExpr(args);
-	    }
-	    case \newObject(Type \type, list[Expression] args, Declaration class): {
-	    	cnt += cntExpr(args);
-	    	//cnt += cntDecl(class);
-	    }
-	    case \newObject(Type \type, list[Expression] args): {
-	    	cnt += cntExpr(args);
-	    }
-	    case \qualifiedName(Expression qualifier, Expression expression): {
-	    	cnt += cntExpr(qualifier);
-	    	cnt += cntExpr(expression);
-	    }
-	    case \conditional(Expression expression, Expression thenBranch, Expression elseBranch): {
-	    	// ? :
-	    	cnt += cntExpr(expression);
-	    	cnt += cntExpr(thenBranch);
-	    	cnt += cntExpr(elseBranch);
-	    }
-	    case \fieldAccess(bool isSuper, Expression expression, str name): {
-	    	cnt += cntExpr(expression);
-	    }
-	    case \instanceof(Expression leftSide, Type rightSide): {
-	    	cnt += cntExpr(leftSide);
-	    }
-	    case \methodCall(bool isSuper, str name, list[Expression] arguments): {
-	    	cnt += cntExpr(arguments);
-	    }
-	    case \methodCall(bool isSuper, Expression receiver, str name, list[Expression] arguments): {
-	    	cnt += cntExpr(receiver);
-	    	cnt += cntExpr(arguments);
-	    }
-	    case \bracket(Expression expression): {
-	    	cnt += cntExpr(expression);
-	    }
-	    case \this(Expression thisExpression): {
-	    	cnt += cntExpr(thisExpression);
-	    }
-	    case \infix(Expression lhs, str operator, Expression rhs): {
-	    	cnt += cntExpr(lhs);
-	    	cnt += cntOperator(operator);
-	    	cnt += cntExpr(rhs);
-	    }
-	    case \postfix(Expression operand, str operator): {
-	    	cnt += cntExpr(operand);
-	    	cnt += cntOperator(operator);
-	    }
-	    case \prefix(str operator, Expression operand): {
-	    	cnt += cntOperator(operator);
-	    	cnt += cntExpr(operand);
-	    }
-	    case \normalAnnotation(str typeName, list[Expression] memberValuePairs): {
-	    	cnt += cntExpr(memberValuePairs);
+	visit(d) {
+	    case m:\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
+	    	cnt += cntStmt(impl);
 	    }
 	}
-	return cnt;
+	return cnt == expected_cnt;
 }
+
+test bool testCntStmtNone()
+	= testCntStmtBase("", 0);
+
+// this test case loads a java file that contains all 13 test cases.
+test bool testCntStmtForeach()
+	= testCntStmtBase("
+		int[] a = {0,1,2,3};
+		for(int i : a) {}
+		",1);
+
+test bool testCntStmtForA()
+	= testCntStmtBase("for(int i;i\<42;i++){}", 1);
+	
+test bool testCntStmtForB()
+	= testCntStmtBase("for(;;){}", 1);
+	
+test bool testCntStmtIfThen()
+	= testCntStmtBase("if(true){}", 1);
+
+test bool testCntStmtIfThenElse()
+	= testCntStmtBase("if(true){}else{}", 1);
+	
+test bool testCntStmtCase()
+	= testCntStmtBase("
+		int x=1; 
+		switch(x) {
+			case 1: {
+				x = 2;
+				break;
+			}
+		}", 1);
+		
+test bool testCntStmtDefault()
+	= testCntStmtBase("
+		int x=1; 
+		switch(x) {
+			default: {
+				x = 2;
+				break;
+			}
+		}", 1);
+		
+test bool testCntStmtWhile()
+	= testCntStmtBase("while(true) {}",1);
+	
+test bool testCntStmtConditional()
+	= testCntStmtBase("
+		int x = 1;
+		int y = x == 1 ? 0 : 1;", 1);
+
+test bool testCntStmtInfix()
+	= testCntStmtBase("if(true && true){}", 2);
+	
+test bool testCntStmtPrefix()
+	= false;
+	
+test bool testCntStmtPostfix()
+	= false;
+	
+test bool testCntStmtCatcjh()
+	= testCntStmtBase("try{} catch(Exception e) {}", 1);
+
+// cc = 1 + condStmt + condOp ---> 3 test cases
+int cntOperator(str operator) {
+	return (operator == "&&" || operator == "||") ? 1 : 0;
+}
+
+test bool testCntOperatorNone()
+	= cntOperator("not a conditional") == 0;
+
+test bool testCntOperatorAnd()
+	= cntOperator("&&") == 1;
+
+test bool testCntOperatorOr()
+	= cntOperator("||") == 1;
+
