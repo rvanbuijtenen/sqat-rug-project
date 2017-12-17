@@ -73,7 +73,7 @@ test bool testCcMany()
 
 alias CCDist = map[int cc, int freq];
 
-// 1 + for + ifelse ---> 3 test cases
+// cc = 1 + for + ifelse ---> 3 test cases
 CCDist ccDist(CC cc) {
 	CCDist result = ();
 	for(<m, c> <- cc) {
@@ -94,7 +94,7 @@ test bool testCcDistOne()
 
 test bool testCcDistMany()
 	= ccDist({<|file://Test.java|,1>, <|file://Test2.java|,1>}) == (1:2);
-// 1 + 2x case ---> 3 test cases
+// cc = 1 + 2x case ---> 3 test cases
 CC cntDecl(Declaration decl) {
 	CC result = {};
 	visit(decl) {
@@ -195,7 +195,6 @@ bool testCntStmtBase(str body, int expected_cnt) {
 test bool testCntStmtNone()
 	= testCntStmtBase("", 0);
 
-// this test case loads a java file that contains all 13 test cases.
 test bool testCntStmtForeach()
 	= testCntStmtBase("
 		int[] a = {0,1,2,3};
