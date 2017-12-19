@@ -58,31 +58,41 @@ set[Message] visitDeclarations(set[Declaration] decls) {
 	for(decl <- decls) {
 		result += checkParameters(decl);
 		result += methodLength(decl);
-		//result += privateClass(decl);
+		result += privateClass(decl);
 		//result += customCheck(decl);
 	}
 	return result;
 }
   
 set[Message]  methodLength(Declaration decl) {
-	visit(decl) {
+	/*visit(decl) {
 	    case m:\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
-	    	println(m.impl);
 	    	//<property name="max" value="30"/>
 	    	
 	    	
 	    	
 	    }
-	}
+	}*/
+	return {};
 }
 
 set[Message] checkParameters(Declaration decl) {
 	set[Message] messages = {};
+	int max_params = 7;
 	visit(decl) {
-		case m:\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
-	    	int max_params = 3;
+		case \method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
 	    	if(size(parameters) > max_params) {
-	    		messages += {error("Amount of function parameters exceeds the maximum of 3.", parameters[max_params].src)};
+	    		messages += {error("The amount of function parameters exceeds the maximum of 7.", parameters[max_params].src)};
+	    	}
+	    }
+	    case \method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions): {
+	    	if(size(parameters) > max_params) {
+	    		messages += {error("The amount of function parameters exceeds the maximum of 7.", parameters[max_params].src)};
+	    	}
+	    }
+	    case \constructor(str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl):{
+	    	if(size(parameters) > max_params) {
+	    		messages += {error("The amount of function parameters exceeds the maximum of 7.", parameters[max_params].src)};
 	    	}
 	    }
 	}
@@ -91,6 +101,36 @@ set[Message] checkParameters(Declaration decl) {
 
 set[Message] privateClass(Declaration decl) {
 	set[Message] messages = {};
+	visit(decl) {
+		case c:\class(str name, list[Type] extends, list[Type] implements, list[Declaration] body):{
+			/*if(onlyPrivateConstructors(body)) {
+			
+			}*/
+			if(onlyPrivateConstructors(body)) {
+				if(final() notin c.modifiers) {
+					messages += {error("A method that only has private constructors shoudl be declared using the FINAL modifier", c.src)};
+				}
+			}
+			
+		}
+	}
+	return messages;
+}
+
+bool onlyPrivateConstructors(list[Declaration] body) {
+	bool onlyPrivate = true;
+	bool isEmpty = true;
+	for(decl <- body) {
+		visit(decl) {
+		    case c:\constructor(str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl):{
+		    	isEmpty = false;
+		    	if(\private() notin c.modifiers) {
+		    		onlyPrivate = false;
+		    	}
+		    }
+		}
+	}
+	return onlyPrivate && !isEmpty;
 }
 
 /* Styles to check:
