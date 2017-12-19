@@ -59,7 +59,7 @@ set[Message] visitDeclarations(set[Declaration] decls) {
 		result += checkParameters(decl);
 		result += methodLength(decl);
 		result += privateClass(decl);
-		//result += customCheck(decl);
+		result += methodParameterLineBreaks(decl);
 	}
 	return result;
 }
@@ -108,7 +108,7 @@ set[Message] privateClass(Declaration decl) {
 			}*/
 			if(onlyPrivateConstructors(body)) {
 				if(final() notin c.modifiers) {
-					messages += {error("A method that only has private constructors shoudl be declared using the FINAL modifier", c.src)};
+					messages += {warning("A method that only has private constructors should be declared using the FINAL modifier", c.src)};
 				}
 			}
 			
@@ -131,6 +131,37 @@ bool onlyPrivateConstructors(list[Declaration] body) {
 		}
 	}
 	return onlyPrivate && !isEmpty;
+}
+
+set[Message] methodParameterLineBreaks(Declaration decl) {
+	set[Message] messages = {};
+	visit(decl) {
+		case \method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
+	    	messages += checkParameterStyle(parameters);
+	    }
+	    case \method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions): {
+	    	messages += checkParameterStyle(parameters);
+	    }
+	    case \constructor(str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl):{
+	    	messages += checkParameterStyle(parameters);
+	    }
+	}
+	return messages;
+}
+
+set[Message] checkParameterStyle(list[Declaration] parameters) {
+	if(size(parameters) <= 3) {
+		return {};
+	}
+	list[int] param_lines = [ p.src.begin.line | p <- parameters ];
+	int previous = param_lines[0] - 1;
+	for(l <- param_lines) {
+		if(l - 1 != previous) {
+			return {warning("If there are more than 3 parameters, each parameter should be on a separate line", parameters[0].src)};
+		}
+		previous = l;
+	}
+	return {};
 }
 
 /* Styles to check:
