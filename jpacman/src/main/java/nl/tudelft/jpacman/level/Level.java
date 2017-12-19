@@ -74,7 +74,7 @@ public class Level {
 	private final CollisionMap collisions;
 
 	/**
-	 * The objects observing this level.
+	 The objects observing this level.
 	 */
 	private final Set<LevelObserver> observers;
 

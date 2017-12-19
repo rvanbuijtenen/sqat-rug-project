@@ -41,16 +41,29 @@ Bonus:
 
 */
 
-set[Message] checkStyle(loc project) {
+set[Message] checkStyle() {
   set[Message] result = {};
-  set[Declaration] decls = createAstsFromEclipseProject(project, true); 
+  set[Declaration] decls = createAstsFromEclipseProject(|project://jpacman-framework/src/main/java/nl/tudelft/jpacman|, true); 
   // to be done
   // implement each check in a separate function called here. 
   
   
-  
   return result;
 }
+
+  
+  set[Message]  methodLength(Declaration decl) {
+  visit(decl) {
+	    case m:\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
+	    	println(m.impl);
+	    	//<property name="max" value="30"/>
+	    	
+	    	
+	    	
+	    }
+	    }
+  
+  }
 
 
 
@@ -59,4 +72,4 @@ set[Message] checkStyle(loc project) {
 /* Styles to check:
  * - Number of parameters does not exceed 7
  * - Method length does not exceed 30 lines
- * - Class with only private constructors must be final
+ * - Class with only private constructors must be final */
