@@ -59,4 +59,4 @@ set[Message] checkStyle(loc project) {
 /* Styles to check:
  * - Number of parameters does not exceed 7
  * - Method length does not exceed 30 lines
- * - Class with only private constructors must be final
+ * - Class with only private constructors must be final */
