@@ -43,9 +43,20 @@ Bonus:
 
 set[Message] checkStyle(loc project) {
   set[Message] result = {};
-  
+  set[Declaration] decls = createAstsFromEclipseProject(project, true); 
   // to be done
   // implement each check in a separate function called here. 
   
+  
+  
   return result;
 }
+
+
+
+
+
+/* Styles to check:
+ * - Number of parameters does not exceed 7
+ * - Method length does not exceed 30 lines
+ * - Class with only private constructors must be final

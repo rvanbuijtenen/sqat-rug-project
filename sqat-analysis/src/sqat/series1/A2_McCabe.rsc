@@ -94,6 +94,7 @@ test bool testCcDistOne()
 
 test bool testCcDistMany()
 	= ccDist({<|file://Test.java|,1>, <|file://Test2.java|,1>}) == (1:2);
+
 // cc = 1 + 2x case ---> 3 test cases
 CC cntDecl(Declaration decl) {
 	CC result = {};
