@@ -2,6 +2,13 @@ module sqat::series1::A3_CheckStyle
 
 import Java17ish;
 import Message;
+import lang::java::jdt::m3::AST;
+import IO;
+import ParseTree;
+import lang::java::m3::Core;
+import Type;
+import List;
+import Message;
 
 /*
 
@@ -41,18 +48,36 @@ Bonus:
 
 */
 
-set[Message] checkStyle(loc project) {
-  set[Message] result = {};
-  set[Declaration] decls = createAstsFromEclipseProject(project, true); 
+set[Message] checkStyle() {
+  set[Declaration] decls = createAstsFromEclipseProject(|project://jpacman-framework/src/main/java/nl/tudelft/jpacman|, true); 
   // to be done
   // implement each check in a separate function called here. 
-  
-  
-  
-  return result;
+  return visitDeclarations(decls);
 }
 
+set[Message] visitDeclarations(set[Declaration] decls) {
+	set[Message] result = {};
+	for(decl <- decls) {
+		result += checkParameters(decl);
+		result += methodLength(decl);
+		//result += privateClass(decl);
+		//result += customCheck(decl);
+	}
+	return result;
+}
 
+set[Message] checkParameters(Declaration decl) {
+	set[Message] messages = {};
+	visit(decl) {
+		case m:\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
+	    	int max_params = 3;
+	    	if(size(parameters) > max_params) {
+	    		messages += {error("Amount of function parameters exceeds the maximum of 3.", parameters[max_params].src)};
+	    	}
+	    }
+	}
+	return messages;
+}
 
 
 
