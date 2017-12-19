@@ -57,13 +57,15 @@ set[Message] visitDeclarations(set[Declaration] decls) {
 	set[Message] result = {};
 	for(decl <- decls) {
 		result += checkParameters(decl);
+
 		result += fileLength(decl);
-		//result += privateClass(decl);
-		//result += customCheck(decl);
+		result += privateClass(decl);
+		result += methodParameterLineBreaks(decl);
+
 	}
 	return result;
 }
-  
+
 set[Message]  fileLength(Declaration decl) {
 	set[Message] messages = {};
 	totalLength = decl.src.end.line - decl.src.begin.line;
@@ -71,17 +73,28 @@ set[Message]  fileLength(Declaration decl) {
 	messages += warning("The length of this file exceed the length of 150", decl.src);
 	}
 	return messages;
+
 }
 
 	
 
 set[Message] checkParameters(Declaration decl) {
 	set[Message] messages = {};
+	int max_params = 7;
 	visit(decl) {
-		case m:\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
-	    	int max_params = 3;
+		case \method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
 	    	if(size(parameters) > max_params) {
-	    		messages += {error("Amount of function parameters exceeds the maximum of 3.", parameters[max_params].src)};
+	    		messages += {error("The amount of function parameters exceeds the maximum of 7.", parameters[max_params].src)};
+	    	}
+	    }
+	    case \method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions): {
+	    	if(size(parameters) > max_params) {
+	    		messages += {error("The amount of function parameters exceeds the maximum of 7.", parameters[max_params].src)};
+	    	}
+	    }
+	    case \constructor(str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl):{
+	    	if(size(parameters) > max_params) {
+	    		messages += {error("The amount of function parameters exceeds the maximum of 7.", parameters[max_params].src)};
 	    	}
 	    }
 	}
@@ -90,6 +103,67 @@ set[Message] checkParameters(Declaration decl) {
 
 set[Message] privateClass(Declaration decl) {
 	set[Message] messages = {};
+	visit(decl) {
+		case c:\class(str name, list[Type] extends, list[Type] implements, list[Declaration] body):{
+			/*if(onlyPrivateConstructors(body)) {
+			
+			}*/
+			if(onlyPrivateConstructors(body)) {
+				if(final() notin c.modifiers) {
+					messages += {warning("A method that only has private constructors should be declared using the FINAL modifier", c.src)};
+				}
+			}
+			
+		}
+	}
+	return messages;
+}
+
+bool onlyPrivateConstructors(list[Declaration] body) {
+	bool onlyPrivate = true;
+	bool isEmpty = true;
+	for(decl <- body) {
+		visit(decl) {
+		    case c:\constructor(str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl):{
+		    	isEmpty = false;
+		    	if(\private() notin c.modifiers) {
+		    		onlyPrivate = false;
+		    	}
+		    }
+		}
+	}
+	return onlyPrivate && !isEmpty;
+}
+
+set[Message] methodParameterLineBreaks(Declaration decl) {
+	set[Message] messages = {};
+	visit(decl) {
+		case \method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
+	    	messages += checkParameterStyle(parameters);
+	    }
+	    case \method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions): {
+	    	messages += checkParameterStyle(parameters);
+	    }
+	    case \constructor(str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl):{
+	    	messages += checkParameterStyle(parameters);
+	    }
+	}
+	return messages;
+}
+
+set[Message] checkParameterStyle(list[Declaration] parameters) {
+	if(size(parameters) <= 3) {
+		return {};
+	}
+	list[int] param_lines = [ p.src.begin.line | p <- parameters ];
+	int previous = param_lines[0] - 1;
+	for(l <- param_lines) {
+		if(l - 1 != previous) {
+			return {warning("If there are more than 3 parameters, each parameter should be on a separate line", parameters[0].src)};
+		}
+		previous = l;
+	}
+	return {};
 }
 
 /* Styles to check:
