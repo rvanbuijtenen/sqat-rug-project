@@ -49,9 +49,7 @@ Bonus:
 */
 
 set[Message] checkStyle() {
-  set[Declaration] decls = createAstsFromEclipseProject(|project://jpacman-framework/src/main/java/nl/tudelft/jpacman|, true); 
-  // to be done
-  // implement each check in a separate function called here. 
+  set[Declaration] decls = createAstsFromEclipseProject(|project://jpacman-framework/src/main/java/nl/tudelft/jpacman|, true);  
   return visitDeclarations(decls);
 }
 
@@ -64,6 +62,18 @@ set[Message] visitDeclarations(set[Declaration] decls) {
 		//result += customCheck(decl);
 	}
 	return result;
+}
+  
+set[Message]  methodLength(Declaration decl) {
+	visit(decl) {
+	    case m:\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
+	    	println(m.impl);
+	    	//<property name="max" value="30"/>
+	    	
+	    	
+	    	
+	    }
+	}
 }
 
 set[Message] checkParameters(Declaration decl) {
