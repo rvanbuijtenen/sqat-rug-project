@@ -57,24 +57,23 @@ set[Message] visitDeclarations(set[Declaration] decls) {
 	set[Message] result = {};
 	for(decl <- decls) {
 		result += checkParameters(decl);
-		result += methodLength(decl);
+		result += fileLength(decl);
 		//result += privateClass(decl);
 		//result += customCheck(decl);
 	}
 	return result;
 }
   
-set[Message]  methodLength(Declaration decl) {
-	visit(decl) {
-	    case m:\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
-	    	println(m.impl);
-	    	//<property name="max" value="30"/>
-	    	
-	    	
-	    	
-	    }
+set[Message]  fileLength(Declaration decl) {
+	set[Message] messages = {};
+	totalLength = decl.src.end.line - decl.src.begin.line;
+	if (totalLength > 150) {
+	messages += warning("The length of this file exceed the length of 150", decl.src);
 	}
+	return messages;
 }
+
+	
 
 set[Message] checkParameters(Declaration decl) {
 	set[Message] messages = {};
@@ -95,5 +94,5 @@ set[Message] privateClass(Declaration decl) {
 
 /* Styles to check:
  * - Number of parameters does not exceed 7
- * - Method length does not exceed 30 lines
+ * - File length does not exceed 150 lines
  * - Class with only private constructors must be final */
