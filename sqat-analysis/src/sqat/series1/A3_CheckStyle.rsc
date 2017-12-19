@@ -79,7 +79,9 @@ set[Message] checkParameters(Declaration decl) {
 	return messages;
 }
 
-
+set[Message] privateClass(Declaration decl) {
+	set[Message] messages = {};
+}
 
 /* Styles to check:
  * - Number of parameters does not exceed 7
