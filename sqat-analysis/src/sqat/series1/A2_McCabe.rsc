@@ -16,6 +16,8 @@ Construct a distribution of method cylcomatic complexity.
 
 Questions:
 - which method has the highest complexity (use the @src annotation to get a method's location)
+	The method nextMove in Inky.java is the most complex method, with a complexity of 8:
+	 |project://jpacman-framework/src/main/java/nl/tudelft/jpacman/npc/ghost/Inky.java|(2255,2267,<68,1>,<131,17>)
 
 - how does pacman fare w.r.t. the SIG maintainability McCabe thresholds?
 
