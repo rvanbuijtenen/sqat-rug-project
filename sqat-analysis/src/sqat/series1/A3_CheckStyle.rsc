@@ -56,11 +56,10 @@ set[Message] checkStyle() {
 set[Message] visitDeclarations(set[Declaration] decls) {
 	set[Message] result = {};
 	for(decl <- decls) {
-		result += checkParameters(decl);
-
-		result += fileLength(decl);
+		//result += checkParameters(decl);
+		//result += fileLength(decl);
 		result += privateClass(decl);
-		result += methodParameterLineBreaks(decl);
+		//result += methodParameterLineBreaks(decl);
 
 	}
 	return result;
