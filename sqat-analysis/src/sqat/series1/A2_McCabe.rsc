@@ -21,6 +21,8 @@ Questions:
 
 - how does pacman fare w.r.t. the SIG maintainability McCabe thresholds?
 
+  The highest complexity is 8. Following the SIG, the CC of 1-10 has a risk evaluation of 'simple, without much risk'.
+
 - is code size correlated with McCabe in this case (use functions in analysis::statistics::Correlation to find out)? 
   (Background: Davy Landman, Alexander Serebrenik, Eric Bouwers and Jurgen J. Vinju. Empirical analysis 
   of the relationship between CC and SLOC in a large corpus of Java methods 
@@ -28,6 +30,7 @@ Questions:
   http://homepages.cwi.nl/~jurgenv/papers/JSEP-2015.pdf)
   
 - what if you separate out the test sources?
+If you
 
 Tips: 
 - the AST data type can be found in module lang::java::m3::AST

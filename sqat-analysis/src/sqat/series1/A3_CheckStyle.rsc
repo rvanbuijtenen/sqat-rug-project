@@ -60,6 +60,7 @@ set[Message] visitDeclarations(set[Declaration] decls) {
 		//result += fileLength(decl);
 		result += privateClass(decl);
 		//result += methodParameterLineBreaks(decl);
+
 	}
 	return result;
 }
