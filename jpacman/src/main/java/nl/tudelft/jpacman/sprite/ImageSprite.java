@@ -25,7 +25,7 @@ public class ImageSprite implements Sprite {
 	 * @param img
 	 *            The image to create a sprite from.
 	 */
-	public ImageSprite(Image img) {
+	private ImageSprite(Image img) {
 		this.image = img;
 	}
 

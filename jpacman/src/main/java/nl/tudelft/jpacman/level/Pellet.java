@@ -25,7 +25,7 @@ public class Pellet extends Unit {
 	 * @param points The point value of this pellet.
 	 * @param sprite The sprite of this pellet.
 	 */
-	public Pellet(int points, Sprite sprite) {
+	private Pellet(int points, Sprite sprite) {
 		this.image = sprite;
 		this.value = points;
 	}

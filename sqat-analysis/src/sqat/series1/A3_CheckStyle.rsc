@@ -79,21 +79,21 @@ set[Message]  fileLength(Declaration decl) {
 
 set[Message] checkParameters(Declaration decl) {
 	set[Message] messages = {};
-	int max_params = 7;
+	int max_params = 4;
 	visit(decl) {
 		case \method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
 	    	if(size(parameters) > max_params) {
-	    		messages += {error("The amount of function parameters exceeds the maximum of 7.", parameters[max_params].src)};
+	    		messages += {error("The amount of function parameters exceeds the maximum of 4.", parameters[max_params].src)};
 	    	}
 	    }
 	    case \method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions): {
 	    	if(size(parameters) > max_params) {
-	    		messages += {error("The amount of function parameters exceeds the maximum of 7.", parameters[max_params].src)};
+	    		messages += {error("The amount of function parameters exceeds the maximum of 4.", parameters[max_params].src)};
 	    	}
 	    }
 	    case \constructor(str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl):{
 	    	if(size(parameters) > max_params) {
-	    		messages += {error("The amount of function parameters exceeds the maximum of 7.", parameters[max_params].src)};
+	    		messages += {error("The amount of function parameters exceeds the maximum of 4.", parameters[max_params].src)};
 	    	}
 	    }
 	}
@@ -104,9 +104,6 @@ set[Message] privateClass(Declaration decl) {
 	set[Message] messages = {};
 	visit(decl) {
 		case c:\class(str name, list[Type] extends, list[Type] implements, list[Declaration] body):{
-			/*if(onlyPrivateConstructors(body)) {
-			
-			}*/
 			if(onlyPrivateConstructors(body)) {
 				if(final() notin c.modifiers) {
 					messages += {warning("A method that only has private constructors should be declared using the FINAL modifier", c.src)};
@@ -119,19 +116,19 @@ set[Message] privateClass(Declaration decl) {
 }
 
 bool onlyPrivateConstructors(list[Declaration] body) {
-	bool onlyPrivate = true;
 	bool isEmpty = true;
 	for(decl <- body) {
-		visit(decl) {
+		top-down-break visit(decl) {
 		    case c:\constructor(str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl):{
 		    	isEmpty = false;
 		    	if(\private() notin c.modifiers) {
-		    		onlyPrivate = false;
+		    		return false;
 		    	}
 		    }
+		    case c:\class(str name, list[Type] extends, list[Type] implements, list[Declaration] body): ;
 		}
 	}
-	return onlyPrivate && !isEmpty;
+	return !isEmpty;
 }
 
 set[Message] methodParameterLineBreaks(Declaration decl) {
