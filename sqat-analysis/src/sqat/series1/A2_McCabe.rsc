@@ -63,6 +63,18 @@ CC cc(set[Declaration] decls) {
   return result;
 }
 
+list[value] mostComplexMethod(CC results) {
+	int max_cc = 0;
+	loc max_loc;
+	for(c <- results) {
+		if(c.cc > max_cc) {
+			max_cc = c.cc;
+			max_loc = c.method;
+		}
+	}
+	return [max_loc, max_cc];
+}
+
 test bool testCcNone()
 	= cc({}) == {};
 
@@ -105,7 +117,6 @@ CC cntDecl(Declaration decl) {
 	    case m:\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
 	    	cnt = 1;
 	    	cnt += cntStmt(impl);
-	    	println(m.src);
 	    	result += <m.src, cnt>;
 	    }
 	    case m:\constructor(str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
