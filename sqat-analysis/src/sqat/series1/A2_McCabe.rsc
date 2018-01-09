@@ -8,8 +8,8 @@ import Type;
 import List;
 import vis::Figure;
 import vis::Render;
-/*
 
+/*
 Construct a distribution of method cylcomatic complexity. 
 (that is: a map[int, int] where the key is the McCabe complexity, and the value the frequency it occurs)
 

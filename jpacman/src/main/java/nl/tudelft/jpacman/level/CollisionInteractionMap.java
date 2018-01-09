@@ -231,7 +231,7 @@ public class CollisionInteractionMap implements CollisionMap {
 	 * @param <C2>
 	 *            The collidee type.
 	 */
-	private static class InverseCollisionHandler<C1 extends Unit, C2 extends Unit>
+	private final static class InverseCollisionHandler<C1 extends Unit, C2 extends Unit>
 			implements CollisionHandler<C1, C2> {
 
 		/**

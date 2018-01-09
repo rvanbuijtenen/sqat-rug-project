@@ -19,7 +19,7 @@ rel[loc from, loc to]         M3.containment;             // what is logically c
 list[Message]                 M3.messages;                // error messages and warnings produced while constructing a single m3 model
 rel[str simpleName, loc qualifiedName]  M3.names;         // convenience mapping from logical names to end-user readable (GUI) names, and vice versa
 rel[loc definition, loc comments]       M3.documentation; // comments and javadoc attached to declared things
-rel[loc definition, Modifier modifier] M3.modifiers;     // modifiers associated with declared things
+rel[loc definition, Modifier modifier]  M3.modifiers;     // modifiers associated with declared things
 
 - module  lang::java::m3::Core:
 
