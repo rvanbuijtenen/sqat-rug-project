@@ -26,7 +26,7 @@ public class CollisionInteractionMap implements CollisionMap {
 	/**
 	 * Creates a new, empty collision map.
 	 */
-	public CollisionInteractionMap() {
+	private CollisionInteractionMap() {
 		this.handlers = new HashMap<>();
 	}
 
@@ -245,7 +245,7 @@ public class CollisionInteractionMap implements CollisionMap {
 		 * @param handler
 		 *            The symmetric handler for this collision.
 		 */
-		InverseCollisionHandler(CollisionHandler<C2, C1> handler) {
+		private InverseCollisionHandler(CollisionHandler<C2, C1> handler) {
 			this.handler = handler;
 		}
 

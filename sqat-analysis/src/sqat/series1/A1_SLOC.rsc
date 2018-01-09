@@ -91,15 +91,28 @@ test bool testCountBlankLines()
 
 public int countComment(list[str] file){	
   n = 0;
-  for(s <- file)
-  	if(/^(\t|\s)*?(\/\*|\*|\/\/)/ := s)
+  bool isBlockComment = false;
+  for(s <- file) {
+  	if(isBlockComment) {
+		if(/^(\t|\s)*?(\*\/)/ := s) {
+  			isBlockComment = false;
+  		}
+  		n += 1;
+  	}
+  	if(/^(\t|\s)*?(\/\*)/ := s) {
+  		isBlockComment = true;
+  		n+= 1;
+  	}
+  	if(/^(\t|\s)*?(\/\/)/ := s) {
       n +=1;
+    }
+  }
   return n;
 }
 
 test bool testCountComment()
-	= countComment(["/**","* comment body","*/"," ","// test comment", "int var = 5;"])
-	== 4;
+	= countComment(["/**","* comment body","*/","/**","comment body","*/"," ","// test comment", "int var = 5;"])
+	== 7;
 
 public int maxLOC(SLOC filelist) {
 	return max([filelist[file] | file <- filelist]);

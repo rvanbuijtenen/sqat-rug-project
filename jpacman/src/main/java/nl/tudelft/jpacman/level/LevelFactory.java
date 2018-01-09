@@ -54,7 +54,7 @@ public class LevelFactory {
 	 * @param ghostFactory
 	 *            The factory providing ghosts.
 	 */
-	public LevelFactory(PacManSprites spriteStore, GhostFactory ghostFactory) {
+	private LevelFactory(PacManSprites spriteStore, GhostFactory ghostFactory) {
 		this.sprites = spriteStore;
 		this.ghostIndex = -1;
 		this.ghostFact = ghostFactory;

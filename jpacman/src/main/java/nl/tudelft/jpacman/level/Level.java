@@ -90,7 +90,7 @@ public class Level {
 	 * @param collisionMap
 	 *            The collection of collisions that should be handled.
 	 */
-	public Level(Board b, List<NPC> ghosts, List<Square> startPositions,
+	private Level(Board b, List<NPC> ghosts, List<Square> startPositions,
 			CollisionMap collisionMap) {
 		assert b != null;
 		assert ghosts != null;
