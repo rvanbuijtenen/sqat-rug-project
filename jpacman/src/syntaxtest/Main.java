@@ -2,7 +2,10 @@ public class Main {
 	public int aVariable;
 	
 	public int main(String[] args) {
-		return 0; /* nog een comment */
+		/* 
+		nog een comment 
+		*/
+		return 0; 
 	}
 	// comment
 	

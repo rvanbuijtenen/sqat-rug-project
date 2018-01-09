@@ -100,7 +100,9 @@ public int countComment(list[str] file){
   		n += 1;
   	}
   	if(/^(\t|\s)*?(\/\*)/ := s) {
-  		isBlockComment = true;
+  		if(!/\*\// := s) {
+  			isBlockComment = true;
+  		}
   		n+= 1;
   	}
   	if(/^(\t|\s)*?(\/\/)/ := s) {
