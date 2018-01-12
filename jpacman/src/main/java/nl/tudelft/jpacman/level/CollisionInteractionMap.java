@@ -26,7 +26,7 @@ public class CollisionInteractionMap implements CollisionMap {
 	/**
 	 * Creates a new, empty collision map.
 	 */
-	private CollisionInteractionMap() {
+	public CollisionInteractionMap() {
 		this.handlers = new HashMap<>();
 	}
 
