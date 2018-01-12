@@ -9,11 +9,15 @@ import java.awt.Graphics;
  * @author Jeroen Roosen 
  */
 public class EmptySprite implements Sprite {
-	private EmptySprite() {
+	public EmptySprite() {
 		super();
 	}
 	@Override
-	public void draw(Graphics g, int x, int y, int width, int height) {
+	public void draw(Graphics g,
+					 int x,
+					 int y,
+					 int width,
+					 int height) {
 		// nothing to draw.
 	}
 

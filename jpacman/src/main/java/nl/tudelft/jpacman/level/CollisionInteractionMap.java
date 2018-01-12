@@ -26,7 +26,7 @@ public class CollisionInteractionMap implements CollisionMap {
 	/**
 	 * Creates a new, empty collision map.
 	 */
-	private CollisionInteractionMap() {
+	public CollisionInteractionMap() {
 		this.handlers = new HashMap<>();
 	}
 
@@ -231,7 +231,7 @@ public class CollisionInteractionMap implements CollisionMap {
 	 * @param <C2>
 	 *            The collidee type.
 	 */
-	private static class InverseCollisionHandler<C1 extends Unit, C2 extends Unit>
+	private final static class InverseCollisionHandler<C1 extends Unit, C2 extends Unit>
 			implements CollisionHandler<C1, C2> {
 
 		/**

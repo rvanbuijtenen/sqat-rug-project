@@ -27,7 +27,7 @@ public abstract class Game implements LevelObserver {
 	/**
 	 * Creates a new game.
 	 */
-	private Game() {
+	public Game() {
 		inProgress = false;
 	}
 
