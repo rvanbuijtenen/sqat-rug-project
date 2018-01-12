@@ -46,4 +46,3 @@ Questions:
 
 
 M3 jpacmanM3() = createM3FromEclipseProject(|project://jpacman-framework|);
-
