@@ -53,6 +53,7 @@ We used the tool Emma, which determines the coverage level based on instructions
 
 M3 jpacmanM3() = createM3FromEclipseProject(|project://jpacman-framework|);
 
+
 alias JpacmanInvocations = set[tuple[loc, loc]];
 alias Graph = rel[loc, str, loc];
 alias Edge = rel[Node,Label,Node];
@@ -142,4 +143,3 @@ set[tuple[loc, str]] getJpacmanMethods() {
  * Step 5: extract all nodes that are present in the transitive closure
  * Step 6: compute tested_nodes = set[Node] all_nodes - set[Node] reachable_nodes
  */
-
