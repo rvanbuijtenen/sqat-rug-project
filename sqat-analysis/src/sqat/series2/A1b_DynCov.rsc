@@ -3,6 +3,13 @@ module sqat::series2::A1b_DynCov
 import Java17ish;
 import ParseTree;
 import util::FileSystem;
+import Message;
+import lang::java::jdt::m3::AST;
+import IO;
+import lang::java::m3::Core;
+import Type;
+import List;
+import Message;
 
 /*
 
@@ -43,8 +50,71 @@ Tips:
 
 */
 
+str currentClass;
 
+void main() {
+	loc project = |project://jpacman-instrumented/src/main/java/nl/tudelft/jpacman/Launcher.java|;
+	currentClass = "\"" + project.path + "\"";
+	tree = parse(#start[CompilationUnit], project, allowAmbiguity=true);
+	//println(tree);
+	
+	call = (BlockStm)`Api.call("test123");`;
+	api = (ImportDec)`import nl.tudelft.jpacman.Api;`;
+	x = visit(tree) {
+		case (MethodBody) `{<BlockStm* stms>}` => (MethodBody)`{<BlockStm call> <BlockStm* stms>}`
+	}
+	x = visit(tree) {
+		case (ImportDec) `<ImportDec imports>` => (ImportDec)`<ImportDec api>`
+	}
+	cnt1 = 0;
+	top-down visit(tree) {
+		case (MethodBody) `{<BlockStm* stms>}`: {
+			cnt1 += 1;
+		}
+	}
+	x2 = visit(tree) {
+		case (MethodBody) `{<BlockStm* stms>}` => blockify(putAfterEvery(stms, callStmt))
+	}
+	cnt2 = 0;
+	visit(tree) {
+		case (Stm) `<Stm s>`: {
+			cnt2 += 1;
+		}
+	}
+	//println(x2);
+	//println(x2);
+	println(cnt2);
+	//methodCoverage(project);
+	//lineCoverage(project);
+}
+
+StringLiteral getClass() = (StringLiteral)`"Launcher.java"`;
+
+StringLiteral getMethod(loc l) = (StringLiteral)`"unknown"`;
+
+StringLiteral getSrcLoc(loc l) {
+	str src = l.path;
+	return (StringLiteral)`"known"`;
+}
+
+
+BlockStm callStmt(loc l) {
+	StringLiteral c = getClass();
+	StringLiteral m = getMethod(l);
+	StringLiteral src = getSrcLoc(l);
+	return (BlockStm)`Api.hit(<StringLiteral c>, <StringLiteral m>, <StringLiteral src>);`;
+}
+BlockStm callMthd(loc l) = (BlockStm)`Api.hit("Method");`;
+MethodBody blockify(BlockStm* stms) {
+	return (MethodBody)`{<BlockStm* stms>}`;
+}
 void methodCoverage(loc project) {
+	set[Declaration] decls = createAstsFromEclipseProject(project, true);
+	BlockStm stms = [];
+	insertedStm = (BlockStm)`call();`;
+	x = visit(decls){
+		case (Block) `{<BlockStm* stms>}` => putAfterEvery(stms, callMethod)
+	}
   // to be done
 }
 

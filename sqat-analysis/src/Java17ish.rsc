@@ -20,7 +20,7 @@ syntax Stm
   ; 
 
 start[CompilationUnit] parseJava(loc l) {
-  return parse(#start[CompilationUnit], l, allowAmbiguity=true);
+  return parse(#TypeDec, l, allowAmbiguity=true);
 }
 
 void testOnJPacman() {
