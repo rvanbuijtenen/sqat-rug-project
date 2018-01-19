@@ -46,6 +46,8 @@ Questions:
 - what methods are not covered at all?
 - how do your results compare to the jpacman results in the paper? Has jpacman improved?
 - use a third-party coverage tool (e.g. Clover) to compare your results to (explain differences)
+We used the tool Emma, which determines the coverage level based on instructions. They report a test coverage of 40.6%
+
 */
 
 
