@@ -10,6 +10,7 @@ import lang::java::m3::Core;
 import Type;
 import List;
 import Message;
+import String;
 
 /*
 
@@ -49,12 +50,8 @@ Tips:
    [NT]"...", where NT represents the desired non-terminal (e.g. Expr, IntLiteral etc.).  
 
 */
-
-str currentClass;
-
 void main() {
 	loc project = |project://jpacman-instrumented/src/main/java/nl/tudelft/jpacman/Launcher.java|;
-	currentClass = "\"" + project.path + "\"";
 	tree = parse(#start[CompilationUnit], project, allowAmbiguity=true);
 	//println(tree);
 	
@@ -63,17 +60,12 @@ void main() {
 	x = visit(tree) {
 		case (MethodBody) `{<BlockStm* stms>}` => (MethodBody)`{<BlockStm call> <BlockStm* stms>}`
 	}
-	x = visit(tree) {
-		case (ImportDec) `<ImportDec imports>` => (ImportDec)`<ImportDec api>`
+	x = top-down-break visit(tree) {
+		case (CompilationUnit) `<PackageDec? package> <ImportDec* imports> <TypeDec* types>` => (CompilationUnit)`<PackageDec? package> <ImportDec* imports> <ImportDec api> <TypeDec* types>`
 	}
 	cnt1 = 0;
-	top-down visit(tree) {
-		case (MethodBody) `{<BlockStm* stms>}`: {
-			cnt1 += 1;
-		}
-	}
 	x2 = visit(tree) {
-		case (MethodBody) `{<BlockStm* stms>}` => blockify(putAfterEvery(stms, callStmt))
+		case (MethodBody) `{<BlockStm* stms>}` => blockify(putAfterEvery(stms, callStmt, name))
 	}
 	cnt2 = 0;
 	visit(tree) {
@@ -88,18 +80,35 @@ void main() {
 	//lineCoverage(project);
 }
 
-StringLiteral getClass() = (StringLiteral)`"Launcher.java"`;
+Id getMethodName(MethodDecHead m) {
+	Id currentAnno = (Id)`a`;
+	top-down visit(m) {
+		case (Anno) `@<Id name>`: {
+			currentAnno = name;
+		}
+		case (Id) `<Id name>`: {
+			if(currentAnno != name) {
+				return name;
+			}
+		}
+	}
+}
+
+StringLiteral getClass(loc l) {
+	StringPart sp = parse(#StringPart, l.path);
+	return (StringLiteral)`"<StringPart sp>"`;
+}
 
 StringLiteral getMethod(loc l) = (StringLiteral)`"unknown"`;
 
 StringLiteral getSrcLoc(loc l) {
-	str src = l.path;
-	return (StringLiteral)`"known"`;
+	StringPart sp = parse(#StringPart, "lines <l.begin.line>:<l.begin.column> - <l.end.line>:<l.end.column>");
+	return (StringLiteral)`"<StringPart sp>"`;
 }
 
 
 BlockStm callStmt(loc l) {
-	StringLiteral c = getClass();
+	StringLiteral c = getClass(l);
 	StringLiteral m = getMethod(l);
 	StringLiteral src = getSrcLoc(l);
 	return (BlockStm)`Api.hit(<StringLiteral c>, <StringLiteral m>, <StringLiteral src>);`;
@@ -108,6 +117,7 @@ BlockStm callMthd(loc l) = (BlockStm)`Api.hit("Method");`;
 MethodBody blockify(BlockStm* stms) {
 	return (MethodBody)`{<BlockStm* stms>}`;
 }
+
 void methodCoverage(loc project) {
 	set[Declaration] decls = createAstsFromEclipseProject(project, true);
 	BlockStm stms = [];
