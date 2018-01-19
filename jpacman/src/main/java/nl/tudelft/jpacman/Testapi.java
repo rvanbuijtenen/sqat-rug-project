@@ -1,6 +1,9 @@
 package nl.tudelft.jpacman;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 
 
 public class Testapi {
@@ -20,12 +23,15 @@ public class Testapi {
 	
 	static public void hit( String c, String m) {
 		try {
-			FileWriter writer = new FileWriter("test.csv");
-			writer.append("c");
-			writer.append(";");
-			writer.append("m");
-			writer.append(";");
-			writer.append("\n");
+			PrintWriter pw = new PrintWriter(new File("test.csv"));
+			StringBuilder sb = new StringBuilder();
+			sb.append(c);
+			sb.append(";");
+			sb.append(m);
+			sb.append(";");
+			sb.append("\n");
+			pw.write(sb.toString());
+			pw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -35,12 +41,15 @@ public class Testapi {
 	static public void hit(String c, String m, String line) {
 	
 		try {
-			FileWriter writer = new FileWriter("test.csv");
-			writer.append("c");
-			writer.append(";");
-			writer.append("m");
-			writer.append(";");
-			writer.append("\n");
+			PrintWriter pw = new PrintWriter(new File("test.csv"));
+			StringBuilder sb = new StringBuilder();
+			sb.append(c);
+			sb.append(";");
+			sb.append(m);
+			sb.append(";");
+			sb.append("\n");
+			pw.write(sb.toString());
+			pw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
