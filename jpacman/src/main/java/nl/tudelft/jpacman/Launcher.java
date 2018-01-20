@@ -1,5 +1,4 @@
 package nl.tudelft.jpacman;
-import nl.tudelft.jpacman.Testapi;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,7 +40,6 @@ public class Launcher {
 	 *         is called.
 	 */
 	public Game getGame() {
-		Testapi.hit("1", "2");
 		return game;
 	}
 	

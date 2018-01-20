@@ -1,13 +1,4 @@
-package nl.tudelft.jpacman.board;
-
-import nl.tudelft.jpacman.sprite.Sprite;
-
-/**
- * A unit that can be placed on a {@link Square}.
- * 
- * @author Jeroen Roosen 
- */
-public abstract class Unit {
+package nl.tudelft.jpacman.board; import nl.tudelft.jpacman.sprite.Sprite; import nl.tudelft.jpacman.Api; public abstract class Unit {
 
 	/**
 	 * The square this unit is currently occupying.
@@ -30,17 +21,13 @@ public abstract class Unit {
 	 * Sets this unit to face the new direction.
 	 * @param newDirection The new direction this unit is facing.
 	 */
-	public void setDirection(Direction newDirection) {
-		this.direction = newDirection;
-	}
+	public void setDirection(Direction newDirection) {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Unit.java", "setDirection"); this.direction = newDirection;}
 	
 	/**
 	 * Returns the current direction this unit is facing.
 	 * @return The current direction this unit is facing.
 	 */
-	public Direction getDirection() {
-		return this.direction;
-	}
+	public Direction getDirection() {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Unit.java", "getDirection"); return this.direction;}
 	
 	/**
 	 * Returns the square this unit is currently occupying.
@@ -48,10 +35,7 @@ public abstract class Unit {
 	 * @return The square this unit is currently occupying, or <code>null</code>
 	 *         if this unit is not on a square.
 	 */
-	public Square getSquare() {
-		assert invariant();
-		return square;
-	}
+	public Square getSquare() {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Unit.java", "getSquare"); assert invariant(); return square;}
 
 	/**
 	 * Occupies the target square iff this unit is allowed to as decided by
@@ -60,27 +44,20 @@ public abstract class Unit {
 	 * @param target
 	 *            The square to occupy.
 	 */
-	public void occupy(Square target) {
-		assert target != null;
-		
-		if (square != null) {
+	public void occupy(Square target) {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Unit.java", "occupy"); assert target != null; if (square != null) {
 			square.remove(this);
 		}
 		square = target;
 		target.put(this);
-		assert invariant();
-	}
+		assert invariant();}
 	
 	/**
 	 * Leaves the currently occupying square, thus removing this unit from the board.
 	 */
-	public void leaveSquare() {
-		if (square != null) {
+	public void leaveSquare() {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Unit.java", "leaveSquare"); if (square != null) {
 			square.remove(this);
 			square = null;
-		}
-		assert invariant();
-	}
+		} assert invariant();}
 
 	/**
 	 * Tests whether the square this unit is occupying has this unit listed as
@@ -90,9 +67,7 @@ public abstract class Unit {
 	 *         unit listed as one of its occupiers, or if this unit is currently
 	 *         not occupying any square.
 	 */
-	protected boolean invariant() {
-		return square == null || square.getOccupants().contains(this);
-	}
+	protected boolean invariant() {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Unit.java", "invariant"); return square == null || square.getOccupants().contains(this);}
 
 	/**
 	 * Returns the sprite of this unit.

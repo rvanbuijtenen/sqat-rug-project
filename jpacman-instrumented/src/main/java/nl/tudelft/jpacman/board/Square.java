@@ -1,21 +1,11 @@
-package nl.tudelft.jpacman.board;
-
-import java.util.ArrayList;
+package nl.tudelft.jpacman.board; import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
 import com.google.common.collect.ImmutableList;
 
-import nl.tudelft.jpacman.sprite.Sprite;
-
-/**
- * A square on a {@link Board}, which can (or cannot, depending on the type) be
- * occupied by units.
- * 
- * @author Jeroen Roosen 
- */
-public abstract class Square {
+import nl.tudelft.jpacman.sprite.Sprite; import nl.tudelft.jpacman.Api; public abstract class Square {
 
 	/**
 	 * The units occupying this square, in order of appearance.
@@ -43,9 +33,7 @@ public abstract class Square {
 	 *            The direction of the adjacent square.
 	 * @return The adjacent square in the given direction.
 	 */
-	public Square getSquareAt(Direction direction) {
-		return neighbours.get(direction);
-	}
+	public Square getSquareAt(Direction direction) {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Square.java", "getSquareAt"); return neighbours.get(direction);}
 
 	/**
 	 * Links this square to a neighbour in the given direction. Note that this
@@ -56,10 +44,7 @@ public abstract class Square {
 	 * @param direction
 	 *            The direction the new neighbour is in, as seen from this cell.
 	 */
-	public void link(Square neighbour, Direction direction) {
-		neighbours.put(direction, neighbour);
-		assert invariant();
-	}
+	public void link(Square neighbour, Direction direction) {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Square.java", "link"); neighbours.put(direction, neighbour); assert invariant();}
 
 	/**
 	 * Returns an immutable list of units occupying this square, in the order in
@@ -68,9 +53,7 @@ public abstract class Square {
 	 * @return An immutable list of units occupying this square, in the order in
 	 *         which they occupied this square (i.e. oldest first.)
 	 */
-	public List<Unit> getOccupants() {
-		return ImmutableList.copyOf(occupants);
-	}
+	public List<Unit> getOccupants() {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Square.java", "getOccupants"); return ImmutableList.copyOf(occupants);}
 
 	/**
 	 * Adds a new occupant to this square.
@@ -78,12 +61,9 @@ public abstract class Square {
 	 * @param occupant
 	 *            The unit to occupy this square.
 	 */
-	void put(Unit occupant) {
-		assert occupant != null;
-		assert !occupants.contains(occupant);
+	void put(Unit occupant) {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Square.java", "put"); assert occupant != null; assert !occupants.contains(occupant);
 		
-		occupants.add(occupant);
-	}
+		occupants.add(occupant);}
 
 	/**
 	 * Removes the unit from this square if it was present.
@@ -91,10 +71,7 @@ public abstract class Square {
 	 * @param occupant
 	 *            The unit to be removed from this square.
 	 */
-	void remove(Unit occupant) {
-		assert occupant != null;
-		occupants.remove(occupant);
-	}
+	void remove(Unit occupant) {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Square.java", "remove"); assert occupant != null; occupants.remove(occupant);}
 
 	/**
 	 * Verifies that all occupants on this square have indeed listed this square
@@ -103,14 +80,11 @@ public abstract class Square {
 	 * @return <code>true</code> iff all occupants of this square have this
 	 *         square listed as the square they are currently occupying.
 	 */
-	protected final boolean invariant() {
-		for (Unit occupant : occupants) {
+	protected final boolean invariant() {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Square.java", "invariant"); for (Unit occupant : occupants) {
 			if (occupant.getSquare() != this) {
 				return false;
 			}
-		}
-		return true;
-	}
+		} return true;}
 
 	/**
 	 * Determines whether the unit is allowed to occupy this square.

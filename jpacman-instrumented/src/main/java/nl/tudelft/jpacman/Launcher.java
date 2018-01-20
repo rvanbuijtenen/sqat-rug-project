@@ -1,6 +1,4 @@
-package nl.tudelft.jpacman;
-
-import java.awt.event.KeyEvent;
+package nl.tudelft.jpacman; import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -18,14 +16,7 @@ import nl.tudelft.jpacman.npc.ghost.GhostFactory;
 import nl.tudelft.jpacman.sprite.PacManSprites;
 import nl.tudelft.jpacman.ui.Action;
 import nl.tudelft.jpacman.ui.PacManUI;
-import nl.tudelft.jpacman.ui.PacManUiBuilder;
-
-/**
- * Creates and launches the JPacMan UI.
- * 
- * @author Jeroen Roosen 
- */
-@SuppressWarnings("PMD.TooManyMethods")
+import nl.tudelft.jpacman.ui.PacManUiBuilder; import nl.tudelft.jpacman.Api; @SuppressWarnings("PMD.TooManyMethods")
 public class Launcher {
 
 	private static final PacManSprites SPRITE_STORE = new PacManSprites();
@@ -40,38 +31,28 @@ public class Launcher {
 	 * @return The game object this launcher will start when {@link #launch()}
 	 *         is called.
 	 */
-	public Game getGame() {
-		return game;
-	}
+	public Game getGame() {Api.hit("/src/main/java/nl/tudelft/jpacman/Launcher.java", "getGame"); return game;}
 	
 	/**
 	 * The map file used to populate the level.
 	 * @return The name of the map file.
 	 */
-	protected String getLevelMap() {
-		return levelMap;
-	}
+	protected String getLevelMap() {Api.hit("/src/main/java/nl/tudelft/jpacman/Launcher.java", "getLevelMap"); return levelMap;}
 	
 	/**
 	 * Set the name of the file containing this level's map.
 	 * @param fileName Map to be used.
 	 * @return Level corresponding to the given map.
 	 */
-	public Launcher withMapFile(String fileName) {
-		levelMap = fileName;
-		return this;
-	}
+	public Launcher withMapFile(String fileName) {Api.hit("/src/main/java/nl/tudelft/jpacman/Launcher.java", "withMapFile"); levelMap = fileName; return this;}
 
 	/**
 	 * Creates a new game using the level from {@link #makeLevel()}.
 	 * 
 	 * @return a new Game.
 	 */
-	public Game makeGame() {
-		GameFactory gf = getGameFactory();
-		Level level = makeLevel();
-		return gf.createSinglePlayerGame(level);
-	}
+	public Game makeGame() {Api.hit("/src/main/java/nl/tudelft/jpacman/Launcher.java", "makeGame"); GameFactory gf = getGameFactory(); Level level = makeLevel();
+		return gf.createSinglePlayerGame(level);}
 
 	/**
 	 * Creates a new level. By default this method will use the map parser to
@@ -79,68 +60,51 @@ public class Launcher {
 	 * 
 	 * @return A new level.
 	 */
-	public Level makeLevel() {
-		MapParser parser = getMapParser();
-		try (InputStream boardStream = Launcher.class
+	public Level makeLevel() {Api.hit("/src/main/java/nl/tudelft/jpacman/Launcher.java", "makeLevel"); MapParser parser = getMapParser(); try (InputStream boardStream = Launcher.class
 				.getResourceAsStream(getLevelMap())) {
 			return parser.parseMap(boardStream);
 		} catch (IOException e) {
 			throw new PacmanConfigurationException("Unable to create level.", e);
-		}
-	}
+		}}
 	
 
 	/**
 	 * @return A new map parser object using the factories from
 	 *         {@link #getLevelFactory()} and {@link #getBoardFactory()}.
 	 */
-	protected MapParser getMapParser() {
-		return new MapParser(getLevelFactory(), getBoardFactory());
-	}
+	protected MapParser getMapParser() {Api.hit("/src/main/java/nl/tudelft/jpacman/Launcher.java", "getMapParser"); return new MapParser(getLevelFactory(), getBoardFactory());}
 
 	/**
 	 * @return A new board factory using the sprite store from
 	 *         {@link #getSpriteStore()}.
 	 */
-	protected BoardFactory getBoardFactory() {
-		return new BoardFactory(getSpriteStore());
-	}
+	protected BoardFactory getBoardFactory() {Api.hit("/src/main/java/nl/tudelft/jpacman/Launcher.java", "getBoardFactory"); return new BoardFactory(getSpriteStore());}
 
 	/**
 	 * @return The default {@link PacManSprites}.
 	 */
-	protected PacManSprites getSpriteStore() {
-		return SPRITE_STORE;
-	}
+	protected PacManSprites getSpriteStore() {Api.hit("/src/main/java/nl/tudelft/jpacman/Launcher.java", "getSpriteStore"); return SPRITE_STORE;}
 
 	/**
 	 * @return A new factory using the sprites from {@link #getSpriteStore()}
 	 *         and the ghosts from {@link #getGhostFactory()}.
 	 */
-	protected LevelFactory getLevelFactory() {
-		return new LevelFactory(getSpriteStore(), getGhostFactory());
-	}
+	protected LevelFactory getLevelFactory() {Api.hit("/src/main/java/nl/tudelft/jpacman/Launcher.java", "getLevelFactory"); return new LevelFactory(getSpriteStore(), getGhostFactory());}
 
 	/**
 	 * @return A new factory using the sprites from {@link #getSpriteStore()}.
 	 */
-	protected GhostFactory getGhostFactory() {
-		return new GhostFactory(getSpriteStore());
-	}
+	protected GhostFactory getGhostFactory() {Api.hit("/src/main/java/nl/tudelft/jpacman/Launcher.java", "getGhostFactory"); return new GhostFactory(getSpriteStore());}
 
 	/**
 	 * @return A new factory using the players from {@link #getPlayerFactory()}.
 	 */
-	protected GameFactory getGameFactory() {
-		return new GameFactory(getPlayerFactory());
-	}
+	protected GameFactory getGameFactory() {Api.hit("/src/main/java/nl/tudelft/jpacman/Launcher.java", "getGameFactory"); return new GameFactory(getPlayerFactory());}
 
 	/**
 	 * @return A new factory using the sprites from {@link #getSpriteStore()}.
 	 */
-	protected PlayerFactory getPlayerFactory() {
-		return new PlayerFactory(getSpriteStore());
-	}
+	protected PlayerFactory getPlayerFactory() {Api.hit("/src/main/java/nl/tudelft/jpacman/Launcher.java", "getPlayerFactory"); return new PlayerFactory(getSpriteStore());}
 
 	/**
 	 * Adds key events UP, DOWN, LEFT and RIGHT to a game.
@@ -151,62 +115,41 @@ public class Launcher {
 	 *            The game that will process the events.
 	 */
 	protected void addSinglePlayerKeys(final PacManUiBuilder builder,
-			final Game game) {
-		final Player p1 = getSinglePlayer(game);
-
-		builder.addKey(KeyEvent.VK_UP, new Action() {
+			final Game game) {Api.hit("/src/main/java/nl/tudelft/jpacman/Launcher.java", "doAction"); final Player p1 = getSinglePlayer(game); builder.addKey(KeyEvent.VK_UP, new Action() {
 
 			@Override
-			public void doAction() {
-				game.move(p1, Direction.NORTH);
-			}
+			public void doAction() {Api.hit("/src/main/java/nl/tudelft/jpacman/Launcher.java", "doAction"); game.move(p1, Direction.NORTH);}
 		}).addKey(KeyEvent.VK_DOWN, new Action() {
 
 			@Override
-			public void doAction() {
-				game.move(p1, Direction.SOUTH);
-			}
+			public void doAction() {Api.hit("/src/main/java/nl/tudelft/jpacman/Launcher.java", "doAction"); game.move(p1, Direction.SOUTH);}
 		}).addKey(KeyEvent.VK_LEFT, new Action() {
 
 			@Override
-			public void doAction() {
-				game.move(p1, Direction.WEST);
-			}
+			public void doAction() {Api.hit("/src/main/java/nl/tudelft/jpacman/Launcher.java", "doAction"); game.move(p1, Direction.WEST);}
 		}).addKey(KeyEvent.VK_RIGHT, new Action() {
 
 			@Override
-			public void doAction() {
-				game.move(p1, Direction.EAST);
-			}
-		});
+			public void doAction() {Api.hit("/src/main/java/nl/tudelft/jpacman/Launcher.java", "doAction"); game.move(p1, Direction.EAST);}
+		});}
 
-	}
-
-	private Player getSinglePlayer(final Game game) {
-		List<Player> players = game.getPlayers();
-		if (players.isEmpty()) {
+	private Player getSinglePlayer(final Game game) {Api.hit("/src/main/java/nl/tudelft/jpacman/Launcher.java", "getSinglePlayer"); List<Player> players = game.getPlayers(); if (players.isEmpty()) {
 			throw new IllegalArgumentException("Game has 0 players.");
 		}
-		return players.get(0);
-	}
+		return players.get(0);}
 
 	/**
 	 * Creates and starts a JPac-Man game.
 	 */
-	public void launch() {
-		game = makeGame();
-		PacManUiBuilder builder = new PacManUiBuilder().withDefaultButtons();
+	public void launch() {Api.hit("/src/main/java/nl/tudelft/jpacman/Launcher.java", "launch"); game = makeGame(); PacManUiBuilder builder = new PacManUiBuilder().withDefaultButtons();
 		addSinglePlayerKeys(builder, game);
 		pacManUI = builder.build(game);
-		pacManUI.start();
-	}
+		pacManUI.start();}
 
 	/**
 	 * Disposes of the UI. For more information see {@link javax.swing.JFrame#dispose()}.
 	 */
-	public void dispose() {
-		pacManUI.dispose();
-	}
+	public void dispose() {Api.hit("/src/main/java/nl/tudelft/jpacman/Launcher.java", "dispose"); pacManUI.dispose();}
 
 	/**
 	 * Main execution method for the Launcher.
@@ -216,7 +159,5 @@ public class Launcher {
 	 * @throws IOException
 	 *             When a resource could not be read.
 	 */
-	public static void main(String[] args) throws IOException {
-		new Launcher().launch();
-	}
+	public static void main(String[] args) throws IOException {Api.hit("/src/main/java/nl/tudelft/jpacman/Launcher.java", "main"); new Launcher().launch();}
 }

@@ -1,14 +1,5 @@
-package nl.tudelft.jpacman.level;
-
-import nl.tudelft.jpacman.board.Unit;
-import nl.tudelft.jpacman.sprite.Sprite;
-
-/**
- * A pellet, one of the little dots Pac-Man has to collect.
- * 
- * @author Jeroen Roosen 
- */
-public class Pellet extends Unit {
+package nl.tudelft.jpacman.level; import nl.tudelft.jpacman.board.Unit;
+import nl.tudelft.jpacman.sprite.Sprite; import nl.tudelft.jpacman.Api; public class Pellet extends Unit {
 
 	/**
 	 * The sprite of this unit.
@@ -34,12 +25,8 @@ public class Pellet extends Unit {
 	 * Returns the point value of this pellet.
 	 * @return The point value of this pellet.
 	 */
-	public int getValue() {
-		return value;
-	}
+	public int getValue() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Pellet.java", "getValue"); return value;}
 	
 	@Override
-	public Sprite getSprite() {
-		return image;
-	}
+	public Sprite getSprite() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Pellet.java", "getSprite"); return image;}
 }

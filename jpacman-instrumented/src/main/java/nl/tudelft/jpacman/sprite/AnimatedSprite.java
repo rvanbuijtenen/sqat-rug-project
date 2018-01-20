@@ -1,14 +1,4 @@
-package nl.tudelft.jpacman.sprite;
-
-import java.awt.Graphics;
-
-/**
- * Animated sprite, renders the frame depending on the time of requesting the
- * draw.
- * 
- * @author Jeroen Roosen 
- */
-public class AnimatedSprite implements Sprite {
+package nl.tudelft.jpacman.sprite; import java.awt.Graphics; import nl.tudelft.jpacman.Api; public class AnimatedSprite implements Sprite {
 
 	/**
 	 * Static empty sprite to serve as the end of a non-looping sprite.
@@ -88,14 +78,11 @@ public class AnimatedSprite implements Sprite {
 	/**
 	 * @return The frame of the current index.
 	 */
-	private Sprite currentSprite() {
-		Sprite result = END_OF_LOOP;
-		if (current < animationFrames.length) {
+	private Sprite currentSprite() {Api.hit("/src/main/java/nl/tudelft/jpacman/sprite/AnimatedSprite.java", "currentSprite"); Sprite result = END_OF_LOOP; if (current < animationFrames.length) {
 			result = animationFrames[current];
 		}
 		assert result != null;
-		return result;
-	}
+		return result;}
 
 	/**
 	 * Starts or stops the animation of this sprite.
@@ -104,37 +91,24 @@ public class AnimatedSprite implements Sprite {
 	 *            <code>true</code> to animate this sprite or <code>false</code>
 	 *            to stop animating this sprite.
 	 */
-	public void setAnimating(boolean isAnimating) {
-		this.animating = isAnimating;
-	}
+	public void setAnimating(boolean isAnimating) {Api.hit("/src/main/java/nl/tudelft/jpacman/sprite/AnimatedSprite.java", "setAnimating"); this.animating = isAnimating;}
 	
 	/**
 	 * (Re)starts the current animation.
 	 */
-	public void restart() {
-		this.current = 0;
-		this.lastUpdate = System.currentTimeMillis();
-		setAnimating(true);
-	}
+	public void restart() {Api.hit("/src/main/java/nl/tudelft/jpacman/sprite/AnimatedSprite.java", "restart"); this.current = 0; this.lastUpdate = System.currentTimeMillis();
+		setAnimating(true);}
 
 	@Override
-	public void draw(Graphics g, int x, int y, int width, int height) {
-		update();
-		currentSprite().draw(g, x, y, width, height);
-	}
+	public void draw(Graphics g, int x, int y, int width, int height) {Api.hit("/src/main/java/nl/tudelft/jpacman/sprite/AnimatedSprite.java", "draw"); update(); currentSprite().draw(g, x, y, width, height);}
 
 	@Override
-	public Sprite split(int x, int y, int width, int height) {
-		update();
-		return currentSprite().split(x, y, width, height);
-	}
+	public Sprite split(int x, int y, int width, int height) {Api.hit("/src/main/java/nl/tudelft/jpacman/sprite/AnimatedSprite.java", "split"); update(); return currentSprite().split(x, y, width, height);}
 
 	/**
 	 * Updates the current frame index depending on the current system time.
 	 */
-	private void update() {
-		long now = System.currentTimeMillis();
-		if (animating) {
+	private void update() {Api.hit("/src/main/java/nl/tudelft/jpacman/sprite/AnimatedSprite.java", "update"); long now = System.currentTimeMillis(); if (animating) {
 			while (lastUpdate < now) {
 				lastUpdate += animationDelay;
 				current++;
@@ -146,19 +120,12 @@ public class AnimatedSprite implements Sprite {
 			}
 		} else {
 			lastUpdate = now;
-		}
-	}
+		}}
 
 	@Override
-	public int getWidth() {
-		assert currentSprite() != null;
-		return currentSprite().getWidth();
-	}
+	public int getWidth() {Api.hit("/src/main/java/nl/tudelft/jpacman/sprite/AnimatedSprite.java", "getWidth"); assert currentSprite() != null; return currentSprite().getWidth();}
 
 	@Override
-	public int getHeight() {
-		assert currentSprite() != null;
-		return currentSprite().getHeight();
-	}
+	public int getHeight() {Api.hit("/src/main/java/nl/tudelft/jpacman/sprite/AnimatedSprite.java", "getHeight"); assert currentSprite() != null; return currentSprite().getHeight();}
 
 }

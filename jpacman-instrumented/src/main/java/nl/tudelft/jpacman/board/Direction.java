@@ -1,11 +1,4 @@
-package nl.tudelft.jpacman.board;
-
-/**
- * An enumeration of possible directions on a two-dimensional square grid.
- * 
- * @author Jeroen Roosen 
- */
-public enum Direction {
+package nl.tudelft.jpacman.board; import nl.tudelft.jpacman.Api; public enum Direction {
 
 	/**
 	 * North, or up.
@@ -58,15 +51,11 @@ public enum Direction {
 	 * @return The delta x (width difference) for a single step in this
 	 *         direction, in a matrix with 0,0 (x,y) as its top-left element.
 	 */
-	public int getDeltaX() {
-		return dx;
-	}
+	public int getDeltaX() {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Direction.java", "getDeltaX"); return dx;}
 
 	/**
 	 * @return The delta y (height difference) for a single step in this
 	 *         direction, in a matrix with 0,0 (x,y) as its top-left element.
 	 */
-	public int getDeltaY() {
-		return dy;
-	}
+	public int getDeltaY() {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Direction.java", "getDeltaY"); return dy;}
 }

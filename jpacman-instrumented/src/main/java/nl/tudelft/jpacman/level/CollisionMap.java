@@ -1,14 +1,4 @@
-package nl.tudelft.jpacman.level;
-
-import nl.tudelft.jpacman.board.Unit;
-
-/**
- * A table containing all (relevant) collisions between different types of
- * units.
- * 
- * @author Jeroen Roosen 
- */
-public interface CollisionMap {
+package nl.tudelft.jpacman.level; import nl.tudelft.jpacman.board.Unit; import nl.tudelft.jpacman.Api; public interface CollisionMap {
 
 	/**
 	 * Collides the two units and handles the result of the collision, which may

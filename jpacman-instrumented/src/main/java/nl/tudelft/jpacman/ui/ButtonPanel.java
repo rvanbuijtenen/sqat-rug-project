@@ -1,26 +1,10 @@
-package nl.tudelft.jpacman.ui;
-
-import java.awt.event.ActionEvent;
+package nl.tudelft.jpacman.ui; import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-/**
- * A panel containing a button for every registered action.
- * 
- 
- 
- 
- 
- 
- 
- 
- * @author Jeroen Roosen 
- */
-class ButtonPanel extends JPanel {
+import javax.swing.JPanel; import nl.tudelft.jpacman.Api; class ButtonPanel extends JPanel {
 	
 	/**
 	 * Default serialisation ID.
@@ -42,10 +26,7 @@ class ButtonPanel extends JPanel {
 			button.addActionListener(new ActionListener() {
 
 				@Override
-				public void actionPerformed(ActionEvent e) {
-					buttons.get(caption).doAction();
-					parent.requestFocusInWindow();
-				}
+				public void actionPerformed(ActionEvent e) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/ButtonPanel.java", "actionPerformed"); buttons.get(caption).doAction(); parent.requestFocusInWindow();}
 			});
 			add(button);
 		}

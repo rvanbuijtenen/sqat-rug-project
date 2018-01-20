@@ -1,18 +1,9 @@
-package nl.tudelft.jpacman.level;
-
-import java.util.Map;
+package nl.tudelft.jpacman.level; import java.util.Map;
 
 import nl.tudelft.jpacman.board.Direction;
 import nl.tudelft.jpacman.board.Unit;
 import nl.tudelft.jpacman.sprite.AnimatedSprite;
-import nl.tudelft.jpacman.sprite.Sprite;
-
-/**
- * A player operated unit in our game.
- * 
- * @author Jeroen Roosen 
- */
-public class Player extends Unit {
+import nl.tudelft.jpacman.sprite.Sprite; import nl.tudelft.jpacman.Api; public class Player extends Unit {
 
 	/**
 	 * The amount of points accumulated by this player.
@@ -55,9 +46,7 @@ public class Player extends Unit {
 	 * 
 	 * @return <code>true</code> iff the player is alive.
 	 */
-	public boolean isAlive() {
-		return alive;
-	}
+	public boolean isAlive() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Player.java", "isAlive"); return alive;}
 
 	/**
 	 * Sets whether this player is alive or not.
@@ -65,32 +54,24 @@ public class Player extends Unit {
 	 * @param isAlive
 	 *            <code>true</code> iff this player is alive.
 	 */
-	public void setAlive(boolean isAlive) {
-		if (isAlive) {
+	public void setAlive(boolean isAlive) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Player.java", "setAlive"); if (isAlive) {
 			deathSprite.setAnimating(false);
-		}
-		if (!isAlive) {
+		} if (!isAlive) {
 			deathSprite.restart();
 		}
-		this.alive = isAlive;
-	}
+		this.alive = isAlive;}
 
 	/**
 	 * Returns the amount of points accumulated by this player.
 	 * 
 	 * @return The amount of points accumulated by this player.
 	 */
-	public int getScore() {
-		return score;
-	}
+	public int getScore() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Player.java", "getScore"); return score;}
 
 	@Override
-	public Sprite getSprite() {
-		if (isAlive()) {
+	public Sprite getSprite() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Player.java", "getSprite"); if (isAlive()) {
 			return sprites.get(getDirection());
-		}
-		return deathSprite;
-	}
+		} return deathSprite;}
 
 	/**
 	 * Adds points to the score of this player.
@@ -99,7 +80,5 @@ public class Player extends Unit {
 	 *            The amount of points to add to the points this player already
 	 *            has.
 	 */
-	public void addPoints(int points) {
-		score += points;
-	}
+	public void addPoints(int points) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Player.java", "addPoints"); score += points;}
 }

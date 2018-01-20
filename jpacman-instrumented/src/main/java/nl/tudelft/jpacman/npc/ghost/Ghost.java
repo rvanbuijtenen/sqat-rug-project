@@ -1,6 +1,4 @@
-package nl.tudelft.jpacman.npc.ghost;
-
-import java.util.ArrayList;
+package nl.tudelft.jpacman.npc.ghost; import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -8,14 +6,7 @@ import java.util.Random;
 import nl.tudelft.jpacman.board.Direction;
 import nl.tudelft.jpacman.board.Square;
 import nl.tudelft.jpacman.npc.NPC;
-import nl.tudelft.jpacman.sprite.Sprite;
-
-/**
- * An antagonist in the game of Pac-Man, a ghost.
- * 
- * @author Jeroen Roosen 
- */
-public abstract class Ghost extends NPC {
+import nl.tudelft.jpacman.sprite.Sprite; import nl.tudelft.jpacman.Api; public abstract class Ghost extends NPC {
 	
 	/**
 	 * The sprite map, one sprite for each direction.
@@ -49,14 +40,10 @@ public abstract class Ghost extends NPC {
 	}
 
 	@Override
-	public Sprite getSprite() {
-		return sprites.get(getDirection());
-	}
+	public Sprite getSprite() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Ghost.java", "getSprite"); return sprites.get(getDirection());}
 
 	@Override
-	public long getInterval() {
-		return this.moveInterval + new Random().nextInt(this.intervalVariation);
-	}
+	public long getInterval() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Ghost.java", "getInterval"); return this.moveInterval + new Random().nextInt(this.intervalVariation);}
 
 	/**
 	 * Determines a possible move in a random direction.
@@ -64,9 +51,7 @@ public abstract class Ghost extends NPC {
 	 * @return A direction in which the ghost can move, or <code>null</code> if
 	 *         the ghost is shut in by inaccessible squares.
 	 */
-	protected Direction randomMove() {
-		Square square = getSquare();
-		List<Direction> directions = new ArrayList<>();
+	protected Direction randomMove() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Ghost.java", "randomMove"); Square square = getSquare(); List<Direction> directions = new ArrayList<>();
 		for (Direction d : Direction.values()) {
 			if (square.getSquareAt(d).isAccessibleTo(this)) {
 				directions.add(d);
@@ -76,6 +61,5 @@ public abstract class Ghost extends NPC {
 			return null;
 		}
 		int i = new Random().nextInt(directions.size());
-		return directions.get(i);
-	}
+		return directions.get(i);}
 }

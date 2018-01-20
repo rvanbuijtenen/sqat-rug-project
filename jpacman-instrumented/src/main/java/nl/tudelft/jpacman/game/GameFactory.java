@@ -1,14 +1,5 @@
-package nl.tudelft.jpacman.game;
-
-import nl.tudelft.jpacman.level.Level;
-import nl.tudelft.jpacman.level.PlayerFactory;
-
-/**
- * Factory that provides Game objects.
- * 
- * @author Jeroen Roosen 
- */
-public class GameFactory {
+package nl.tudelft.jpacman.game; import nl.tudelft.jpacman.level.Level;
+import nl.tudelft.jpacman.level.PlayerFactory; import nl.tudelft.jpacman.Api; public class GameFactory {
 
 	/**
 	 * The factory providing the player objects.
@@ -32,15 +23,11 @@ public class GameFactory {
 	 *            The level to create a game for.
 	 * @return A new single player game.
 	 */
-	public Game createSinglePlayerGame(Level level) {
-		return new SinglePlayerGame(playerFact.createPacMan(), level);
-	}
+	public Game createSinglePlayerGame(Level level) {Api.hit("/src/main/java/nl/tudelft/jpacman/game/GameFactory.java", "createSinglePlayerGame"); return new SinglePlayerGame(playerFact.createPacMan(), level);}
 
 	/**
 	 * Returns the player factory associated with this game factory.
 	 * @return the player factory associated with this game factory.
 	 */
-	protected PlayerFactory getPlayerFactory() {
-		return playerFact;
-	}
+	protected PlayerFactory getPlayerFactory() {Api.hit("/src/main/java/nl/tudelft/jpacman/game/GameFactory.java", "getPlayerFactory"); return playerFact;}
 }

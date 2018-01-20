@@ -1,6 +1,4 @@
-package nl.tudelft.jpacman.ui;
-
-import java.awt.Color;
+package nl.tudelft.jpacman.ui; import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
@@ -9,15 +7,7 @@ import javax.swing.JPanel;
 import nl.tudelft.jpacman.board.Board;
 import nl.tudelft.jpacman.board.Square;
 import nl.tudelft.jpacman.board.Unit;
-import nl.tudelft.jpacman.game.Game;
-
-/**
- * Panel displaying a game.
- * 
- * @author Jeroen Roosen 
- * 
- */
-class BoardPanel extends JPanel {
+import nl.tudelft.jpacman.game.Game; import nl.tudelft.jpacman.Api; class BoardPanel extends JPanel {
 
 	/**
 	 * Default serialisation ID.
@@ -62,10 +52,7 @@ class BoardPanel extends JPanel {
 	}
 
 	@Override
-	public void paint(Graphics g) {
-		assert g != null;
-		render(game.getLevel().getBoard(), g, getSize());
-	}
+	public void paint(Graphics g) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/BoardPanel.java", "paint"); assert g != null; render(game.getLevel().getBoard(), g, getSize());}
 
 	/**
 	 * Renders the board on the given graphics context to the given dimensions.
@@ -77,9 +64,7 @@ class BoardPanel extends JPanel {
 	 * @param window
 	 *            The dimensions to scale the rendered board to.
 	 */
-	private void render(Board board, Graphics g, Dimension window) {
-		int cellW = window.width / board.getWidth();
-		int cellH = window.height / board.getHeight();
+	private void render(Board board, Graphics g, Dimension window) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/BoardPanel.java", "render"); int cellW = window.width / board.getWidth(); int cellH = window.height / board.getHeight();
 
 		g.setColor(BACKGROUND_COLOR);
 		g.fillRect(0, 0, window.width, window.height);
@@ -91,8 +76,7 @@ class BoardPanel extends JPanel {
 				Square square = board.squareAt(x, y);
 				render(square, g, cellX, cellY, cellW, cellH);
 			}
-		}
-	}
+		}}
 
 	/**
 	 * Renders a single square on the given graphics context on the specified
@@ -111,10 +95,7 @@ class BoardPanel extends JPanel {
 	 * @param h
 	 *            The height of this square (in pixels.)
 	 */
-	private void render(Square square, Graphics g, int x, int y, int w, int h) {
-		square.getSprite().draw(g, x, y, w, h);
-		for (Unit unit : square.getOccupants()) {
+	private void render(Square square, Graphics g, int x, int y, int w, int h) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/BoardPanel.java", "render"); square.getSprite().draw(g, x, y, w, h); for (Unit unit : square.getOccupants()) {
 			unit.getSprite().draw(g, x, y, w, h);
-		}
-	}
+		}}
 }

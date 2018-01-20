@@ -1,6 +1,4 @@
-package nl.tudelft.jpacman.ui;
-
-import java.awt.GridLayout;
+package nl.tudelft.jpacman.ui; import java.awt.GridLayout;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,16 +6,7 @@ import java.util.Map;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import nl.tudelft.jpacman.level.Player;
-
-/**
- * A panel consisting of a column for each player, with the numbered players on
- * top and their respective scores underneath.
- * 
- * @author Jeroen Roosen 
- * 
- */
-public class ScorePanel extends JPanel {
+import nl.tudelft.jpacman.level.Player; import nl.tudelft.jpacman.Api; public class ScorePanel extends JPanel {
 
 	/**
 	 * Default serialisation ID.
@@ -36,9 +25,7 @@ public class ScorePanel extends JPanel {
 			// this lambda breaks cobertura 2.7 ...
 			// player) -> String.format("Score: %3d", player.getScore());
 			new ScoreFormatter() {
-				public String format(Player p) {
-					return String.format("Score: %3d", p.getScore());
-				}
+				public String format(Player p) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/ScorePanel.java", "format"); return String.format("Score: %3d", p.getScore());}
 			};
 
 	/**
@@ -72,8 +59,7 @@ public class ScorePanel extends JPanel {
 	/**
 	 * Refreshes the scores of the players.
 	 */
-	protected void refresh() {
-		for (Map.Entry<Player, JLabel> entry : scoreLabels.entrySet()) {
+	protected void refresh() {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/ScorePanel.java", "refresh"); for (Map.Entry<Player, JLabel> entry : scoreLabels.entrySet()) {
 			Player p = entry.getKey();
 			String score = "";
 			if (!p.isAlive()) {
@@ -81,8 +67,7 @@ public class ScorePanel extends JPanel {
 			}
 			score += scoreFormatter.format(p);
 			entry.getValue().setText(score);
-		}
-	}
+		}}
 	
 	/**
 	 * Provide means to format the score for a given player.
@@ -101,8 +86,5 @@ public class ScorePanel extends JPanel {
 	 * Let the score panel use a dedicated score formatter.
 	 * @param sf Score formatter to be used.
 	 */
-	public void setScoreFormatter(ScoreFormatter sf) {
-		assert sf != null;
-		scoreFormatter = sf;
-	}
+	public void setScoreFormatter(ScoreFormatter sf) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/ScorePanel.java", "setScoreFormatter"); assert sf != null; scoreFormatter = sf;}
 }

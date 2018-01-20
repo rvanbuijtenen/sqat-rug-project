@@ -1,13 +1,4 @@
-package nl.tudelft.jpacman.npc.ghost;
-
-import nl.tudelft.jpacman.sprite.PacManSprites;
-
-/**
- * Factory that creates ghosts.
- * 
- * @author Jeroen Roosen 
- */
-public class GhostFactory {
+package nl.tudelft.jpacman.npc.ghost; import nl.tudelft.jpacman.sprite.PacManSprites; import nl.tudelft.jpacman.Api; public class GhostFactory {
 
 	/**
 	 * The sprite store containing the ghost sprites.
@@ -29,9 +20,7 @@ public class GhostFactory {
 	 * @see Blinky
 	 * @return A new Blinky.
 	 */
-	public Ghost createBlinky() {
-		return new Blinky(sprites.getGhostSprite(GhostColor.RED));
-	}
+	public Ghost createBlinky() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/GhostFactory.java", "createBlinky"); return new Blinky(sprites.getGhostSprite(GhostColor.RED));}
 
 	/**
 	 * Creates a new Pinky / Speedy, the pink Ghost.
@@ -39,9 +28,7 @@ public class GhostFactory {
 	 * @see Pinky
 	 * @return A new Pinky.
 	 */
-	public Ghost createPinky() {
-		return new Pinky(sprites.getGhostSprite(GhostColor.PINK));
-	}
+	public Ghost createPinky() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/GhostFactory.java", "createPinky"); return new Pinky(sprites.getGhostSprite(GhostColor.PINK));}
 
 	/**
 	 * Creates a new Inky / Bashful, the cyan Ghost.
@@ -49,9 +36,7 @@ public class GhostFactory {
 	 * @see Inky
 	 * @return A new Inky.
 	 */
-	public Ghost createInky() {
-		return new Inky(sprites.getGhostSprite(GhostColor.CYAN));
-	}
+	public Ghost createInky() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/GhostFactory.java", "createInky"); return new Inky(sprites.getGhostSprite(GhostColor.CYAN));}
 
 	/**
 	 * Creates a new Clyde / Pokey, the orange Ghost.
@@ -59,7 +44,5 @@ public class GhostFactory {
 	 * @see Clyde
 	 * @return A new Clyde.
 	 */
-	public Ghost createClyde() {
-		return new Clyde(sprites.getGhostSprite(GhostColor.ORANGE));
-	}
+	public Ghost createClyde() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/GhostFactory.java", "createClyde"); return new Clyde(sprites.getGhostSprite(GhostColor.ORANGE));}
 }

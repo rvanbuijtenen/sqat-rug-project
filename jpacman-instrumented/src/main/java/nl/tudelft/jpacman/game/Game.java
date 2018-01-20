@@ -1,18 +1,9 @@
-package nl.tudelft.jpacman.game;
-
-import java.util.List;
+package nl.tudelft.jpacman.game; import java.util.List;
 
 import nl.tudelft.jpacman.board.Direction;
 import nl.tudelft.jpacman.level.Level;
 import nl.tudelft.jpacman.level.Level.LevelObserver;
-import nl.tudelft.jpacman.level.Player;
-
-/**
- * A basic implementation of a Pac-Man game.
- * 
- * @author Jeroen Roosen 
- */
-public abstract class Game implements LevelObserver {
+import nl.tudelft.jpacman.level.Player; import nl.tudelft.jpacman.Api; public abstract class Game implements LevelObserver {
 
 	/**
 	 * <code>true</code> if the game is in progress.
@@ -34,8 +25,7 @@ public abstract class Game implements LevelObserver {
 	/**
 	 * Starts or resumes the game.
 	 */
-	public void start() {
-		synchronized (progressLock) {
+	public void start() {Api.hit("/src/main/java/nl/tudelft/jpacman/game/Game.java", "start"); synchronized (progressLock) {
 			if (isInProgress()) {
 				return;
 			}
@@ -45,28 +35,23 @@ public abstract class Game implements LevelObserver {
 				getLevel().addObserver(this);
 				getLevel().start();
 			}
-		}
-	}
+		}}
 
 	/**
 	 * Pauses the game.
 	 */
-	public void stop() {
-		synchronized (progressLock) {
+	public void stop() {Api.hit("/src/main/java/nl/tudelft/jpacman/game/Game.java", "stop"); synchronized (progressLock) {
 			if (!isInProgress()) {
 				return;
 			}
 			inProgress = false;
 			getLevel().stop();
-		}
-	}
+		}}
 
 	/**
 	 * @return <code>true</code> iff the game is started and in progress.
 	 */
-	public boolean isInProgress() {
-		return inProgress;
-	}
+	public boolean isInProgress() {Api.hit("/src/main/java/nl/tudelft/jpacman/game/Game.java", "isInProgress"); return inProgress;}
 
 	/**
 	 * @return An immutable list of the participants of this game.
@@ -86,20 +71,14 @@ public abstract class Game implements LevelObserver {
 	 * @param direction
 	 *            The direction to move in.
 	 */
-	public void move(Player player, Direction direction) {
-		if (isInProgress()) {
+	public void move(Player player, Direction direction) {Api.hit("/src/main/java/nl/tudelft/jpacman/game/Game.java", "move"); if (isInProgress()) {
 			// execute player move.
 			getLevel().move(player, direction);
-		}
-	}
+		}}
 	
 	@Override
-	public void levelWon() {
-		stop();
-	}
+	public void levelWon() {Api.hit("/src/main/java/nl/tudelft/jpacman/game/Game.java", "levelWon"); stop();}
 	
 	@Override
-	public void levelLost() {
-		stop();
-	}
+	public void levelLost() {Api.hit("/src/main/java/nl/tudelft/jpacman/game/Game.java", "levelLost"); stop();}
 }

@@ -1,6 +1,4 @@
-package nl.tudelft.jpacman.level;
-
-import java.io.BufferedReader;
+package nl.tudelft.jpacman.level; import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -11,14 +9,7 @@ import nl.tudelft.jpacman.PacmanConfigurationException;
 import nl.tudelft.jpacman.board.Board;
 import nl.tudelft.jpacman.board.BoardFactory;
 import nl.tudelft.jpacman.board.Square;
-import nl.tudelft.jpacman.npc.NPC;
-
-/**
- * Creates new {@link Level}s from text representations.
- * 
- * @author Jeroen Roosen 
- */
-public class MapParser {
+import nl.tudelft.jpacman.npc.NPC; import nl.tudelft.jpacman.Api; public class MapParser {
 
 	/**
 	 * The factory that creates the levels.
@@ -60,9 +51,7 @@ public class MapParser {
 	 *            representing the square at position x,y.
 	 * @return The level as represented by this text.
 	 */
-	public Level parseMap(char[][] map) {
-		int width = map.length;
-		int height = map[0].length;
+	public Level parseMap(char[][] map) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/MapParser.java", "parseMap"); int width = map.length; int height = map[0].length;
 
 		Square[][] grid = new Square[width][height];
 
@@ -72,22 +61,18 @@ public class MapParser {
 		makeGrid(map, width, height, grid, ghosts, startPositions);
 		
 		Board board = boardCreator.createBoard(grid);
-		return levelCreator.createLevel(board, ghosts, startPositions);
-	}
+		return levelCreator.createLevel(board, ghosts, startPositions);}
 
 	private void makeGrid(char[][] map, int width, int height,
-			Square[][] grid, List<NPC> ghosts, List<Square> startPositions) {
-		for (int x = 0; x < width; x++) {
+			Square[][] grid, List<NPC> ghosts, List<Square> startPositions) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/MapParser.java", "makeGrid"); for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
 				char c = map[x][y];
 				addSquare(grid, ghosts, startPositions, x, y, c);
 			}
-		}
-	}
+		}}
 
 	private void addSquare(Square[][] grid, List<NPC> ghosts,
-			List<Square> startPositions, int x, int y, char c) {
-		switch (c) {
+			List<Square> startPositions, int x, int y, char c) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/MapParser.java", "addSquare"); switch (c) {
 		case ' ':
 			grid[x][y] = boardCreator.createGround();
 			break;
@@ -111,16 +96,12 @@ public class MapParser {
 		default:
 			throw new PacmanConfigurationException("Invalid character at "
 					+ x + "," + y + ": " + c);
-		}
-	}
+		}}
 
-	private Square makeGhostSquare(List<NPC> ghosts) {
-		Square ghostSquare = boardCreator.createGround();
-		NPC ghost = levelCreator.createGhost();
+	private Square makeGhostSquare(List<NPC> ghosts) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/MapParser.java", "makeGhostSquare"); Square ghostSquare = boardCreator.createGround(); NPC ghost = levelCreator.createGhost();
 		ghosts.add(ghost);
 		ghost.occupy(ghostSquare);
-		return ghostSquare;
-	}
+		return ghostSquare;}
 
 	/**
 	 * Parses the list of strings into a 2-dimensional character array and
@@ -133,11 +114,7 @@ public class MapParser {
 	 * @return The level as represented by the text.
 	 * @throws PacmanConfigurationException If text lines are not properly formatted.
 	 */
-	public Level parseMap(List<String> text) {
-		
-		checkMapFormat(text);
-
-		int height = text.size();
+	public Level parseMap(List<String> text) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/MapParser.java", "parseMap"); checkMapFormat(text); int height = text.size();
 		int width = text.get(0).length();
 
 		char[][] map = new char[width][height];
@@ -146,21 +123,17 @@ public class MapParser {
 				map[x][y] = text.get(y).charAt(x);
 			}
 		}
-		return parseMap(map);
-	}
+		return parseMap(map);}
 	
 	/**
 	 * Check the correctness of the map lines in the text.
 	 * @param text Map to be checked
 	 * @throws PacmanConfigurationException if map is not OK.
 	 */
-	private void checkMapFormat(List<String> text) {	
-		if (text == null) {
+	private void checkMapFormat(List<String> text) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/MapParser.java", "checkMapFormat"); if (text == null) {
 			throw new PacmanConfigurationException(
 					"Input text cannot be null.");
-		}
-
-		if (text.isEmpty()) {
+		} if (text.isEmpty()) {
 			throw new PacmanConfigurationException(
 					"Input text must consist of at least 1 row.");
 		}
@@ -177,8 +150,7 @@ public class MapParser {
 				throw new PacmanConfigurationException(
 					"Input text lines are not of equal width.");
 			}
-		}		
-	}
+		}}
 
 	/**
 	 * Parses the provided input stream as a character stream and passes it
@@ -190,14 +162,12 @@ public class MapParser {
 	 * @throws IOException
 	 *             when the source could not be read.
 	 */
-	public Level parseMap(InputStream source) throws IOException {
-		try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+	public Level parseMap(InputStream source) throws IOException {Api.hit("/src/main/java/nl/tudelft/jpacman/level/MapParser.java", "parseMap"); try (BufferedReader reader = new BufferedReader(new InputStreamReader(
 				source, "UTF-8"))) {
 			List<String> lines = new ArrayList<>();
 			while (reader.ready()) {
 				lines.add(reader.readLine());
 			}
 			return parseMap(lines);
-		}
-	}
+		}}
 }

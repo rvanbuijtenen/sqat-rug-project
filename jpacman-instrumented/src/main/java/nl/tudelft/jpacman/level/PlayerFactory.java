@@ -1,13 +1,4 @@
-package nl.tudelft.jpacman.level;
-
-import nl.tudelft.jpacman.sprite.PacManSprites;
-
-/**
- * Factory that creates Players.
- * 
- * @author Jeroen Roosen 
- */
-public class PlayerFactory {
+package nl.tudelft.jpacman.level; import nl.tudelft.jpacman.sprite.PacManSprites; import nl.tudelft.jpacman.Api; public class PlayerFactory {
 
 	/**
 	 * The sprite store containing the Pac-Man sprites.
@@ -29,17 +20,13 @@ public class PlayerFactory {
 	 * 
 	 * @return A new player.
 	 */
-	public Player createPacMan() {
-		return new Player(getSprites().getPacmanSprites(),
-				getSprites().getPacManDeathAnimation());
-	}
+	public Player createPacMan() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/PlayerFactory.java", "createPacMan"); return new Player(getSprites().getPacmanSprites(),
+				getSprites().getPacManDeathAnimation());}
 
 	/**
 	 * The sprites created by the factory.
 	 * 
 	 * @return The sprites for the player created.
 	 */
-	protected PacManSprites getSprites() {
-		return sprites;
-	}
+	protected PacManSprites getSprites() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/PlayerFactory.java", "getSprites"); return sprites;}
 }

@@ -1,18 +1,9 @@
-package nl.tudelft.jpacman.game;
-
-import java.util.List;
+package nl.tudelft.jpacman.game; import java.util.List;
 
 import nl.tudelft.jpacman.level.Level;
 import nl.tudelft.jpacman.level.Player;
 
-import com.google.common.collect.ImmutableList;
-
-/**
- * A game with one player and a single level.
- * 
- * @author Jeroen Roosen 
- */
-public class SinglePlayerGame extends Game {
+import com.google.common.collect.ImmutableList; import nl.tudelft.jpacman.Api; public class SinglePlayerGame extends Game {
 
 	/**
 	 * The player of this game.
@@ -42,12 +33,8 @@ public class SinglePlayerGame extends Game {
 	}
 
 	@Override
-	public List<Player> getPlayers() {
-		return ImmutableList.of(player);
-	}
+	public List<Player> getPlayers() {Api.hit("/src/main/java/nl/tudelft/jpacman/game/SinglePlayerGame.java", "getPlayers"); return ImmutableList.of(player);}
 
 	@Override
-	public Level getLevel() {
-		return level;
-	}
+	public Level getLevel() {Api.hit("/src/main/java/nl/tudelft/jpacman/game/SinglePlayerGame.java", "getLevel"); return level;}
 }

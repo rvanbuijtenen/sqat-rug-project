@@ -66,9 +66,46 @@ set[Message] eval((Dicto)`<Rule* rules>`, M3 m3)
   
 set[Message] eval(Rule rule, M3 m3) {
   set[Message] msgs = {};
-  
+	  switch(rule) {
+	  case (Rule)`<Entity e1> cannot import <Entity e2>`: {
+		if(!validateCannotImport(e1, e2, m3)) {
+			msgs.add("test");
+		}
+	  }
+	  case (Rule)`<Entity e1> cannot inherit <Entity e2>`: {
+		if(!validateCannotInherit(e1, e2, m3)) {
+			msgs.add("test2");
+		}
+	  }
+	  case (Rule)`<Entity e1> must inherit <Entity e2>`: {
+	  	if(!validateMustInherit(e1, e2)) {
+	  		msgs.add("test3");
+	  	}
+	  }
+  }
   // to be done
   
   return msgs;
 }
+
+bool validateCannotImport(Entity e1, Entity e2, M3 m3) {
+	println(e1);
+	println(e2);
+	println(m3);
+	return true;
+}
+
+
+
+bool validateCannotInherit(Entity e1, Entity e2, M3 m3) {
+	// class cannot inherit class
+	return true;
+}
+
+bool validateMustInherit(Entity e1, Entity e2, M3 m3) {
+	// class must inherit class
+	return true;
+}
+
+
 

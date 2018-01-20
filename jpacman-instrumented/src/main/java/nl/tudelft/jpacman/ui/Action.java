@@ -1,11 +1,4 @@
-package nl.tudelft.jpacman.ui;
-
-/**
- * An action that can be executed.
- * 
- * @author Jeroen Roosen 
- */
-public interface Action {
+package nl.tudelft.jpacman.ui; import nl.tudelft.jpacman.Api; public interface Action {
 
 	/**
 	 * Executes the action.

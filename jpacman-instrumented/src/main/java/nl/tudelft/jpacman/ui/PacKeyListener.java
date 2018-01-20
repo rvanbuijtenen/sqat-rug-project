@@ -1,15 +1,6 @@
-package nl.tudelft.jpacman.ui;
-
-import java.awt.event.KeyEvent;
+package nl.tudelft.jpacman.ui; import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Map;
-
-/**
- * A key listener based on a set of keyCode-action pairs.
- * 
- * @author Jeroen Roosen 
- */
-class PacKeyListener implements KeyListener {
+import java.util.Map; import nl.tudelft.jpacman.Api; class PacKeyListener implements KeyListener {
 
 	/**
 	 * The mappings of keyCode to action.
@@ -26,21 +17,14 @@ class PacKeyListener implements KeyListener {
 	}
 	
 	@Override
-	public void keyPressed(KeyEvent e) {
-		assert e != null;
-		Action action = mappings.get(e.getKeyCode());
+	public void keyPressed(KeyEvent e) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacKeyListener.java", "keyPressed"); assert e != null; Action action = mappings.get(e.getKeyCode());
 		if (action != null) {
 			action.doAction();
-		}
-	}
+		}}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-		// do nothing
-	}
+	public void keyTyped(KeyEvent e) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacKeyListener.java", "keyTyped");}
 	
 	@Override
-	public void keyReleased(KeyEvent e) {
-		// do nothing
-	}
+	public void keyReleased(KeyEvent e) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacKeyListener.java", "keyReleased");}
 }

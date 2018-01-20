@@ -1,6 +1,4 @@
-package nl.tudelft.jpacman.ui;
-
-import java.awt.BorderLayout;
+package nl.tudelft.jpacman.ui; import java.awt.BorderLayout;
 import java.awt.Container;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -11,23 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import nl.tudelft.jpacman.game.Game;
-import nl.tudelft.jpacman.ui.ScorePanel.ScoreFormatter;
-
-/**
- * The default JPacMan UI frame. The PacManUI consists of the following
- * elements:
- * 
- * <ul>
- * <li>A score panel at the top, displaying the score of the player(s).
- * <li>A board panel, displaying the current level, i.e. the board and all units
- * on it.
- * <li>A button panel, containing all buttons provided upon creation.
- * </ul>
- * 
- * @author Jeroen Roosen 
- * 
- */
-public class PacManUI extends JFrame {
+import nl.tudelft.jpacman.ui.ScorePanel.ScoreFormatter; import nl.tudelft.jpacman.Api; public class PacManUI extends JFrame {
 
 	/**
 	 * Default serialisation UID.
@@ -98,27 +80,17 @@ public class PacManUI extends JFrame {
 	 * Starts the "engine", the thread that redraws the interface at set
 	 * intervals.
 	 */
-	public void start() {
-		setVisible(true);
-
-		ScheduledExecutorService service = Executors
+	public void start() {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUI.java", "run"); setVisible(true); ScheduledExecutorService service = Executors
 				.newSingleThreadScheduledExecutor();
 
 		service.scheduleAtFixedRate(new Runnable() {
 
 			@Override
-			public void run() {
-				nextFrame();
-			}
-		}, 0, FRAME_INTERVAL, TimeUnit.MILLISECONDS);
-
-	}
+			public void run() {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUI.java", "run"); nextFrame();}
+		}, 0, FRAME_INTERVAL, TimeUnit.MILLISECONDS);}
 
 	/**
 	 * Draws the next frame, i.e. refreshes the scores and game.
 	 */
-	private void nextFrame() {
-		boardPanel.repaint();
-		scorePanel.refresh();
-	}
+	private void nextFrame() {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUI.java", "nextFrame"); boardPanel.repaint(); scorePanel.refresh();}
 }

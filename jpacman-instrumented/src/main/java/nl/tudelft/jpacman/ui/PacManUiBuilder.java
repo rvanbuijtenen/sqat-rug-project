@@ -1,18 +1,9 @@
-package nl.tudelft.jpacman.ui;
-
-import java.util.HashMap;
+package nl.tudelft.jpacman.ui; import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import nl.tudelft.jpacman.game.Game;
-import nl.tudelft.jpacman.ui.ScorePanel.ScoreFormatter;
-
-/**
- * Builder for the JPac-Man UI.
- * 
- * @author Jeroen Roosen 
- */
-public class PacManUiBuilder {
+import nl.tudelft.jpacman.ui.ScorePanel.ScoreFormatter; import nl.tudelft.jpacman.Api; public class PacManUiBuilder {
 
 	/**
 	 * Caption for the default stop button.
@@ -60,15 +51,11 @@ public class PacManUiBuilder {
 	 *            The game to build the UI for.
 	 * @return A new Pac-Man UI with the set keys and buttons.
 	 */
-	public PacManUI build(final Game game) {
-		assert game != null;
-
-		if (defaultButtons) {
+	public PacManUI build(final Game game) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "build"); assert game != null; if (defaultButtons) {
 			addStartButton(game);
 			addStopButton(game);
 		}
-		return new PacManUI(game, buttons, keyMappings, scoreFormatter);
-	}
+		return new PacManUI(game, buttons, keyMappings, scoreFormatter);}
 
 	/**
 	 * Adds a button with the caption {@value #STOP_CAPTION} that stops the
@@ -77,16 +64,10 @@ public class PacManUiBuilder {
 	 * @param game
 	 *            The game to stop.
 	 */
-	private void addStopButton(final Game game) {
-		assert game != null;
-
-		buttons.put(STOP_CAPTION, new Action() {
+	private void addStopButton(final Game game) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "doAction"); assert game != null; buttons.put(STOP_CAPTION, new Action() {
 			@Override
-			public void doAction() {
-				game.stop();
-			}
-		});
-	}
+			public void doAction() {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "doAction"); game.stop();}
+		});}
 
 	/**
 	 * Adds a button with the caption {@value #START_CAPTION} that starts the
@@ -95,16 +76,10 @@ public class PacManUiBuilder {
 	 * @param game
 	 *            The game to start.
 	 */
-	private void addStartButton(final Game game) {
-		assert game != null;
-
-		buttons.put(START_CAPTION, new Action() {
+	private void addStartButton(final Game game) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "doAction"); assert game != null; buttons.put(START_CAPTION, new Action() {
 			@Override
-			public void doAction() {
-				game.start();
-			}
-		});
-	}
+			public void doAction() {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "doAction"); game.start();}
+		});}
 
 	/**
 	 * Adds a key listener to the UI.
@@ -115,13 +90,10 @@ public class PacManUiBuilder {
 	 *            The action to perform when the key is pressed.
 	 * @return The builder.
 	 */
-	public PacManUiBuilder addKey(Integer keyCode, Action action) {
-		assert keyCode != null;
-		assert action != null;
+	public PacManUiBuilder addKey(Integer keyCode, Action action) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "addKey"); assert keyCode != null; assert action != null;
 
 		keyMappings.put(keyCode, action);
-		return this;
-	}
+		return this;}
 
 	/**
 	 * Adds a button to the UI.
@@ -132,14 +104,11 @@ public class PacManUiBuilder {
 	 *            The action to execute when the button is clicked.
 	 * @return The builder.
 	 */
-	public PacManUiBuilder addButton(String caption, Action action) {
-		assert caption != null;
-		assert !caption.isEmpty();
+	public PacManUiBuilder addButton(String caption, Action action) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "addButton"); assert caption != null; assert !caption.isEmpty();
 		assert action != null;
 
 		buttons.put(caption, action);
-		return this;
-	}
+		return this;}
 
 	/**
 	 * Adds a start and stop button to the UI. The actual actions for these
@@ -147,12 +116,9 @@ public class PacManUiBuilder {
 	 * 
 	 * @return The builder.
 	 */
-	public PacManUiBuilder withDefaultButtons() {
-		defaultButtons = true;
-		buttons.put(START_CAPTION, null);
+	public PacManUiBuilder withDefaultButtons() {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "withDefaultButtons"); defaultButtons = true; buttons.put(START_CAPTION, null);
 		buttons.put(STOP_CAPTION, null);
-		return this;
-	}
+		return this;}
 	
 	/**
 	 * Provide formatter for the score.
@@ -162,8 +128,5 @@ public class PacManUiBuilder {
 	 * 
 	 * @return The builder.
 	 */
-	public PacManUiBuilder withScoreFormatter(ScoreFormatter sf) {
-		scoreFormatter = sf;
-		return this;
-	}
+	public PacManUiBuilder withScoreFormatter(ScoreFormatter sf) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "withScoreFormatter"); scoreFormatter = sf; return this;}
 }

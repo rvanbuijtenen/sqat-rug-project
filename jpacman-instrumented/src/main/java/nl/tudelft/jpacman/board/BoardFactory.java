@@ -1,15 +1,5 @@
-package nl.tudelft.jpacman.board;
-
-import nl.tudelft.jpacman.sprite.PacManSprites;
-import nl.tudelft.jpacman.sprite.Sprite;
-
-/**
- * A factory that creates {@link Board} objects from 2-dimensional arrays of
- * {@link Square}s.
- * 
- * @author Jeroen Roosen 
- */
-public class BoardFactory {
+package nl.tudelft.jpacman.board; import nl.tudelft.jpacman.sprite.PacManSprites;
+import nl.tudelft.jpacman.sprite.Sprite; import nl.tudelft.jpacman.Api; public class BoardFactory {
 
 	/**
 	 * The sprite store providing the sprites for the background.
@@ -35,10 +25,7 @@ public class BoardFactory {
 	 *            the square at position x,y.
 	 * @return A new board, wrapping a grid of connected cells.
 	 */
-	public Board createBoard(Square[][] grid) {
-		assert grid != null;
-
-		Board board = new Board(grid);
+	public Board createBoard(Square[][] grid) {Api.hit("/src/main/java/nl/tudelft/jpacman/board/BoardFactory.java", "createBoard"); assert grid != null; Board board = new Board(grid);
 
 		int width = board.getWidth();
 		int height = board.getHeight();
@@ -54,26 +41,21 @@ public class BoardFactory {
 			}
 		}
 
-		return board;
-	}
+		return board;}
 
 	/**
 	 * Creates a new square that can be occupied by any unit.
 	 * 
 	 * @return A new square that can be occupied by any unit.
 	 */
-	public Square createGround() {
-		return new Ground(sprites.getGroundSprite());
-	}
+	public Square createGround() {Api.hit("/src/main/java/nl/tudelft/jpacman/board/BoardFactory.java", "createGround"); return new Ground(sprites.getGroundSprite());}
 
 	/**
 	 * Creates a new square that cannot be occupied by any unit.
 	 * 
 	 * @return A new square that cannot be occupied by any unit.
 	 */
-	public Square createWall() {
-		return new Wall(sprites.getWallSprite());
-	}
+	public Square createWall() {Api.hit("/src/main/java/nl/tudelft/jpacman/board/BoardFactory.java", "createWall"); return new Wall(sprites.getWallSprite());}
 
 	/**
 	 * A wall is a square that is inaccessible to anyone.
@@ -98,14 +80,10 @@ public class BoardFactory {
 		}
 
 		@Override
-		public boolean isAccessibleTo(Unit unit) {
-			return false;
-		}
+		public boolean isAccessibleTo(Unit unit) {Api.hit("/src/main/java/nl/tudelft/jpacman/board/BoardFactory.java", "isAccessibleTo"); return false;}
 
 		@Override
-		public Sprite getSprite() {
-			return background;
-		}
+		public Sprite getSprite() {Api.hit("/src/main/java/nl/tudelft/jpacman/board/BoardFactory.java", "getSprite"); return background;}
 	}
 
 	/**
@@ -131,13 +109,9 @@ public class BoardFactory {
 		}
 
 		@Override
-		public boolean isAccessibleTo(Unit unit) {
-			return true;
-		}
+		public boolean isAccessibleTo(Unit unit) {Api.hit("/src/main/java/nl/tudelft/jpacman/board/BoardFactory.java", "isAccessibleTo"); return true;}
 
 		@Override
-		public Sprite getSprite() {
-			return background;
-		}
+		public Sprite getSprite() {Api.hit("/src/main/java/nl/tudelft/jpacman/board/BoardFactory.java", "getSprite"); return background;}
 	}
 }

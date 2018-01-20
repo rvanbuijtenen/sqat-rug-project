@@ -1,25 +1,8 @@
-package nl.tudelft.jpacman.level;
-
-import nl.tudelft.jpacman.board.Unit;
-import nl.tudelft.jpacman.npc.ghost.Ghost;
-
-/**
- * A simple implementation of a collision map for the JPacman player.
- * <p>
- * It uses a number of instanceof checks to implement the multiple dispatch for the 
- * collisionmap. For more realistic collision maps, this approach will not scale,
- * and the recommended approach is to use a {@link CollisionInteractionMap}.
- * 
- * @author Arie van Deursen, 2014
- *
- */
-
-public class PlayerCollisions implements CollisionMap {
+package nl.tudelft.jpacman.level; import nl.tudelft.jpacman.board.Unit;
+import nl.tudelft.jpacman.npc.ghost.Ghost; import nl.tudelft.jpacman.Api; public class PlayerCollisions implements CollisionMap {
 
 	@Override
-	public void collide(Unit mover, Unit collidedOn) {
-		
-		if (mover instanceof Player) {
+	public void collide(Unit mover, Unit collidedOn) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/PlayerCollisions.java", "collide"); if (mover instanceof Player) {
 			playerColliding((Player) mover, collidedOn);
 		}
 		else if (mover instanceof Ghost) {
@@ -27,30 +10,21 @@ public class PlayerCollisions implements CollisionMap {
 		}
 		else if (mover instanceof Pellet) {
 			pelletColliding((Pellet) mover, collidedOn);
-		}
-	}
+		}}
 	
-	private void playerColliding(Player player, Unit collidedOn) {
-		if (collidedOn instanceof Ghost) {
+	private void playerColliding(Player player, Unit collidedOn) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/PlayerCollisions.java", "playerColliding"); if (collidedOn instanceof Ghost) {
 			playerVersusGhost(player, (Ghost) collidedOn);
-		}
-		
-		if (collidedOn instanceof Pellet) {
+		} if (collidedOn instanceof Pellet) {
 			playerVersusPellet(player, (Pellet) collidedOn);
-		}		
-	}
+		}}
 	
-	private void ghostColliding(Ghost ghost, Unit collidedOn) {
-		if (collidedOn instanceof Player) {
+	private void ghostColliding(Ghost ghost, Unit collidedOn) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/PlayerCollisions.java", "ghostColliding"); if (collidedOn instanceof Player) {
 			playerVersusGhost((Player) collidedOn, ghost);
-		}
-	}
+		}}
 	
-	private void pelletColliding(Pellet pellet, Unit collidedOn) {
-		if (collidedOn instanceof Player) {
+	private void pelletColliding(Pellet pellet, Unit collidedOn) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/PlayerCollisions.java", "pelletColliding"); if (collidedOn instanceof Player) {
 			playerVersusPellet((Player) collidedOn, pellet);
-		}		
-	}
+		}}
 	
 	
 	/**
@@ -59,9 +33,7 @@ public class PlayerCollisions implements CollisionMap {
      * @param player The player involved in the collision.
      * @param ghost The ghost involved in the collision.
 	 */
-	public void playerVersusGhost(Player player, Ghost ghost) {
-		player.setAlive(false);
-	}
+	public void playerVersusGhost(Player player, Ghost ghost) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/PlayerCollisions.java", "playerVersusGhost"); player.setAlive(false);}
 	
 	/**
 	 * Actual case of player consuming a pellet.
@@ -69,9 +41,6 @@ public class PlayerCollisions implements CollisionMap {
      * @param player The player involved in the collision.
      * @param pellet The pellet involved in the collision.
 	 */
-	public void playerVersusPellet(Player player, Pellet pellet) {
-		pellet.leaveSquare();
-		player.addPoints(pellet.getValue());		
-	}
+	public void playerVersusPellet(Player player, Pellet pellet) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/PlayerCollisions.java", "playerVersusPellet"); pellet.leaveSquare(); player.addPoints(pellet.getValue());}
 
 }

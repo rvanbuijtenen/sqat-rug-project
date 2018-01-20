@@ -1,19 +1,9 @@
-package nl.tudelft.jpacman.level;
-
-import java.util.ArrayList;
+package nl.tudelft.jpacman.level; import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import nl.tudelft.jpacman.board.Unit;
-
-/**
- * A map of possible collisions and their handlers.
- * 
- * @author Michael de Jong
- * @author Jeroen Roosen 
- */
-public class CollisionInteractionMap implements CollisionMap {
+import nl.tudelft.jpacman.board.Unit; import nl.tudelft.jpacman.Api; public class CollisionInteractionMap implements CollisionMap {
 
 	/**
 	 * The collection of collision handlers.
@@ -48,9 +38,7 @@ public class CollisionInteractionMap implements CollisionMap {
 	 */
 	public <C1 extends Unit, C2 extends Unit> void onCollision(
 			Class<C1> collider, Class<C2> collidee,
-			CollisionHandler<C1, C2> handler) {
-		onCollision(collider, collidee, true, handler);
-	}
+			CollisionHandler<C1, C2> handler) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/CollisionInteractionMap.java", "onCollision"); onCollision(collider, collidee, true, handler);}
 
 	/**
 	 * Adds a collision interaction to this collection.
@@ -73,13 +61,10 @@ public class CollisionInteractionMap implements CollisionMap {
 	 */
 	public <C1 extends Unit, C2 extends Unit> void onCollision(
 			Class<C1> collider, Class<C2> collidee, boolean symetric,
-			CollisionHandler<C1, C2> handler) {
-		addHandler(collider, collidee, handler);
-		if (symetric) {
+			CollisionHandler<C1, C2> handler) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/CollisionInteractionMap.java", "onCollision"); addHandler(collider, collidee, handler); if (symetric) {
 			addHandler(collidee, collider, new InverseCollisionHandler<>(
 					handler));
-		}
-	}
+		}}
 
 	/**
 	 * Adds the collision interaction..
@@ -92,17 +77,13 @@ public class CollisionInteractionMap implements CollisionMap {
 	 *            The handler that handles the collision.
 	 */
 	private void addHandler(Class<? extends Unit> collider,
-			Class<? extends Unit> collidee, CollisionHandler<?, ?> handler) {
-		if (!handlers.containsKey(collider)) {
+			Class<? extends Unit> collidee, CollisionHandler<?, ?> handler) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/CollisionInteractionMap.java", "addHandler"); if (!handlers.containsKey(collider)) {
 			handlers.put(
 					collider,
 					new HashMap<>());
-		}
-
-		Map<Class<? extends Unit>, CollisionHandler<?, ?>> map = handlers
+		} Map<Class<? extends Unit>, CollisionHandler<?, ?>> map = handlers
 				.get(collider);
-		map.put(collidee, handler);
-	}
+		map.put(collidee, handler);}
 
 	/**
 	 * Handles the collision between two colliding parties, if a suitable
@@ -121,10 +102,8 @@ public class CollisionInteractionMap implements CollisionMap {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <C1 extends Unit, C2 extends Unit> void collide(C1 collider,
-			C2 collidee) {
-		Class<? extends Unit> colliderKey = getMostSpecificClass(handlers,
-				collider.getClass());
-		if (colliderKey == null) {
+			C2 collidee) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/CollisionInteractionMap.java", "collide"); Class<? extends Unit> colliderKey = getMostSpecificClass(handlers,
+				collider.getClass()); if (colliderKey == null) {
 			return;
 		}
 
@@ -142,8 +121,7 @@ public class CollisionInteractionMap implements CollisionMap {
 			return;
 		}
 
-		collisionHandler.handleCollision(collider, collidee);
-	}
+		collisionHandler.handleCollision(collider, collidee);}
 
 	/**
 	 * Figures out the most specific class that is listed in the map. I.e. if A
@@ -156,15 +134,12 @@ public class CollisionInteractionMap implements CollisionMap {
 	 * @return The most specific class from the key collection.
 	 */
 	private Class<? extends Unit> getMostSpecificClass(
-			Map<Class<? extends Unit>, ?> map, Class<? extends Unit> key) {
-		List<Class<? extends Unit>> collideeInheritance = getInheritance(key);
-		for (Class<? extends Unit> pointer : collideeInheritance) {
+			Map<Class<? extends Unit>, ?> map, Class<? extends Unit> key) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/CollisionInteractionMap.java", "getMostSpecificClass"); List<Class<? extends Unit>> collideeInheritance = getInheritance(key); for (Class<? extends Unit> pointer : collideeInheritance) {
 			if (map.containsKey(pointer)) {
 				return pointer;
 			}
 		}
-		return null;
-	}
+		return null;}
 
 	/**
 	 * Returns a list of all classes and interfaces the class inherits.
@@ -176,9 +151,7 @@ public class CollisionInteractionMap implements CollisionMap {
 	 */
 	@SuppressWarnings("unchecked")
 	private List<Class<? extends Unit>> getInheritance(
-			Class<? extends Unit> clazz) {
-		List<Class<? extends Unit>> found = new ArrayList<>();
-		found.add(clazz);
+			Class<? extends Unit> clazz) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/CollisionInteractionMap.java", "getInheritance"); List<Class<? extends Unit>> found = new ArrayList<>(); found.add(clazz);
 
 		int index = 0;
 		while (found.size() > index) {
@@ -195,8 +168,7 @@ public class CollisionInteractionMap implements CollisionMap {
 			index++;
 		}
 
-		return found;
-	}
+		return found;}
 
 	/**
 	 * Handles the collision between two colliding parties.
@@ -254,9 +226,7 @@ public class CollisionInteractionMap implements CollisionMap {
 		 * it compatible with the initial collision.
 		 */
 		@Override
-		public void handleCollision(C1 collider, C2 collidee) {
-			handler.handleCollision(collidee, collider);
-		}
+		public void handleCollision(C1 collider, C2 collidee) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/CollisionInteractionMap.java", "handleCollision"); handler.handleCollision(collidee, collider);}
 	}
 
 }

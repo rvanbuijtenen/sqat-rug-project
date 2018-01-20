@@ -1,13 +1,4 @@
-package nl.tudelft.jpacman;
-
-/**
- * Exception that is thrown when JPacman cannot be properly loaded
- * from its resources.
- * 
- * @author Arie van Deursen, 2014
- *
- */
-public class PacmanConfigurationException extends RuntimeException {
+package nl.tudelft.jpacman; import nl.tudelft.jpacman.Api; public class PacmanConfigurationException extends RuntimeException {
 
 	/**
 	 * A configuration exception with a direct message.

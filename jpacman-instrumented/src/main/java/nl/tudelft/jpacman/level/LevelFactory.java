@@ -1,6 +1,4 @@
-package nl.tudelft.jpacman.level;
-
-import java.util.List;
+package nl.tudelft.jpacman.level; import java.util.List;
 import java.util.Map;
 
 import nl.tudelft.jpacman.board.Board;
@@ -11,14 +9,7 @@ import nl.tudelft.jpacman.npc.ghost.Ghost;
 import nl.tudelft.jpacman.npc.ghost.GhostColor;
 import nl.tudelft.jpacman.npc.ghost.GhostFactory;
 import nl.tudelft.jpacman.sprite.PacManSprites;
-import nl.tudelft.jpacman.sprite.Sprite;
-
-/**
- * Factory that creates levels and units.
- * 
- * @author Jeroen Roosen 
- */
-public class LevelFactory {
+import nl.tudelft.jpacman.sprite.Sprite; import nl.tudelft.jpacman.Api; public class LevelFactory {
 
 	private static final int GHOSTS = 4;
 	private static final int BLINKY = 0;
@@ -72,22 +63,14 @@ public class LevelFactory {
 	 * @return A new level for the board.
 	 */
 	public Level createLevel(Board board, List<NPC> ghosts,
-			List<Square> startPositions) {
-
-		// We'll adopt the simple collision map for now.
-		CollisionMap collisionMap = new PlayerCollisions();
-		
-		return new Level(board, ghosts, startPositions, collisionMap);
-	}
+			List<Square> startPositions) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/LevelFactory.java", "createLevel"); CollisionMap collisionMap = new PlayerCollisions(); return new Level(board, ghosts, startPositions, collisionMap);}
 
 	/**
 	 * Creates a new ghost.
 	 * 
 	 * @return The new ghost.
 	 */
-	NPC createGhost() {
-		ghostIndex++;
-		ghostIndex %= GHOSTS;
+	NPC createGhost() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/LevelFactory.java", "createGhost"); ghostIndex++; ghostIndex %= GHOSTS;
 		switch (ghostIndex) {
 		case BLINKY:
 			return ghostFact.createBlinky();
@@ -99,17 +82,14 @@ public class LevelFactory {
 			return ghostFact.createClyde();
 		default:
 			return new RandomGhost(sprites.getGhostSprite(GhostColor.RED));
-		}
-	}
+		}}
 
 	/**
 	 * Creates a new pellet.
 	 * 
 	 * @return The new pellet.
 	 */
-	public Pellet createPellet() {
-		return new Pellet(PELLET_VALUE, sprites.getPelletSprite());
-	}
+	public Pellet createPellet() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/LevelFactory.java", "createPellet"); return new Pellet(PELLET_VALUE, sprites.getPelletSprite());}
 
 	/**
 	 * Implementation of an NPC that wanders around randomly.
@@ -134,8 +114,6 @@ public class LevelFactory {
 		}
 
 		@Override
-		public Direction nextMove() {
-			return randomMove();
-		}
+		public Direction nextMove() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/LevelFactory.java", "nextMove"); return randomMove();}
 	}
 }

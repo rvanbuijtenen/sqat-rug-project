@@ -1,19 +1,10 @@
-package nl.tudelft.jpacman.sprite;
-
-import java.awt.image.BufferedImage;
+package nl.tudelft.jpacman.sprite; import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
-
-/**
- * Utility to load {@link Sprite}s.
- * 
- * @author Jeroen Roosen 
- */
-public class SpriteStore {
+import javax.imageio.ImageIO; import nl.tudelft.jpacman.Api; public class SpriteStore {
 	
 	/**
 	 * We only need to load images once, so we keep track
@@ -39,14 +30,11 @@ public class SpriteStore {
 	 * @throws IOException
 	 *             When the resource could not be loaded.
 	 */
-	public Sprite loadSprite(String resource) throws IOException {
-		Sprite result = spriteMap.get(resource);
-		if (result == null) {
+	public Sprite loadSprite(String resource) throws IOException {Api.hit("/src/main/java/nl/tudelft/jpacman/sprite/SpriteStore.java", "loadSprite"); Sprite result = spriteMap.get(resource); if (result == null) {
 			result = loadSpriteFromResource(resource);
 			spriteMap.put(resource, result);
 		}
-		return result;
-	}
+		return result;}
 
 	/**
 	 * Loads a sprite from a resource on the class path.
@@ -57,16 +45,14 @@ public class SpriteStore {
 	 * @throws IOException
 	 *             When the resource could not be loaded.
 	 */
-	private Sprite loadSpriteFromResource(String resource) throws IOException {
-		try (InputStream input = SpriteStore.class.getResourceAsStream(resource)) {
+	private Sprite loadSpriteFromResource(String resource) throws IOException {Api.hit("/src/main/java/nl/tudelft/jpacman/sprite/SpriteStore.java", "loadSpriteFromResource"); try (InputStream input = SpriteStore.class.getResourceAsStream(resource)) {
 			if (input == null) {
 				throw new IOException("Unable to load " + resource
 					+ ", resource does not exist.");
 			}
 			BufferedImage image = ImageIO.read(input);
 			return new ImageSprite(image);
-		}
-	}
+		}}
 
 	/**
 	 * Creates a new {@link AnimatedSprite} from a base image.
@@ -82,9 +68,7 @@ public class SpriteStore {
 	 * @return The animated sprite.
 	 */
 	public AnimatedSprite createAnimatedSprite(Sprite baseImage, int frames,
-			int delay, boolean loop) {
-		assert baseImage != null;
-		assert frames > 0;
+			int delay, boolean loop) {Api.hit("/src/main/java/nl/tudelft/jpacman/sprite/SpriteStore.java", "createAnimatedSprite"); assert baseImage != null; assert frames > 0;
 
 		int frameWidth = baseImage.getWidth() / frames;
 
@@ -94,7 +78,6 @@ public class SpriteStore {
 					baseImage.getHeight());
 		}
 
-		return new AnimatedSprite(animation, delay, loop);
-	}
+		return new AnimatedSprite(animation, delay, loop);}
 
 }

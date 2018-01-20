@@ -1,13 +1,4 @@
-package nl.tudelft.jpacman.sprite;
-
-import java.awt.Graphics;
-
-/**
- * Visual representation of some object.
- * 
- * @author Jeroen Roosen 
- */
-public interface Sprite {
+package nl.tudelft.jpacman.sprite; import java.awt.Graphics; import nl.tudelft.jpacman.Api; public interface Sprite {
 
 	/**
 	 * Draws the sprite on the provided graphics context.
