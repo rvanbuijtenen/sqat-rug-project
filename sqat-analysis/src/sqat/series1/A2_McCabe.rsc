@@ -47,7 +47,12 @@ Bonus
 void main() {
 	dists = ccDist(cc(jpacmanASTs()));
 	println(dists);
-	//questions:
+	answerQuestions();
+
+}
+
+void answerQuestions(){
+
 	print( "which method has the highest complexity?\n" );
   	
 	int Complexity = 0;
@@ -71,7 +76,6 @@ void main() {
   
   	
   	print( "what if you separate out the test sources?\n" );
-	
 
 }
 

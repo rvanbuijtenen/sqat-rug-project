@@ -71,6 +71,13 @@ void main() {
 	coverage = getTestCoverage(result, getMethods(x.declarations));
 	println("Test covereage is:");
 	println(coverage);
+	answerQuestions();
+}
+
+void answerQuestions(){
+
+	print( "is code size correlated with McCabe in this case?\n" );
+
 }
 
 rel[loc,loc] getMethods(rel[loc,loc] decls) {
