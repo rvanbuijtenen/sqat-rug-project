@@ -47,6 +47,32 @@ Bonus
 void main() {
 	dists = ccDist(cc(jpacmanASTs()));
 	println(dists);
+	//questions:
+	print( "which method has the highest complexity?\n" );
+  	
+	int Complexity = 0;
+	loc method;
+	CC c = cc(jpacmanASTs());
+	for(<loc l, int cnt > <- c) {
+
+		if(cnt > Complexity) {
+			Complexity = cnt;
+			method = l;
+		}
+	}
+	println(method);
+	println(Complexity);
+  	
+  	print( "how does pacman fare w.r.t. the SIG maintainability McCabe thresholds?\n" );
+  	println( "The highest complexity is 8. Following the SIG, the risk evaluation is labeled as -without much risk-" );
+  	
+  		
+	print( "is code size correlated with McCabe in this case?\n" );
+  
+  	
+  	print( "what if you separate out the test sources?\n" );
+	
+
 }
 
 set[Declaration] jpacmanASTs() = createAstsFromEclipseProject(|project://jpacman-framework/src/main/java/nl/tudelft/jpacman|, true); 
@@ -149,22 +175,22 @@ int cntStmt(Statement stmt) {
     	}
     	case \for(list[Expression] initializers, Expression condition, list[Expression] updaters, Statement body): {
     		// +1 for for
-    		println("for1");
+    		//println("for1");
     		cnt += 1;
     	}
     	case \for(list[Expression] initializers, list[Expression] updaters, Statement body): {
     		// +1 for for
-    		println("for2");
+    		//println("for2");
     		cnt += 1;
     	}
     	case \if(Expression condition, Statement thenBranch): {
     		// +1 for if
-    		println("ifthen");
+    		//println("ifthen");
     		cnt += 1;
     	}
     	case \if(Expression condition, Statement thenBranch, Statement elseBranch): {
     		// +1 for if, +1 for else
-    		println("ifthenelse");
+    		//println("ifthenelse");
     		cnt += 1;
     	}
     	case \case(Expression expression): {
