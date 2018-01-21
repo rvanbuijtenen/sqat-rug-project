@@ -8,7 +8,7 @@ import IO;
 import ParseTree;
 import Type;
 import List;
-import Message;
+import String;
 /*
 Implement static code coverage metrics by Alves & Visser 
 (https://www.sig.eu/en/about-sig/publications/static-estimation-test-coverage)
@@ -75,10 +75,18 @@ void main() {
 	for(<method, isCovered> <- coverage[1]) {
 		println("<method><isCovered>");
 	}
+	answerQuestions();
+}
+
+void answerQuestions(){
+	print( "how do your results compare to the jpacman results in the paper? Has jpacman improved?\n" );
+	print( "use a third-party coverage tool (e.g. Clover) to compare your results\n" );
+	print( "We used the tool Emma, which determines the coverage level based on instructions. They report a test coverage of 40.6%\n" );
+
 }
 
 rel[loc,loc] getMethods(rel[loc,loc] decls) {
-	return {<name, src> | <name, src> <- decls, /java\+method/ := name.uri};
+	return {<name, src> | <name, src> <- decls, /java\+method/ := name.uri, !contains(name.uri, "test")};
 }
 
 tuple[real,rel[loc, bool]] getTestCoverage(Graph g, rel[loc, loc] methods) {
