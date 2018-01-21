@@ -76,7 +76,10 @@ void main() {
 
 void answerQuestions(){
 
-	print( "is code size correlated with McCabe in this case?\n" );
+	print( "what methods are not covered at all?\n" );
+	print( "how do your results compare to the jpacman results in the paper? Has jpacman improved?\n" );
+	print( "use a third-party coverage tool (e.g. Clover) to compare your results\n" );
+	print( "We used the tool Emma, which determines the coverage level based on instructions. They report a test coverage of 40.6%\n" );
 
 }
 
