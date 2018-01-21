@@ -106,6 +106,62 @@ set[Message] checkStyle() {
   return visitDeclarations(decls);
 }
 
+void answerQuestions() {
+	println("for each violation: look at the code and describe what is going on? Is it a \"valid\" violation, or a false positive?");
+  
+ 	println("\nWe will take the first style violation of each type that our program reports
+ will discuss them below:");
+ 
+ println("
+ Violation 1:\n warning(
+	    \"If there are more than 3 parameters, each parameter should be on a separate line\",\n|project://jpacman-framework/src/main/java/nl/tudelft/jpacman/sprite/EmptySprite.java|(310,10,\<16,18\>,\<16,28\>))");
+	    
+ println("	 
+	The first violation is from our custom style violation: methods with more than three
+	three parameters should list each parameter on a separate line. The method has 5 parameters which
+	are all listed on the same line.\n
+ 
+ 	When we fix the violation our program doesn\'t report it as a violation. The method looks like this:
+ 	@Override
+	public void draw(Graphics g,
+					 int x,
+					 int y,
+					 int width,
+					 int height) {");
+println("
+Violation 2:\n
+	warning(
+	    \"The length of this file exceed the length of 150\",
+	    |project://jpacman-framework/src/main/java/nl/tudelft/jpacman/level/CollisionInteractionMap.java|(0,6954,\<1,0\>,\<262,2\>))");
+println("
+	This violation simply indicates that the CollisionInteractionMap (one of the more complex files in the Jpacman program)
+	is to long according to our current settings. We have deliberately set a very low limit of 150 lines to ensure that some
+	files show up for testing purposes. When we increase this limit to 300 for example, our program does not report it anymore");
+	
+println("
+Violation 3:\n
+	 error(
+	    \"The amount of function parameters exceeds the maximum of 4.\",
+	    |project://jpacman-framework/src/main/java/nl/tudelft/jpacman/level/MapParser.java|(2169,16,\<79,20\>,\<79,36\>))\n
+	    
+	 This check is a variation of the settings used by the jpacman application. In their configuration file a limit of 7
+	 parameters is set, so we decided on a limit of 4 because otherwise no violations would show up. Of course, four parameters
+	 is very little and would be to strict for a real application, but it works well for testing purposes. When we set our
+	 limit to that of jpacman\'s configuration our program does not find any violations.");
+	 
+println("
+Violation 4:\n
+	warning(
+	    \"A method that only has private constructors should be declared using the FINAL modifier\",
+	    |project://jpacman-framework/src/main/java/nl/tudelft/jpacman/level/CollisionInteractionMap.java|(174,6779,\<10,0\>,\<262,1\>))\n
+	    
+	This violation was not one that was present in the original version of JPacman, so we changed the constructors
+	of a few classes from public to private. As a result, our program is able to detect these violations, even for
+	nested class definitions. To test this we changed the constructors of the CollsionInteractionMap.java to private.
+	We did the same for the nested private class that is defined within this class. Both violations show up in our output.");
+	
+}
+
 set[Message] visitDeclarations(set[Declaration] decls) {
 	set[Message] result = {};
 	for(decl <- decls) {

@@ -47,11 +47,11 @@ Questions:
 - how do your results compare to the jpacman results in the paper? Has jpacman improved?
 - use a third-party coverage tool (e.g. Clover) to compare your results to (explain differences)
 We used the tool Emma, which determines the coverage level based on instructions. They report a test coverage of 40.6%
-
+We also used the integrated test coverage from eclipse, by running the jpacman prohect using the "Coverage as" option. This dynamic result lists 80.7% statement coverage.
 */
 
 
-M3 jpacmanM3() = createM3FromEclipseProject(|project://jpacman-framework|);
+M3 jpacmanM3() = createM3FromEclipseProject(|project://jpacman-framework/|);
 
 
 alias JpacmanInvocations = set[tuple[loc, loc]];
@@ -68,16 +68,21 @@ void main() {
 	result = solve(jpacman_invocations) {
 		result = {<f1, l1, t2> | <f1,l1,t1> <- result, <f2, l2, t2> <- jpacman_invocations, f1 != t2, t1 == f2};
 	}
-	coverage = getTestCoverage(result, getMethods(x.declarations));
-	println("Test covereage is:");
-	println(coverage);
+	tuple[real, rel[loc, bool]] coverage = getTestCoverage(result, getMethods(x.declarations));
+	println("Total test coverage is:");
+	println(coverage[0]);
+	println("Coverage on methodlevel is:");
+	for(<method, isCovered> <- coverage[1]) {
+		println("<method><isCovered>");
+	}
 }
 
 rel[loc,loc] getMethods(rel[loc,loc] decls) {
 	return {<name, src> | <name, src> <- decls, /java\+method/ := name.uri};
 }
 
-real getTestCoverage(Graph g, rel[loc, loc] methods) {
+tuple[real,rel[loc, bool]] getTestCoverage(Graph g, rel[loc, loc] methods) {
+	
 	map[loc, bool] m = ();
 	for(<name, src> <- methods) {
 		m[name] = false;
@@ -93,7 +98,12 @@ real getTestCoverage(Graph g, rel[loc, loc] methods) {
 		total+= 1;
 		tested += m[src] == true ? 1 : 0;
 	}
-	return  tested/total*100;
+	rel[loc, bool] coverage = {};
+	for(src <- m) {
+		coverage += <src, m[src]>;
+	}
+	
+	return  <tested/total*100, coverage>;
 }
 
 Graph getJpacmanInvocations(invocations) {

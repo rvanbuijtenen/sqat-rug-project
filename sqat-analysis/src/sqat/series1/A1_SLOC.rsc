@@ -54,14 +54,38 @@ Bonus:
 */
 
 alias SLOC = map[loc file, int sloc];
-SLOC sloc(loc project) {
-  SLOC result = ();
-  result = (f: countLOC(readFileLines(f))| f <- files(project));
-  return result;
+SLOC sloc(loc project, bool isTest) {
+	if(!isTest) {
+		loc src = project + "/src/main/java/nl/tudelft/jpacman";
+		loc testSrc = project + "src/test/java/nl/tudelft/jpacman";
+		SLOC result = ();
+		SLOC testResult = ();
+		result = (f: countLOC(readFileLines(f))| f <- files(src));
+	 	testResult = (f: countLOC(readFileLines(f))| f <- files(testSrc));
+		answerQuestions(result, testResult);
+		return result;
+	}
+	return (f: countLOC(readFileLines(f))| f <- files(project));
+}
+
+void answerQuestions(SLOC result, SLOC testResult) {
+	<filename, length> = maxLOC(result);
+	println("The largest file in JPacman is: <filename> with a length of <length> lines\n");
+	
+	int total = totalLOC(result);
+	println("The total number of lines in JPacman is: <total>\n");
+
+	println("Is JPacman large according to the SIG maintainbility index?");
+	println("No, it is at the bottom of the smallest category following the ranking scheme on page 25\n");
+	println("what is the ratio between actual code and test code size?");
+	int testTotal = totalLOC(testResult);
+	println("The test code size is: <testTotal>");
+	real ratio = testTotal*1.0/total;
+	println("This results in a ratio of <testTotal>/<total> = <ratio>");
 }
 
 test bool testSloc()
-	= sloc(|project://jpacman-framework/src/syntaxtest/|)
+	= sloc(|project://jpacman-framework/src/syntaxtest/|, true)
 	== (|project://jpacman-framework/src/syntaxtest/LongClass.java|:31,
 	 		  |project://jpacman-framework/src/syntaxtest/Main.java|:6);
 
@@ -116,19 +140,27 @@ test bool testCountComment()
 	= countComment(["/**","* comment body","*/","/**","comment body","*/"," ","// test comment", "int var = 5;"])
 	== 7;
 
-public int maxLOC(SLOC filelist) {
-	return max([filelist[file] | file <- filelist]);
+tuple[loc, int] maxLOC(SLOC filelist) {
+	int max_size = 0;
+	loc f;
+	for(file <- filelist) {
+		if(filelist[file] > max_size) {
+			max_size = filelist[file];
+			f = file;
+		}
+	}
+	return <f, max_size>;
 }
 
 test bool testMaxLOC()
-	= maxLOC(sloc(|project://jpacman-framework/src/syntaxtest/|))
-	== 31;
+	= maxLOC(sloc(|project://jpacman-framework/src/syntaxtest/|, true))
+	== <|project://jpacman-framework/src/syntaxtest/LongClass.java|, 31>;
 
 public int totalLOC(SLOC filelist) {
 	return sum([filelist[file] | file <- filelist]);
 }
 
 test bool testTotalLOC()
-	= totalLOC(sloc(|project://jpacman-framework/src/syntaxtest/|))
+	= totalLOC(sloc(|project://jpacman-framework/src/syntaxtest/|, true))
 	== 37;
 

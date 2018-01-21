@@ -23,9 +23,9 @@ public class Api {
 	 */
 	static {
 	     try {
-	    	 pw = new PrintWriter(new FileOutputStream(new File("test.csv")));
+	    	 pw = new PrintWriter(new FileOutputStream(new File("apiOutput.csv")));
 	    	 StringBuilder sb = new StringBuilder();
-	    	 sb.append("class;method;line");
+	    	 sb.append("class;method;line;\n");
 	    	 pw.append(sb.toString());
 	     } catch (Exception e) {
 	       // Handle exception.
