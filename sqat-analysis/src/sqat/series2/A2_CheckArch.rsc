@@ -60,7 +60,7 @@ Questions
 */
 
 void main() {
-	eval(parse(#start[Dicto], |project://sqat-analysis/src/sqat/series2/example.dicto|, allowAmbiguity=true), createM3FromEclipseProject(|project://jpacman-framework/|));
+	println(eval(parse(#start[Dicto], |project://sqat-analysis/src/sqat/series2/example.dicto|, allowAmbiguity=true), createM3FromEclipseProject(|project://jpacman-framework/|)));
 }
 
 set[Message] eval(start[Dicto] dicto, M3 m3) = eval(dicto.top, m3);
