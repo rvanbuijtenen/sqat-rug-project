@@ -9,9 +9,7 @@ import nl.tudelft.jpacman.board.Unit;
  * @author Jeroen Roosen 
  */
 public abstract class NPC extends Unit {
-	public NPC() {
-		super();
-	}
+
 	/**
 	 * The time that should be taken between moves.
 	 * 
