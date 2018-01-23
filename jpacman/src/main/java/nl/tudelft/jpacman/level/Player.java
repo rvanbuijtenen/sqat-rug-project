@@ -4,6 +4,7 @@ import java.util.Map;
 
 import nl.tudelft.jpacman.board.Direction;
 import nl.tudelft.jpacman.board.Unit;
+import nl.tudelft.jpacman.npc.NPC;
 import nl.tudelft.jpacman.sprite.AnimatedSprite;
 import nl.tudelft.jpacman.sprite.Sprite;
 
@@ -12,8 +13,15 @@ import nl.tudelft.jpacman.sprite.Sprite;
  * 
  * @author Jeroen Roosen 
  */
-public class Player extends Unit {
+public class Player extends NPC {
 
+	public Direction nextMove() {
+		return null;
+	}
+	
+	public long getInterval() {
+		return 0;
+	}
 	/**
 	 * The amount of points accumulated by this player.
 	 */

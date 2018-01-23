@@ -5,6 +5,7 @@ import lang::java::jdt::m3::Core;
 import Message;
 import ParseTree;
 import IO;
+import String;
 
 
 /*
@@ -58,6 +59,9 @@ Questions
   of Dicto (and explain why you'd need them). 
 */
 
+void main() {
+	eval(parse(#start[Dicto], |project://sqat-analysis/src/sqat/series2/example.dicto|, allowAmbiguity=true), createM3FromEclipseProject(|project://jpacman-framework/|));
+}
 
 set[Message] eval(start[Dicto] dicto, M3 m3) = eval(dicto.top, m3);
 
@@ -78,7 +82,7 @@ set[Message] eval(Rule rule, M3 m3) {
 		}
 	  }
 	  case (Rule)`<Entity e1> must inherit <Entity e2>`: {
-	  	if(!validateMustInherit(e1, e2)) {
+	  	if(!validateMustInherit(e1, e2, m3)) {
 	  		msgs.add("test3");
 	  	}
 	  }
@@ -89,20 +93,34 @@ set[Message] eval(Rule rule, M3 m3) {
 }
 
 bool validateCannotImport(Entity e1, Entity e2, M3 m3) {
+	// class cannot import class
 	println(e1);
 	println(e2);
-	println(m3);
 	return true;
 }
 
 
 
 bool validateCannotInherit(Entity e1, Entity e2, M3 m3) {
-	// class cannot inherit class
+	// e1 cannot inherit e2
+	println("cannot inherit");
+	println(e1);
+	println(e2);
+	// a extends b
+	for(<a, b> <- m3.extends) {
+		if(contains(a.path, unparse(e1))) {
+			if(contains(b.path, unparse(e2))) {
+				println("cannot inherit!");
+				return false;
+			}
+		}
+	}
 	return true;
 }
 
 bool validateMustInherit(Entity e1, Entity e2, M3 m3) {
+	println(e1);
+	println(e2);
 	// class must inherit class
 	return true;
 }

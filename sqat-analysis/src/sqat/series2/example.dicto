@@ -1,6 +1,7 @@
 
 nl.tudelft.jpacman.level.Level cannot import nl.tudelft.jpacman.ui.PacManUI
-nl.tudelft.jpacman.npc.NPC cannot inherit nl.tudelft.level.Player
+nl.tudelft.jpacman.level.Player cannot inherit nl.tudelft.npc.NPC
+nl.tudelft.jpacman.npc.NPC cannot inherit nl.tudelft.jpacman.level.Player
 nl.tudelft.jpacman.npc.ghost.Ghost must inherit nl.tudelft.npc.NPC
 nl.tudelft.jpacman.npc.ghost.Blinky must inherit nl.tudelft.npc.ghost.Ghost
 nl.tudelft.jpacman.npc.ghost.Clyde must inherit nl.tudelft.npc.ghost.Ghost

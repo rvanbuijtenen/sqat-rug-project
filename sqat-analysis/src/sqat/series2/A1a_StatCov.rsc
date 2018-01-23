@@ -143,9 +143,10 @@ void answerQuestions(tuple[set[loc],set[loc]] coverage){
 		println(method);
 	}
 	println("how do your results compare to the jpacman results in the paper? Has jpacman improved?");
+	println("The paper reports a static covereage of 84.53%");
+	println("Our static coverage is: <size(coverage[0]) * 100.0 / size(coverage[1])>");
+	println("So if our covereage is correct, then jpacman\'s test coverage now is slightly worse than it was in the paper");
 	println("use a third-party coverage tool (e.g. Clover) to compare your results to (explain differences)");
-println("We used the tool Emma, which determines the coverage level based on instructions. They report a test coverage of 40.6%
-We also used the integrated test coverage from eclipse, by running the jpacman prohect using the \"Coverage as\" option. This dynamic result lists 80.7% statement coverage.");
-	
+	println("We used the integrated test coverage from eclipse, by running the jpacman project using the \"Coverage as\" option. This dynamic result lists 81.7% statement coverage. This difference is caused because a different approach is used by eclipse: they use dynamic covereage which computes instruction coverage, while we\'re looking at method covereage");
 }
 

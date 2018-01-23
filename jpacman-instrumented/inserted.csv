@@ -144,10 +144,9 @@ class,method,line
 /src/main/java/nl/tudelft/jpacman/level/Player.java,setAlive,lines 75:2 - 75:23
 /src/main/java/nl/tudelft/jpacman/Launcher.java,getSpriteStore,lines 112:2 - 112:22
 /src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java,getPath,lines 203:3 - 203:28
+/src/main/java/nl/tudelft/jpacman/level/PlayerCollisions.java,playerVersusPellet,lines 73:2 - 73:23
 /src/main/java/nl/tudelft/jpacman/level/CollisionInteractionMap.java,collide,lines 145:2 - 145:55
 /src/main/java/nl/tudelft/jpacman/sprite/AnimatedSprite.java,getHeight,lines 160:2 - 160:33
-/src/main/java/nl/tudelft/jpacman/level/PlayerCollisions.java,playerVersusPellet,lines 73:2 - 73:23
-/src/main/java/nl/tudelft/jpacman/ui/ButtonPanel.java,actionPerformed,lines 47:5 - 47:35
 /src/main/java/nl/tudelft/jpacman/level/CollisionInteractionMap.java,getMostSpecificClass,lines 161:2 - 165:3
 /src/main/java/nl/tudelft/jpacman/npc/ghost/Inky.java,nextMove,lines 98:2 - 100:3
 /src/main/java/nl/tudelft/jpacman/level/Level.java,startNPCs,lines 229:2 - 235:3
@@ -205,12 +204,12 @@ class,method,line
 /src/main/java/nl/tudelft/jpacman/sprite/SpriteStore.java,createAnimatedSprite,lines 97:2 - 97:52
 /src/main/java/nl/tudelft/jpacman/board/Unit.java,occupy,lines 66:2 - 68:3
 /src/main/java/nl/tudelft/jpacman/level/Level.java,updateObservers,lines 267:2 - 271:3
-/src/main/java/nl/tudelft/jpacman/ui/ButtonPanel.java,actionPerformed,lines 46:5 - 46:37
 /src/main/java/nl/tudelft/jpacman/Launcher.java,getGameFactory,lines 134:2 - 134:45
 /src/main/java/nl/tudelft/jpacman/level/MapParser.java,parseMap,lines 143:2 - 143:41
 /src/main/java/nl/tudelft/jpacman/level/MapParser.java,parseMap,lines 194:2 - 201:3
 /src/main/java/nl/tudelft/jpacman/ui/BoardPanel.java,render,lines 85:2 - 85:48
 /src/main/java/nl/tudelft/jpacman/level/Player.java,isAlive,lines 59:2 - 59:15
+/src/main/java/nl/tudelft/jpacman/ui/ButtonPanel.java,actionPerformed,lines 39:5 - 39:37
 /src/main/java/nl/tudelft/jpacman/Launcher.java,getGame,lines 43:2 - 43:14
 /src/main/java/nl/tudelft/jpacman/level/PlayerCollisions.java,playerVersusPellet,lines 74:2 - 74:38
 /src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java,shortestPath,lines 49:2 - 49:42
@@ -235,6 +234,7 @@ class,method,line
 /src/main/java/nl/tudelft/jpacman/npc/ghost/Inky.java,nextMove,lines 103:2 - 105:3
 /src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java,getDirection,lines 175:3 - 175:20
 /src/main/java/nl/tudelft/jpacman/ui/BoardPanel.java,render,lines 87:2 - 94:3
+/src/main/java/nl/tudelft/jpacman/ui/ButtonPanel.java,actionPerformed,lines 40:5 - 40:35
 /src/main/java/nl/tudelft/jpacman/level/DefaultPlayerInteractionMap.java,handleCollision,lines 34:2 - 34:71
 /src/main/java/nl/tudelft/jpacman/level/CollisionInteractionMap.java,handleCollision,lines 258:3 - 258:47
 /src/main/java/nl/tudelft/jpacman/board/BoardFactory.java,createBoard,lines 43:2 - 43:31

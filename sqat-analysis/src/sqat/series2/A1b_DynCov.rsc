@@ -301,23 +301,23 @@ void answerQuestions() {
 	}
 	
 	println("use a third-party coverage tool (e.g. Clover) to compare your results to (explain differences)");
-	println("Eclipses \'Coverage as\' option runs all test cases and reports an instruction coverage of 81.7%.");
-	println("\nwhich methods have full line coverage?");
+	println("Eclipses \'Coverage as\' option runs all test cases and reports an instruction coverage of 81.7%. Since our program computes a dynamic statement coverage of 81.86% there is no significant difference.");
+	println("\n\nwhich methods have full line coverage?");
 	for(<<a,b>,d,e,f> <- cov) {
 		if (f == 100.0) {
 			println("<a> <b> <d>:<e> <f>");
 		}
 	}
 	
-	println("\nwhich methods are not covered at all, and why does it matter (if so)?");
+	println("\n\nwhich methods are not covered at all, and why does it matter (if so)?");
 	for(<<a,b>,d,e,f> <- cov) {
 		if (f == 0.0) {
 			println("<a> <b> <d>:<e> <f>");
 		}
 	}
-	println("\nwhat are the drawbacks of source-based instrumentation?");
+	println("\n\nwhat are the drawbacks of source-based instrumentation?");
 	println("1) Computationally expensive (parse entire source, run all test cases, parse produced output)");
 	println("2) Requires a working version of the source code. This is not always an easy task if the code was supplied by a third party");
-	println("The total covereage is: <totalCov>");
+	println("\n\nThe total covereage is: <totalCov>");
 }
 
