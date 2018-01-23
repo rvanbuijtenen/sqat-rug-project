@@ -73,21 +73,35 @@ set[Message] eval(Rule rule, M3 m3) {
 	  switch(rule) {
 	  case (Rule)`<Entity e1> cannot depend <Entity e2>`: {
 		if(!validateCannotDepend(e1, e2, m3)) {
-			println("<e1> cannot depend <e2>");//msgs.add("test");
+			msgs += error("<e1> cannot depend <e2>", e1);
 		}
 	  }
 	  case (Rule)`<Entity e1> cannot inherit <Entity e2>`: {
 		if(!validateCannotInherit(e1, e2, m3)) {
-			println("<e1> cannot inherit <e2>");//msgs.add("test2");
+			msgs += error("<e1> cannot inherit <e2>", e1);
 		}
 	  }
 	  case (Rule)`<Entity e1> must inherit <Entity e2>`: {
 	  	if(!validateMustInherit(e1, e2, m3)) {
-	  		println("<e1> must inheri <e2>t");;//msgs.add("test3");
+	  		msgs += error("<e1> must inherit <e2>", e1);
+	  	}
+	  }
+	  case (Rule)`<Entity e1> cannot invoke <Entity e2>`: {
+	  	if(!validateCannotInvoke(e1, e2, m3)) {
+	  		msgs += error("<e1> cannot invoke <e2>", e1);
+	  	}
+	  }
+	  case (Rule)`<Entity e1> cannot access <Entity e2>`: {
+	  	if(!validateCannotAccess(e1, e2, m3)) {
+	  		msgs += error("<e1> cannot access <e2>", e1);
+	  	}
+	  }
+	  case (Rule)`<Entity e1> cannot implement <Entity e2>`: {
+	  	if(!validateCannotImplement(e1, e2, m3)) {
+	  		msgs += error("<e1> cannot implement <e2>", e1);
 	  	}
 	  }
   }
-  // to be done
   
   return msgs;
 }
