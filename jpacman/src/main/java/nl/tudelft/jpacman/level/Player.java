@@ -13,15 +13,7 @@ import nl.tudelft.jpacman.sprite.Sprite;
  * 
  * @author Jeroen Roosen 
  */
-public class Player extends NPC {
-
-	public Direction nextMove() {
-		return null;
-	}
-	
-	public long getInterval() {
-		return 0;
-	}
+public class Player {
 	/**
 	 * The amount of points accumulated by this player.
 	 */

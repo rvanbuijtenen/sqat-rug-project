@@ -71,19 +71,19 @@ set[Message] eval((Dicto)`<Rule* rules>`, M3 m3)
 set[Message] eval(Rule rule, M3 m3) {
   set[Message] msgs = {};
 	  switch(rule) {
-	  case (Rule)`<Entity e1> cannot import <Entity e2>`: {
-		if(!validateCannotImport(e1, e2, m3)) {
-			msgs.add("test");
+	  case (Rule)`<Entity e1> cannot depend <Entity e2>`: {
+		if(!validateCannotDepend(e1, e2, m3)) {
+			println("<e1> cannot depend <e2>");//msgs.add("test");
 		}
 	  }
 	  case (Rule)`<Entity e1> cannot inherit <Entity e2>`: {
 		if(!validateCannotInherit(e1, e2, m3)) {
-			msgs.add("test2");
+			println("<e1> cannot inherit <e2>");//msgs.add("test2");
 		}
 	  }
 	  case (Rule)`<Entity e1> must inherit <Entity e2>`: {
 	  	if(!validateMustInherit(e1, e2, m3)) {
-	  		msgs.add("test3");
+	  		println("<e1> must inheri <e2>t");;//msgs.add("test3");
 	  	}
 	  }
   }
@@ -92,25 +92,52 @@ set[Message] eval(Rule rule, M3 m3) {
   return msgs;
 }
 
-bool validateCannotImport(Entity e1, Entity e2, M3 m3) {
-	// class cannot import class
-	println(e1);
-	println(e2);
+bool validateCannotInvoke(Entity e1, Entity e2, M3 m3) {
+	for(<from, to> <- m3.methodInvocation) {
+		if(contains(from.path, replaceAll(unparse(e1), ".", "/"))) {
+			if(contains(to.path, replaceAll(unparse(e2), ".", "/"))) {
+				return false;
+			}
+		}
+	}
 	return true;
 }
 
+bool validateCannotAccess(Entity e1, Entity e2, M3 m3) {
+	for(<from, to> <- m3.fieldAccess) {
+		if(contains(from.path, replaceAll(unparse(e1), ".", "/"))) {
+			if(contains(to.path, replaceAll(unparse(e2), ".", "/"))) {
+				return false;
+			}
+		}
+	}
+	return true;
+}
 
+bool validateCannotImplement(Entity e1, Entity e2, M3 m3) {
+	for(<from, to> <- m3.implements) {
+		if(contains(from.path, replaceAll(unparse(e1), ".", "/"))) {
+			if(contains(to.path, replaceAll(unparse(e2), ".", "/"))) {
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+bool validateCannotDepend(Entity e1, Entity e2, M3 m3) {
+	// e1 cannot invoke/access/implement/extend 1
+	return (validateCannotInvoke(e1, e2, m3) &&
+		    validateCannotAccess(e1, e2, m3) &&
+		    validateCannotImplement(e1, e2, m3) &&
+		    validateCannotInherit(e1, e2, m3));
+}
 
 bool validateCannotInherit(Entity e1, Entity e2, M3 m3) {
-	// e1 cannot inherit e2
-	println("cannot inherit");
-	println(e1);
-	println(e2);
-	// a extends b
+	// e1 cannot extend e2
 	for(<a, b> <- m3.extends) {
-		if(contains(a.path, unparse(e1))) {
-			if(contains(b.path, unparse(e2))) {
-				println("cannot inherit!");
+		if(contains(a.path, replaceAll(unparse(e1), ".", "/"))) {
+			if(contains(b.path, replaceAll(unparse(e2), ".", "/"))) {;
 				return false;
 			}
 		}
@@ -119,10 +146,7 @@ bool validateCannotInherit(Entity e1, Entity e2, M3 m3) {
 }
 
 bool validateMustInherit(Entity e1, Entity e2, M3 m3) {
-	println(e1);
-	println(e2);
-	// class must inherit class
-	return true;
+	return !validateCannotInherit(e1, e2, m3);
 }
 
 
