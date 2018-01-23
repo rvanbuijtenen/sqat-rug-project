@@ -105,7 +105,7 @@ public class Level {
 	 * @param observer
 	 *            The observer that will be notified.
 	 */
-	public void addObserver(LevelObserver observer) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "addObserver"); observers.add(observer);}
+	public void addObserver(LevelObserver observer) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "addObserver", "lines 119:2 - 119:26"); observers.add(observer);}
 
 	/**
 	 * Removes an observer if it was listed.
@@ -113,7 +113,7 @@ public class Level {
 	 * @param observer
 	 *            The observer to be removed.
 	 */
-	public void removeObserver(LevelObserver observer) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "removeObserver"); observers.remove(observer);}
+	public void removeObserver(LevelObserver observer) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "removeObserver", "lines 129:2 - 129:29"); observers.remove(observer);}
 
 	/**
 	 * Registers a player on this level, assigning him to a starting position. A
@@ -123,23 +123,16 @@ public class Level {
 	 * @param p
 	 *            The player to register.
 	 */
-	public void registerPlayer(Player p) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "registerPlayer"); assert p != null; assert !startSquares.isEmpty();
-
-		if (players.contains(p)) {
+	public void registerPlayer(Player p) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "registerPlayer", "lines 141:2 - 141:19"); assert p != null; Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "registerPlayer", "lines 142:2 - 142:33"); assert !startSquares.isEmpty(); Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "registerPlayer", "lines 144:2 - 146:3"); if (players.contains(p)) {
 			return;
-		}
-		players.add(p);
-		Square square = startSquares.get(startSquareIndex);
-		p.occupy(square);
-		startSquareIndex++;
-		startSquareIndex %= startSquares.size();}
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "registerPlayer", "lines 147:2 - 147:17"); players.add(p); Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "registerPlayer", "lines 148:2 - 148:53"); Square square = startSquares.get(startSquareIndex); Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "registerPlayer", "lines 149:2 - 149:19"); p.occupy(square); Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "registerPlayer", "lines 150:2 - 150:21"); startSquareIndex++; Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "registerPlayer", "lines 151:2 - 151:42"); startSquareIndex %= startSquares.size();}
 
 	/**
 	 * Returns the board of this level.
 	 * 
 	 * @return The board of this level.
 	 */
-	public Board getBoard() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "getBoard"); return board;}
+	public Board getBoard() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "getBoard", "lines 160:2 - 160:15"); return board;}
 
 	/**
 	 * Moves the unit into the given direction if possible and handles all
@@ -150,13 +143,9 @@ public class Level {
 	 * @param direction
 	 *            The direction to move the unit in.
 	 */
-	public void move(Unit unit, Direction direction) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "move"); assert unit != null; assert direction != null;
-
-		if (!isInProgress()) {
+	public void move(Unit unit, Direction direction) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "move", "lines 173:2 - 173:22"); assert unit != null; Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "move", "lines 174:2 - 174:27"); assert direction != null; Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "move", "lines 176:2 - 178:3"); if (!isInProgress()) {
 			return;
-		}
-
-		synchronized (moveLock) {
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "move", "lines 180:2 - 193:3"); synchronized (moveLock) {
 			unit.setDirection(direction);
 			Square location = unit.getSquare();
 			Square destination = location.getSquareAt(direction);
@@ -175,7 +164,7 @@ public class Level {
 	 * Starts or resumes this level, allowing movement and (re)starting the
 	 * NPCs.
 	 */
-	public void start() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "start"); synchronized (startStopLock) {
+	public void start() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "start", "lines 201:2 - 208:3"); synchronized (startStopLock) {
 			if (isInProgress()) {
 				return;
 			}
@@ -188,7 +177,7 @@ public class Level {
 	 * Stops or pauses this level, no longer allowing any movement on the board
 	 * and stopping all NPCs.
 	 */
-	public void stop() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "stop"); synchronized (startStopLock) {
+	public void stop() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "stop", "lines 216:2 - 222:3"); synchronized (startStopLock) {
 			if (!isInProgress()) {
 				return;
 			}
@@ -199,7 +188,7 @@ public class Level {
 	/**
 	 * Starts all NPC movement scheduling.
 	 */
-	private void startNPCs() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "startNPCs"); for (final NPC npc : npcs.keySet()) {
+	private void startNPCs() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "startNPCs", "lines 229:2 - 235:3"); for (final NPC npc : npcs.keySet()) {
 			ScheduledExecutorService service = Executors
 					.newSingleThreadScheduledExecutor();
 			service.schedule(new NpcMoveTask(service, npc),
@@ -211,7 +200,7 @@ public class Level {
 	 * Stops all NPC movement scheduling and interrupts any movements being
 	 * executed.
 	 */
-	private void stopNPCs() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "stopNPCs"); for (Entry<NPC, ScheduledExecutorService> e : npcs.entrySet()) {
+	private void stopNPCs() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "stopNPCs", "lines 243:2 - 245:3"); for (Entry<NPC, ScheduledExecutorService> e : npcs.entrySet()) {
 			e.getValue().shutdownNow();
 		}}
 
@@ -221,16 +210,16 @@ public class Level {
 	 * 
 	 * @return <code>true</code> iff this level is in progress.
 	 */
-	public boolean isInProgress() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "isInProgress"); return inProgress;}
+	public boolean isInProgress() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "isInProgress", "lines 255:2 - 255:20"); return inProgress;}
 
 	/**
 	 * Updates the observers about the state of this level.
 	 */
-	private void updateObservers() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "updateObservers"); if (!isAnyPlayerAlive()) {
+	private void updateObservers() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "updateObservers", "lines 262:2 - 266:3"); if (!isAnyPlayerAlive()) {
 			for (LevelObserver o : observers) {
 				o.levelLost();
 			}
-		} if (remainingPellets() == 0) {
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "updateObservers", "lines 267:2 - 271:3"); if (remainingPellets() == 0) {
 			for (LevelObserver o : observers) {
 				o.levelWon();
 			}
@@ -243,19 +232,18 @@ public class Level {
 	 * @return <code>true</code> if at least one of the registered players is
 	 *         alive.
 	 */
-	public boolean isAnyPlayerAlive() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "isAnyPlayerAlive"); for (Player p : players) {
+	public boolean isAnyPlayerAlive() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "isAnyPlayerAlive", "lines 282:2 - 286:3"); for (Player p : players) {
 			if (p.isAlive()) {
 				return true;
 			}
-		} return false;}
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "isAnyPlayerAlive", "lines 287:2 - 287:15"); return false;}
 
 	/**
 	 * Counts the pellets remaining on the board.
 	 * 
 	 * @return The amount of pellets remaining on the board.
 	 */
-	public int remainingPellets() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "remainingPellets"); Board b = getBoard(); int pellets = 0;
-		for (int x = 0; x < b.getWidth(); x++) {
+	public int remainingPellets() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "remainingPellets", "lines 296:2 - 296:23"); Board b = getBoard(); Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "remainingPellets", "lines 297:2 - 297:18"); int pellets = 0; Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "remainingPellets", "lines 298:2 - 306:3"); for (int x = 0; x < b.getWidth(); x++) {
 			for (int y = 0; y < b.getHeight(); y++) {
 				for (Unit u : b.squareAt(x, y).getOccupants()) {
 					if (u instanceof Pellet) {
@@ -263,9 +251,7 @@ public class Level {
 					}
 				}
 			}
-		}
-		assert pellets >= 0;
-		return pellets;}
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "remainingPellets", "lines 307:2 - 307:22"); assert pellets >= 0; Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "remainingPellets", "lines 308:2 - 308:17"); return pellets;}
 
 	/**
 	 * A task that moves an NPC and reschedules itself after it finished.
@@ -298,11 +284,9 @@ public class Level {
 		}
 
 		@Override
-		public void run() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "run"); Direction nextMove = npc.nextMove(); if (nextMove != null) {
+		public void run() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "run", "lines 343:3 - 343:39"); Direction nextMove = npc.nextMove(); Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "run", "lines 344:3 - 346:4"); if (nextMove != null) {
 				move(npc, nextMove);
-			}
-			long interval = npc.getInterval();
-			service.schedule(this, interval, TimeUnit.MILLISECONDS);}
+			} Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "run", "lines 347:3 - 347:37"); long interval = npc.getInterval(); Api.hit("/src/main/java/nl/tudelft/jpacman/level/Level.java", "run", "lines 348:3 - 348:59"); service.schedule(this, interval, TimeUnit.MILLISECONDS);}
 	}
 
 	/**

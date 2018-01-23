@@ -25,7 +25,7 @@ import nl.tudelft.jpacman.level.Player; import nl.tudelft.jpacman.Api; public ab
 	/**
 	 * Starts or resumes the game.
 	 */
-	public void start() {Api.hit("/src/main/java/nl/tudelft/jpacman/game/Game.java", "start"); synchronized (progressLock) {
+	public void start() {Api.hit("/src/main/java/nl/tudelft/jpacman/game/Game.java", "start", "lines 38:2 - 48:3"); synchronized (progressLock) {
 			if (isInProgress()) {
 				return;
 			}
@@ -40,7 +40,7 @@ import nl.tudelft.jpacman.level.Player; import nl.tudelft.jpacman.Api; public ab
 	/**
 	 * Pauses the game.
 	 */
-	public void stop() {Api.hit("/src/main/java/nl/tudelft/jpacman/game/Game.java", "stop"); synchronized (progressLock) {
+	public void stop() {Api.hit("/src/main/java/nl/tudelft/jpacman/game/Game.java", "stop", "lines 55:2 - 61:3"); synchronized (progressLock) {
 			if (!isInProgress()) {
 				return;
 			}
@@ -51,7 +51,7 @@ import nl.tudelft.jpacman.level.Player; import nl.tudelft.jpacman.Api; public ab
 	/**
 	 * @return <code>true</code> iff the game is started and in progress.
 	 */
-	public boolean isInProgress() {Api.hit("/src/main/java/nl/tudelft/jpacman/game/Game.java", "isInProgress"); return inProgress;}
+	public boolean isInProgress() {Api.hit("/src/main/java/nl/tudelft/jpacman/game/Game.java", "isInProgress", "lines 68:2 - 68:20"); return inProgress;}
 
 	/**
 	 * @return An immutable list of the participants of this game.
@@ -71,14 +71,14 @@ import nl.tudelft.jpacman.level.Player; import nl.tudelft.jpacman.Api; public ab
 	 * @param direction
 	 *            The direction to move in.
 	 */
-	public void move(Player player, Direction direction) {Api.hit("/src/main/java/nl/tudelft/jpacman/game/Game.java", "move"); if (isInProgress()) {
+	public void move(Player player, Direction direction) {Api.hit("/src/main/java/nl/tudelft/jpacman/game/Game.java", "move", "lines 90:2 - 93:3"); if (isInProgress()) {
 			// execute player move.
 			getLevel().move(player, direction);
 		}}
 	
 	@Override
-	public void levelWon() {Api.hit("/src/main/java/nl/tudelft/jpacman/game/Game.java", "levelWon"); stop();}
+	public void levelWon() {Api.hit("/src/main/java/nl/tudelft/jpacman/game/Game.java", "levelWon", "lines 98:2 - 98:9"); stop();}
 	
 	@Override
-	public void levelLost() {Api.hit("/src/main/java/nl/tudelft/jpacman/game/Game.java", "levelLost"); stop();}
+	public void levelLost() {Api.hit("/src/main/java/nl/tudelft/jpacman/game/Game.java", "levelLost", "lines 103:2 - 103:9"); stop();}
 }

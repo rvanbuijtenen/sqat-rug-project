@@ -30,12 +30,9 @@ import nl.tudelft.jpacman.board.Unit; import nl.tudelft.jpacman.Api; public fina
 	 *         square, an empty list is returned.
 	 */
 	public static List<Direction> shortestPath(Square from, Square to,
-			Unit traveller) {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "shortestPath"); if (from.equals(to)) {
+			Unit traveller) {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "shortestPath", "lines 43:2 - 45:3"); if (from.equals(to)) {
 			return new ArrayList<>();
-		} List<Node> targets = new ArrayList<>();
-		Set<Square> visited = new HashSet<>();
-		targets.add(new Node(null, from, null));
-		while (!targets.isEmpty()) {
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "shortestPath", "lines 47:2 - 47:41"); List<Node> targets = new ArrayList<>(); Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "shortestPath", "lines 48:2 - 48:40"); Set<Square> visited = new HashSet<>(); Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "shortestPath", "lines 49:2 - 49:42"); targets.add(new Node(null, from, null)); Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "shortestPath", "lines 50:2 - 58:3"); while (!targets.isEmpty()) {
 			Node n = targets.remove(0);
 			Square s = n.getSquare();
 			if (s.equals(to)) {
@@ -43,11 +40,10 @@ import nl.tudelft.jpacman.board.Unit; import nl.tudelft.jpacman.Api; public fina
 			}
 			visited.add(s);
 			addNewTargets(traveller, targets, visited, n, s);
-		}
-		return null;}
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "shortestPath", "lines 59:2 - 59:14"); return null;}
 
 	private static void addNewTargets(Unit traveller, List<Node> targets,
-			Set<Square> visited, Node n, Square s) {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "addNewTargets"); for (Direction d : Direction.values()) {
+			Set<Square> visited, Node n, Square s) {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "addNewTargets", "lines 64:2 - 71:3"); for (Direction d : Direction.values()) {
 			Square target = s.getSquareAt(d);
 			if (!visited.contains(target)
 					&& (traveller == null || target
@@ -69,11 +65,7 @@ import nl.tudelft.jpacman.board.Unit; import nl.tudelft.jpacman.Api; public fina
 	 *         such unit could be found.
 	 */
 	public static Unit findNearest(Class<? extends Unit> type,
-			Square currentLocation) {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "findNearest"); List<Square> toDo = new ArrayList<>(); Set<Square> visited = new HashSet<>();
-
-		toDo.add(currentLocation);
-
-		while (!toDo.isEmpty()) {
+			Square currentLocation) {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "findNearest", "lines 88:2 - 88:40"); List<Square> toDo = new ArrayList<>(); Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "findNearest", "lines 89:2 - 89:40"); Set<Square> visited = new HashSet<>(); Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "findNearest", "lines 91:2 - 91:28"); toDo.add(currentLocation); Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "findNearest", "lines 93:2 - 106:3"); while (!toDo.isEmpty()) {
 			Square square = toDo.remove(0);
 			Unit unit = findUnit(type, square);
 			if (unit != null) {
@@ -86,8 +78,7 @@ import nl.tudelft.jpacman.board.Unit; import nl.tudelft.jpacman.Api; public fina
 					toDo.add(newTarget);
 				}
 			}
-		}
-		return null;}
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "findNearest", "lines 107:2 - 107:14"); return null;}
 
 	/**
 	 * Determines whether a square has an occupant of a certain type.
@@ -99,11 +90,11 @@ import nl.tudelft.jpacman.board.Unit; import nl.tudelft.jpacman.Api; public fina
 	 * @return A unit of type T, iff such a unit occupies this square, or
 	 *         <code>null</code> of none does.
 	 */
-	public static Unit findUnit(Class<? extends Unit> type, Square square) {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "findUnit"); for (Unit u : square.getOccupants()) {
+	public static Unit findUnit(Class<? extends Unit> type, Square square) {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "findUnit", "lines 121:2 - 125:3"); for (Unit u : square.getOccupants()) {
 			if (type.isInstance(u)) {
 				return u;
 			}
-		} return null;}
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "findUnit", "lines 126:2 - 126:14"); return null;}
 
 	/**
 	 * Helper class to keep track of the path.
@@ -150,28 +141,26 @@ import nl.tudelft.jpacman.board.Unit; import nl.tudelft.jpacman.Api; public fina
 		 * @return The direction for this node, or <code>null</code> if this
 		 *         node is a root node.
 		 */
-		private Direction getDirection() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "getDirection"); return direction;}
+		private Direction getDirection() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "getDirection", "lines 175:3 - 175:20"); return direction;}
 
 		/**
 		 * @return The square for this node.
 		 */
-		private Square getSquare() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "getSquare"); return square;}
+		private Square getSquare() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "getSquare", "lines 182:3 - 182:17"); return square;}
 
 		/**
 		 * @return The parent node, or <code>null</code> if this node is a root
 		 *         node.
 		 */
-		private Node getParent() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "getParent"); return parent;}
+		private Node getParent() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "getParent", "lines 190:3 - 190:17"); return parent;}
 
 		/**
 		 * Returns the list of values from the root of the tree to this node.
 		 * 
 		 * @return The list of values from the root of the tree to this node.
 		 */
-		private List<Direction> getPath() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "getPath"); if (getParent() == null) {
+		private List<Direction> getPath() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "getPath", "lines 199:3 - 201:4"); if (getParent() == null) {
 				return new ArrayList<>();
-			} List<Direction> path = parent.getPath();
-			path.add(getDirection());
-			return path;}
+			} Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "getPath", "lines 202:3 - 202:43"); List<Direction> path = parent.getPath(); Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "getPath", "lines 203:3 - 203:28"); path.add(getDirection()); Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Navigation.java", "getPath", "lines 204:3 - 204:15"); return path;}
 	}
 }

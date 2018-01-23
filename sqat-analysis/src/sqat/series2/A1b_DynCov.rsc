@@ -6,6 +6,7 @@ import util::FileSystem;
 import Message;
 import lang::java::jdt::m3::AST;
 import IO;
+import lang::csv::IO;
 import ValueIO;
 import lang::java::m3::Core;
 import Type;
@@ -54,25 +55,29 @@ Tips:
    [NT]"...", where NT represents the desired non-terminal (e.g. Expr, IntLiteral etc.).  
 
 */
+alias C = map[str,map[str,list[str]]];
+
+rel[str class,str method,str line] r = {};
+
 int insertedCnt = 0;
 void main(str coverageLevel) {
 	loc project = |project://jpacman-framework/src/main/java/nl/tudelft/jpacman/|;
 	rel[loc, Tree, int, int] augmented_files = {augmentFile(f, coverageLevel) | f <- files(project)};
-	commitProject(augmented_files);
+	saveProject(augmented_files);
+	writeCSV(r, |project://jpacman-instrumented/inserted.csv|);
 }
 
-void commitProject(rel[loc, Tree, int, int] augmentedFiles) {
+void saveProject(rel[loc, Tree, int, int] augmentedFiles) {
 	for(f <- augmentedFiles) {
-		commitFile(f);
+		saveFile(f);
 	}
 	Tree api = parse(#start[CompilationUnit], |project://sqat-analysis/src/sqat/series2/Api.java|, allowAmbiguity=true);
 	loc apiCopyLoc = |project://jpacman-instrumented/src/main/java/nl/tudelft/jpacman/Api.java|;
 	writeFile(apiCopyLoc, api);
 }
 
-void commitFile(<loc l, Tree t, int insertedMethodCnt, int insertedStmtCnt>) {
-	println("saving file");
-	println(l);
+void saveFile(<loc l, Tree t, int insertedMethodCnt, int insertedStmtCnt>) {
+	println("saving file" + l.path);
 	writeFile(l, t);
 }
 
@@ -120,33 +125,7 @@ Tree augmentMethods(Tree t) {
 		case (MethodBody) `<MethodBody b>` => putInMethod(b, callMthd, name)
 	}
 }
-/*
-void main(str mode) {
-	loc project = |project://jpacman-framework/src/main/java/nl/tudelft/jpacman/|;
-	switch(mode) {
-		case "augment": {
-			augment(project);
-		}
-		case "coverage": {
-			//methodCoverage(project);
-			//lineCoverage(project);
-			;
-		}
-	}
-}
 
-void augmentProject(loc project) {
-	set[rel[loc, Tree]] augmented_files = {augmentFile(f) | f <- files(project)};
-	tree = parse(#start[CompilationUnit], project, allowAmbiguity=true);
-	<mCnt, lCnt> = count(tree);
-	println(mCnt);
-	println(lCnt);
-}
-
-rel[loc, Tree] augmentFile(loc file) {
-	rel[loc, Tree t];
-}
-*/
 tuple[int, int] count(Tree tree) {
 	tuple[int mCnt, int lCnt] cnts = <0, 0>;
 	visit(tree) {
@@ -157,53 +136,7 @@ tuple[int, int] count(Tree tree) {
 	}
 	return cnts;
 }
-/*
-void main() {
-	loc project = |project://jpacman-instrumented/src/main/java/nl/tudelft/jpacman/Launcher.java|;
-	tree = parse(#start[CompilationUnit], project, allowAmbiguity=true);
-	//println(tree);
-	
-	call = (BlockStm)`Api.call("test123");`;
-	api = (ImportDec)`import nl.tudelft.jpacman.Api;`;
-	
-	x = top-down-break visit(tree) {
-		case (CompilationUnit) `<PackageDec? package> <ImportDec* imports> <TypeDec* types>` => (CompilationUnit)`<PackageDec? package> <ImportDec* imports> <ImportDec api> <TypeDec* types>`
-	}
-	Id name = (Id)`none`;
-	methodCnt = 0;
-	statementCnt = 0;
-	visit(x) {
-		case (MethodBody) `<MethodBody b>`: {
-			methodCnt += 1;
-			println(countStatements(b));
-			statementCnt += countStatements(b);
-		}
-	}
-	x = top-down visit(x) {
-		case (MethodDecHead) `<MethodDecHead h>`: {
-			name = getMethodName(h);
-		}
-		case (MethodBody) `{<BlockStm* stms>}` => blockify(putBeforeEvery(stms, callStmt, name))
-		
-	}
-	x = top-down visit(x) {
-		case (MethodDecHead) `<MethodDecHead h>`: {
-			name = getMethodName(h);
-		} 
-		case (MethodBody) `<MethodBody b>` => putInMethod(b, callMthd, name)
-	}
-	
-	
-	
 
-	println(x);
-	//println(x);
-	println(methodCnt);
-	println(statementCnt);
-	//methodCoverage(project);
-	//lineCoverage(project);
-}
-*/
 int countStatements((BlockStm)`<BlockStm* stms>`) {
 	cnt = 0;
 	bottom-up visit(stms) {
@@ -224,8 +157,9 @@ Id getMethodName(MethodDecHead m) {
 		}
 		case (Id) `<Id name>`: {
 			if(currentAnno != name) {
-				if(unparse(name)[0] notin ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]) {
-					println(name);
+				if(unparse(name)[0] notin [
+				"A","B","C","D","E","F","G","H","I","J","K","L","M",
+				"N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]) {
 					return name;
 				}
 			}
@@ -243,10 +177,8 @@ StringLiteral getSrcLoc(loc l) {
 	return (StringLiteral)`"<StringPart sp>"`;
 }
 
-
 BlockStm callStmt(loc l, Id name) {
-	str s = unparse(name);
-	StringPart sp = parse(#StringPart, s);
+	StringPart sp = parse(#StringPart, unparse(name));
 	StringLiteral c = getClass(l);
 	StringLiteral m = (StringLiteral)`"<StringPart sp>"`;
 	StringLiteral src = getSrcLoc(l);
@@ -254,8 +186,7 @@ BlockStm callStmt(loc l, Id name) {
 }
 
 BlockStm callMthd(loc l, Id name) {
-	str s = unparse(name);
-	StringPart sp = parse(#StringPart, s);
+	StringPart sp = parse(#StringPart, unparse(name));
 	StringLiteral c = getClass(l);
 	StringLiteral m = (StringLiteral)`"<StringPart sp>"`;
 	return (BlockStm)`Api.hit(<StringLiteral c>, <StringLiteral m>);`;
@@ -263,26 +194,26 @@ BlockStm callMthd(loc l, Id name) {
 
 MethodBody blockify(BlockStm* stms) = (MethodBody)`{<BlockStm* stms>}`;
 
-void methodCoverage(loc project) {
-	set[Declaration] decls = createAstsFromEclipseProject(project, true);
-	BlockStm stms = [];
-	insertedStm = (BlockStm)`call();`;
-	x = visit(decls){
-		case (Block) `{<BlockStm* stms>}` => putBeforeEvery(stms, callMethod)
-	}
-  // to be done
+bool logMethod(loc l, str name) {
+	r += <l.path, name, "">;
+	return true;
 }
 
-void lineCoverage(loc project) {
-  // to be done
+bool logStatement(loc l, str name) {
+	line = "lines <l.begin.line>:<l.begin.column> - <l.end.line>:<l.end.column>";
+	r += <l.path, name, line>;
+	return true;
 }
 
 MethodBody putInMethod(MethodBody b, BlockStm(loc, Id) f, Id name) {
 	MethodBody put(b:(MethodBody)`{}`) = (MethodBody)`{<BlockStm s>}`
-		when BlockStm s := f(b@\loc, name);
+		when BlockStm s := f(b@\loc, name),
+			logMethod(b@\loc, unparse(name));
+		//logMethod(b@\loc);
 	MethodBody put(b:(MethodBody)`;`) = (MethodBody)`;`;
 	MethodBody put(b:(MethodBody)`{<BlockStm s0> <BlockStm* stms>}`) = (MethodBody)`{<BlockStm s> <BlockStm s0> <BlockStm* stms>}`
-    	when BlockStm s := f(s0@\loc, name);
+    	when BlockStm s := f(s0@\loc, name),
+    		logMethod(s0@\loc, unparse(name));
     
    	return put(b);
 }
@@ -292,29 +223,101 @@ MethodBody putInMethod(MethodBody b, BlockStm(loc, Id) f, Id name) {
 // and producing the BlockStm to-be-inserted 
 BlockStm* putBeforeEvery(BlockStm* stms, BlockStm(loc, Id) f, Id name) {
   Block put(b:(Block)`{}`) = (Block)`{<BlockStm s>}`
-    when BlockStm s := f(b@\loc, name);
+    when BlockStm s := f(b@\loc, name),
+    	logStatement(b@\loc, unparse(name));
   
   Block put((Block)`{<BlockStm s0>}`) = (Block)`{<BlockStm s> <BlockStm s0>}`
-    when BlockStm s := f(s0@\loc, name);
+    when BlockStm s := f(s0@\loc, name),
+    	logStatement(s0@\loc, unparse(name));
   
   Block put((Block)`{<BlockStm s0> <BlockStm+ stms>}`) 
     = (Block)`{<BlockStm s> <BlockStm s0> <BlockStm* stms2>}`
     when
       BlockStm s := f(s0@\loc, name), 
-      (Block)`{<BlockStm* stms2>}` := put((Block)`{<BlockStm+ stms>}`);
+      (Block)`{<BlockStm* stms2>}` := put((Block)`{<BlockStm+ stms>}`),
+    	logStatement(s0@\loc, unparse(name));
 
   if ((Block)`{<BlockStm* stms2>}` := put((Block)`{<BlockStm* stms>}`)) {
     return stms2;
   }
 }
 
+C parseCsvToMap(rel[str,str,str] r) {
+	C c = ();
+	for(<i,j,k> <- r) {
+		if(i in c && j in c[i] && k notin c[i][j]) {
+			c[i][j] += k;
+		}
+		if(i in c && j notin c[i]) {
+			c[i] += (j:[k]);
+		}
+		if(i notin c) {
+			c[i] = (j:[k]);
+		}
+	}
+	return c;
+}
 
-/*
-TODO:
-	- copy api to correct location
-	- save modified source to jpacman-instrumented
-	- run test cases
-	- read produced .csv
-	- use .csv data to compute test coverage
-	- run test cases from rascal?
-*/
+alias coverage = rel[tuple[str,str], int, int, real];
+
+tuple[coverage, real] getCoverage(C c1, C c2) {
+	coverage cov = {};
+	int totalInserted = 0;
+	int totalCovered = 0;
+	for(class <- c1) {
+		for(method <- c1[class]) {
+			if(class in c2 && method in c2[class]) {
+				int insertedCnt = size(c1[class][method]);
+				int coveredCnt = size(c2[class][method]);
+				totalInserted += insertedCnt;
+				totalCovered += coveredCnt;
+				real covPercent = (coveredCnt * 100.0) / insertedCnt;
+				cov += <<class, method>, insertedCnt, coveredCnt, covPercent>;
+			}
+			if(class in c2 && method notin c2[class] || class notin c2) {
+				int insertedCnt = size(c1[class][method]);
+				totalInserted += insertedCnt;
+				int coveredCnt = 0;
+				real covPercent = (coveredCnt * 100.0) / insertedCnt;
+				cov += <<class, method>, insertedCnt, coveredCnt, covPercent>;
+			}
+		}
+	}
+	return <cov, (totalCovered * 100.0) / totalInserted>;
+}
+
+void answerQuestions() {
+	loc insertedLoc = |project://jpacman-instrumented/inserted.csv|;
+	loc apiOutput = |project://jpacman-instrumented/apiOutput.csv|;
+	rel[str,str,str] inserted = readCSV(#rel[str,str,str], insertedLoc);
+	C cin = parseCsvToMap(inserted);
+	rel[str,str,str] output = readCSV(#rel[str,str,str], apiOutput);
+	C cout = parseCsvToMap(output);
+	<cov, totalCov> = getCoverage(cin, cout);
+	for(<<a,b>,d,e,f> <- cov) {
+		if (f < 100.0) {
+			println("<a> <b> <d>:<e> <f>");
+		}
+	}
+	
+	println("use a third-party coverage tool (e.g. Clover) to compare your results to (explain differences)");
+	println("Eclipses \'Coverage as\' option runs all test cases and reports an instruction coverage of 81.7%.");
+	println("\nwhich methods have full line coverage?");
+	for(<<a,b>,d,e,f> <- cov) {
+		if (f == 100.0) {
+			println("<a> <b> <d>:<e> <f>");
+		}
+	}
+	
+	println("\nwhich methods are not covered at all, and why does it matter (if so)?");
+	for(<<a,b>,d,e,f> <- cov) {
+		if (f == 0.0) {
+			println("<a> <b> <d>:<e> <f>");
+		}
+	}
+	println("\nwhat are the drawbacks of source-based instrumentation?");
+	println("1) Computationally expensive (parse entire source, run all test cases, parse produced output)");
+	println("2) Requires a working version of the source code. This is not always an easy task if the code was supplied by a third party");
+	println("The total covereage is: <totalCov>");
+}
+

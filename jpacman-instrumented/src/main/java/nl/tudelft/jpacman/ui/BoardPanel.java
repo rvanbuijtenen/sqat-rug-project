@@ -52,7 +52,7 @@ import nl.tudelft.jpacman.game.Game; import nl.tudelft.jpacman.Api; class BoardP
 	}
 
 	@Override
-	public void paint(Graphics g) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/BoardPanel.java", "paint"); assert g != null; render(game.getLevel().getBoard(), g, getSize());}
+	public void paint(Graphics g) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/BoardPanel.java", "paint", "lines 66:2 - 66:19"); assert g != null; Api.hit("/src/main/java/nl/tudelft/jpacman/ui/BoardPanel.java", "paint", "lines 67:2 - 67:51"); render(game.getLevel().getBoard(), g, getSize());}
 
 	/**
 	 * Renders the board on the given graphics context to the given dimensions.
@@ -64,12 +64,7 @@ import nl.tudelft.jpacman.game.Game; import nl.tudelft.jpacman.Api; class BoardP
 	 * @param window
 	 *            The dimensions to scale the rendered board to.
 	 */
-	private void render(Board board, Graphics g, Dimension window) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/BoardPanel.java", "render"); int cellW = window.width / board.getWidth(); int cellH = window.height / board.getHeight();
-
-		g.setColor(BACKGROUND_COLOR);
-		g.fillRect(0, 0, window.width, window.height);
-
-		for (int y = 0; y < board.getHeight(); y++) {
+	private void render(Board board, Graphics g, Dimension window) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/BoardPanel.java", "render", "lines 81:2 - 81:46"); int cellW = window.width / board.getWidth(); Api.hit("/src/main/java/nl/tudelft/jpacman/ui/BoardPanel.java", "render", "lines 82:2 - 82:48"); int cellH = window.height / board.getHeight(); Api.hit("/src/main/java/nl/tudelft/jpacman/ui/BoardPanel.java", "render", "lines 84:2 - 84:31"); g.setColor(BACKGROUND_COLOR); Api.hit("/src/main/java/nl/tudelft/jpacman/ui/BoardPanel.java", "render", "lines 85:2 - 85:48"); g.fillRect(0, 0, window.width, window.height); Api.hit("/src/main/java/nl/tudelft/jpacman/ui/BoardPanel.java", "render", "lines 87:2 - 94:3"); for (int y = 0; y < board.getHeight(); y++) {
 			for (int x = 0; x < board.getWidth(); x++) {
 				int cellX = x * cellW;
 				int cellY = y * cellH;
@@ -95,7 +90,7 @@ import nl.tudelft.jpacman.game.Game; import nl.tudelft.jpacman.Api; class BoardP
 	 * @param h
 	 *            The height of this square (in pixels.)
 	 */
-	private void render(Square square, Graphics g, int x, int y, int w, int h) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/BoardPanel.java", "render"); square.getSprite().draw(g, x, y, w, h); for (Unit unit : square.getOccupants()) {
+	private void render(Square square, Graphics g, int x, int y, int w, int h) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/BoardPanel.java", "render", "lines 115:2 - 115:41"); square.getSprite().draw(g, x, y, w, h); Api.hit("/src/main/java/nl/tudelft/jpacman/ui/BoardPanel.java", "render", "lines 116:2 - 118:3"); for (Unit unit : square.getOccupants()) {
 			unit.getSprite().draw(g, x, y, w, h);
 		}}
 }

@@ -9,6 +9,8 @@ import ParseTree;
 import Type;
 import List;
 import String;
+import Set;
+import Map;
 /*
 Implement static code coverage metrics by Alves & Visser 
 (https://www.sig.eu/en/about-sig/publications/static-estimation-test-coverage)
@@ -60,104 +62,90 @@ alias Edge = rel[Node,Label,Node];
 alias Node = loc;
 alias Label = str;
 
+alias Graph2 = rel[Node,Node];
+
 void main() {
-	M3 x = jpacmanM3();
-	invocations = x.methodInvocation;
-	jpacman_invocations = getJpacmanInvocations(invocations);
-	Graph result = jpacman_invocations;
-	result = solve(jpacman_invocations) {
-		result = {<f1, l1, t2> | <f1,l1,t1> <- result, <f2, l2, t2> <- jpacman_invocations, f1 != t2, t1 == f2};
-	}
-	tuple[real, rel[loc, bool]] coverage = getTestCoverage(result, getMethods(x.declarations));
-	println("Total test coverage is:");
-	println(coverage[0]);
-	println("Coverage on methodlevel is:");
-	for(<method, isCovered> <- coverage[1]) {
-		println("<method><isCovered>");
-	}
-	answerQuestions();
-}
-
-void answerQuestions(){
-	print( "how do your results compare to the jpacman results in the paper? Has jpacman improved?\n" );
-	print( "use a third-party coverage tool (e.g. Clover) to compare your results\n" );
-	print( "We used the tool Emma, which determines the coverage level based on instructions. They report a test coverage of 40.6%\n" );
-
-}
-
-rel[loc,loc] getMethods(rel[loc,loc] decls) {
-	return {<name, src> | <name, src> <- decls, /java\+method/ := name.uri, !contains(name.uri, "test")};
-}
-
-tuple[real,rel[loc, bool]] getTestCoverage(Graph g, rel[loc, loc] methods) {
+	M3 m3 = jpacmanM3();
+	Graph2 g;
 	
-	map[loc, bool] m = ();
-	for(<name, src> <- methods) {
-		m[name] = false;
-	}
-	for(<from,label,to> <- g) {
-		if(isTest(from)) {
-			m[to] = true;
+	tst = getMethods(m3);
+	g = buildGraph(m3, tst);
+	Graph2 closure = transitiveClosure(g);
+	
+	coverage = getCoverage(closure, tst);
+	answerQuestions(coverage);
+}
+
+tuple[set[loc],set[loc]] getCoverage(Graph2 closure, map[loc, loc] tst) {
+	set[loc] coveredmethods = {};
+	set[loc] allmethods = {};
+	for(<from,to> <- closure) {
+		if(isTest(from, tst) && !isTest(to, tst)) {
+			if(to notin coveredmethods) {
+				coveredmethods += to;
+			}
+		}
+		if(to notin allmethods && !isTest(to, tst)) {
+			allmethods += to;
 		}
 	}
-	total = 0.0;
-	tested = 0.0;
-	for(src <- m) {
-		total+= 1;
-		tested += m[src] == true ? 1 : 0;
-	}
-	rel[loc, bool] coverage = {};
-	for(src <- m) {
-		coverage += <src, m[src]>;
-	}
-	
-	return  <tested/total*100, coverage>;
+	return <coveredmethods, allmethods>;
 }
 
-Graph getJpacmanInvocations(invocations) {
-	Graph jpacman_invocations = {};
-	for(<from, to> <- invocations) {
-		if(!isExternalSource(to)){
-			if(isTest(from)) {
-				jpacman_invocations += <from, "test", to>;
-			} else {
-				jpacman_invocations += <from, "call", to>;
+Graph2 transitiveClosure(Graph2 g) {
+	Graph2 result = g;
+	solve(g) {
+		int s = 0;
+		int new_s = 0;
+		s = size(result);
+		result = result + {<f1,t2> | <f1,t1> <-result, <f2,t2> <- result, t1 == f2, <f1,t2> notin result};
+		new_s = size(result);
+		while(new_s > s) {
+			s = new_s;
+			result = result + {<f1,t2> | <f1,t1> <-result, <f2,t2> <- result, t1 == f2, <f1,t2> notin result};
+			new_s = size(result);
+		}
+	}
+	return result;
+}
+
+bool isJpacman(loc l) = contains(l.path, "/jpacman/");
+
+map[loc, loc] getMethods(M3 m3) {
+	map[loc, loc] tst = ();
+	for(decl <- m3.declarations) {
+		if(isMethod(decl.name)) {
+			if(isJpacman(decl.name)) {
+				if(contains(decl.src.path, "/test/")) {
+					tst += (decl.name: decl.src);
+				}
 			}
-		}	
+		}
 	}
-	return jpacman_invocations;
+	return tst;
 }
 
-bool isExternalSource(loc l) {
-	return !(/nl\/tudelft\/jpacman/ := l.uri);
-}
+bool isTest(loc l, map[loc, loc] tst) = l in tst ? true : false;
 
-bool isTest(loc l) {
-	return (/test/ := l.uri) || (/Test/ := l.uri);
-}
-
-set[tuple[loc, str]] getJpacmanMethods() {
-	set[tuple[loc src, str name]] methods = {};
-	set[Declaration] decls = createAstsFromEclipseProject(|project://jpacman-framework/|, true);
-	visit(decls) {
-		case m:\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl): {
-	    	methods += <m.src, name>;
-	    }
-	    case m:\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions): {
-	    	methods += <m.src, name>;
-	    }
-	    case c:\constructor(str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl):{
-	    	methods += <c.src, name>;
-	    }
+Graph2 buildGraph(M3 m3, map[loc, loc] tst) {
+	Graph2 g = {};
+	for(<from, to> <- m3.methodInvocation) {
+		if(isJpacman(to)) {
+			g += <from, to>;
+		}
 	}
-	return {<src, name> | <src, name> <- methods, !isTest(src), !isExternalSource(src)};
+	return g;
 }
 
-/**
- //* Step 1: remove calls to external sources
- //* Step 2: locate test cases
- * Step 3: create a graph set[Edge] where Edge = [Node, Label, Node]
- * Step 4: compute transitive closure (set[Edge]) on the graph until no new reachable nodes are added.
- * Step 5: extract all nodes that are present in the transitive closure
- * Step 6: compute tested_nodes = set[Node] all_nodes - set[Node] reachable_nodes
- */
+void answerQuestions(tuple[set[loc],set[loc]] coverage){
+	println("what methods are not covered at all?");
+	for(method <- coverage[1] - coverage[0]) {
+		println(method);
+	}
+	println("how do your results compare to the jpacman results in the paper? Has jpacman improved?");
+	println("use a third-party coverage tool (e.g. Clover) to compare your results to (explain differences)");
+println("We used the tool Emma, which determines the coverage level based on instructions. They report a test coverage of 40.6%
+We also used the integrated test coverage from eclipse, by running the jpacman prohect using the \"Coverage as\" option. This dynamic result lists 80.7% statement coverage.");
+	
+}
+

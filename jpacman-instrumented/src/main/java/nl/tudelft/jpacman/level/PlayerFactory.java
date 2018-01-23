@@ -20,7 +20,7 @@ package nl.tudelft.jpacman.level; import nl.tudelft.jpacman.sprite.PacManSprites
 	 * 
 	 * @return A new player.
 	 */
-	public Player createPacMan() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/PlayerFactory.java", "createPacMan"); return new Player(getSprites().getPacmanSprites(),
+	public Player createPacMan() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/PlayerFactory.java", "createPacMan", "lines 33:2 - 34:44"); return new Player(getSprites().getPacmanSprites(),
 				getSprites().getPacManDeathAnimation());}
 
 	/**
@@ -28,5 +28,5 @@ package nl.tudelft.jpacman.level; import nl.tudelft.jpacman.sprite.PacManSprites
 	 * 
 	 * @return The sprites for the player created.
 	 */
-	protected PacManSprites getSprites() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/PlayerFactory.java", "getSprites"); return sprites;}
+	protected PacManSprites getSprites() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/PlayerFactory.java", "getSprites", "lines 43:2 - 43:17"); return sprites;}
 }

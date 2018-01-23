@@ -80,17 +80,15 @@ import nl.tudelft.jpacman.ui.ScorePanel.ScoreFormatter; import nl.tudelft.jpacma
 	 * Starts the "engine", the thread that redraws the interface at set
 	 * intervals.
 	 */
-	public void start() {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUI.java", "run"); setVisible(true); ScheduledExecutorService service = Executors
-				.newSingleThreadScheduledExecutor();
-
-		service.scheduleAtFixedRate(new Runnable() {
+	public void start() {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUI.java", "run", "lines 102:2 - 102:19"); setVisible(true); Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUI.java", "run", "lines 104:2 - 105:40"); ScheduledExecutorService service = Executors
+				.newSingleThreadScheduledExecutor(); Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUI.java", "run", "lines 107:2 - 113:47"); service.scheduleAtFixedRate(new Runnable() {
 
 			@Override
-			public void run() {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUI.java", "run"); nextFrame();}
+			public void run() {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUI.java", "run", "lines 111:4 - 111:16"); nextFrame();}
 		}, 0, FRAME_INTERVAL, TimeUnit.MILLISECONDS);}
 
 	/**
 	 * Draws the next frame, i.e. refreshes the scores and game.
 	 */
-	private void nextFrame() {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUI.java", "nextFrame"); boardPanel.repaint(); scorePanel.refresh();}
+	private void nextFrame() {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUI.java", "nextFrame", "lines 121:2 - 121:23"); boardPanel.repaint(); Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUI.java", "nextFrame", "lines 122:2 - 122:23"); scorePanel.refresh();}
 }

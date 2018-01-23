@@ -51,11 +51,11 @@ package nl.tudelft.jpacman.board; import nl.tudelft.jpacman.Api; public enum Dir
 	 * @return The delta x (width difference) for a single step in this
 	 *         direction, in a matrix with 0,0 (x,y) as its top-left element.
 	 */
-	public int getDeltaX() {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Direction.java", "getDeltaX"); return dx;}
+	public int getDeltaX() {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Direction.java", "getDeltaX", "lines 62:2 - 62:12"); return dx;}
 
 	/**
 	 * @return The delta y (height difference) for a single step in this
 	 *         direction, in a matrix with 0,0 (x,y) as its top-left element.
 	 */
-	public int getDeltaY() {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Direction.java", "getDeltaY"); return dy;}
+	public int getDeltaY() {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Direction.java", "getDeltaY", "lines 70:2 - 70:12"); return dy;}
 }

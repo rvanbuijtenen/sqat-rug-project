@@ -30,11 +30,10 @@ import javax.imageio.ImageIO; import nl.tudelft.jpacman.Api; public class Sprite
 	 * @throws IOException
 	 *             When the resource could not be loaded.
 	 */
-	public Sprite loadSprite(String resource) throws IOException {Api.hit("/src/main/java/nl/tudelft/jpacman/sprite/SpriteStore.java", "loadSprite"); Sprite result = spriteMap.get(resource); if (result == null) {
+	public Sprite loadSprite(String resource) throws IOException {Api.hit("/src/main/java/nl/tudelft/jpacman/sprite/SpriteStore.java", "loadSprite", "lines 43:2 - 43:42"); Sprite result = spriteMap.get(resource); Api.hit("/src/main/java/nl/tudelft/jpacman/sprite/SpriteStore.java", "loadSprite", "lines 44:2 - 47:3"); if (result == null) {
 			result = loadSpriteFromResource(resource);
 			spriteMap.put(resource, result);
-		}
-		return result;}
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/sprite/SpriteStore.java", "loadSprite", "lines 48:2 - 48:16"); return result;}
 
 	/**
 	 * Loads a sprite from a resource on the class path.
@@ -45,7 +44,7 @@ import javax.imageio.ImageIO; import nl.tudelft.jpacman.Api; public class Sprite
 	 * @throws IOException
 	 *             When the resource could not be loaded.
 	 */
-	private Sprite loadSpriteFromResource(String resource) throws IOException {Api.hit("/src/main/java/nl/tudelft/jpacman/sprite/SpriteStore.java", "loadSpriteFromResource"); try (InputStream input = SpriteStore.class.getResourceAsStream(resource)) {
+	private Sprite loadSpriteFromResource(String resource) throws IOException {Api.hit("/src/main/java/nl/tudelft/jpacman/sprite/SpriteStore.java", "loadSpriteFromResource", "lines 61:2 - 68:3"); try (InputStream input = SpriteStore.class.getResourceAsStream(resource)) {
 			if (input == null) {
 				throw new IOException("Unable to load " + resource
 					+ ", resource does not exist.");
@@ -68,16 +67,9 @@ import javax.imageio.ImageIO; import nl.tudelft.jpacman.Api; public class Sprite
 	 * @return The animated sprite.
 	 */
 	public AnimatedSprite createAnimatedSprite(Sprite baseImage, int frames,
-			int delay, boolean loop) {Api.hit("/src/main/java/nl/tudelft/jpacman/sprite/SpriteStore.java", "createAnimatedSprite"); assert baseImage != null; assert frames > 0;
-
-		int frameWidth = baseImage.getWidth() / frames;
-
-		Sprite[] animation = new Sprite[frames];
-		for (int i = 0; i < frames; i++) {
+			int delay, boolean loop) {Api.hit("/src/main/java/nl/tudelft/jpacman/sprite/SpriteStore.java", "createAnimatedSprite", "lines 86:2 - 86:27"); assert baseImage != null; Api.hit("/src/main/java/nl/tudelft/jpacman/sprite/SpriteStore.java", "createAnimatedSprite", "lines 87:2 - 87:20"); assert frames > 0; Api.hit("/src/main/java/nl/tudelft/jpacman/sprite/SpriteStore.java", "createAnimatedSprite", "lines 89:2 - 89:49"); int frameWidth = baseImage.getWidth() / frames; Api.hit("/src/main/java/nl/tudelft/jpacman/sprite/SpriteStore.java", "createAnimatedSprite", "lines 91:2 - 91:42"); Sprite[] animation = new Sprite[frames]; Api.hit("/src/main/java/nl/tudelft/jpacman/sprite/SpriteStore.java", "createAnimatedSprite", "lines 92:2 - 95:3"); for (int i = 0; i < frames; i++) {
 			animation[i] = baseImage.split(i * frameWidth, 0, frameWidth,
 					baseImage.getHeight());
-		}
-
-		return new AnimatedSprite(animation, delay, loop);}
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/sprite/SpriteStore.java", "createAnimatedSprite", "lines 97:2 - 97:52"); return new AnimatedSprite(animation, delay, loop);}
 
 }

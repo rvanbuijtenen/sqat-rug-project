@@ -63,19 +63,15 @@ import nl.tudelft.jpacman.sprite.Sprite; import nl.tudelft.jpacman.Api; public c
 	 * </p>
 	 */
 	@Override
-	public Direction nextMove() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Clyde.java", "nextMove"); Square target = Navigation.findNearest(Player.class, getSquare())
-				.getSquare(); if (target == null) {
+	public Direction nextMove() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Clyde.java", "nextMove", "lines 100:2 - 101:17"); Square target = Navigation.findNearest(Player.class, getSquare())
+				.getSquare(); Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Clyde.java", "nextMove", "lines 102:2 - 104:3"); if (target == null) {
 			return randomMove();
-		}
-
-		List<Direction> path = Navigation.shortestPath(getSquare(), target,
-				this);
-		if (path != null && !path.isEmpty()) {
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Clyde.java", "nextMove", "lines 106:2 - 107:10"); List<Direction> path = Navigation.shortestPath(getSquare(), target,
+				this); Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Clyde.java", "nextMove", "lines 108:2 - 114:3"); if (path != null && !path.isEmpty()) {
 			Direction d = path.get(0);
 			if (path.size() <= SHYNESS) {
 				return OPPOSITES.get(d);
 			}
 			return d;
-		}
-		return randomMove();}
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Clyde.java", "nextMove", "lines 115:2 - 115:22"); return randomMove();}
 }

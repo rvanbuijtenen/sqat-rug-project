@@ -33,8 +33,8 @@ import com.google.common.collect.ImmutableList; import nl.tudelft.jpacman.Api; p
 	}
 
 	@Override
-	public List<Player> getPlayers() {Api.hit("/src/main/java/nl/tudelft/jpacman/game/SinglePlayerGame.java", "getPlayers"); return ImmutableList.of(player);}
+	public List<Player> getPlayers() {Api.hit("/src/main/java/nl/tudelft/jpacman/game/SinglePlayerGame.java", "getPlayers", "lines 46:2 - 46:34"); return ImmutableList.of(player);}
 
 	@Override
-	public Level getLevel() {Api.hit("/src/main/java/nl/tudelft/jpacman/game/SinglePlayerGame.java", "getLevel"); return level;}
+	public Level getLevel() {Api.hit("/src/main/java/nl/tudelft/jpacman/game/SinglePlayerGame.java", "getLevel", "lines 51:2 - 51:15"); return level;}
 }

@@ -17,14 +17,17 @@ import java.util.Map; import nl.tudelft.jpacman.Api; class PacKeyListener implem
 	}
 	
 	@Override
-	public void keyPressed(KeyEvent e) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacKeyListener.java", "keyPressed"); assert e != null; Action action = mappings.get(e.getKeyCode());
-		if (action != null) {
+	public void keyPressed(KeyEvent e) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacKeyListener.java", "keyPressed", "lines 30:2 - 30:19"); assert e != null; Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacKeyListener.java", "keyPressed", "lines 31:2 - 31:47"); Action action = mappings.get(e.getKeyCode()); Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacKeyListener.java", "keyPressed", "lines 32:2 - 34:3"); if (action != null) {
 			action.doAction();
 		}}
 
 	@Override
-	public void keyTyped(KeyEvent e) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacKeyListener.java", "keyTyped");}
+	public void keyTyped(KeyEvent e) {
+		// do nothing
+	}
 	
 	@Override
-	public void keyReleased(KeyEvent e) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacKeyListener.java", "keyReleased");}
+	public void keyReleased(KeyEvent e) {
+		// do nothing
+	}
 }

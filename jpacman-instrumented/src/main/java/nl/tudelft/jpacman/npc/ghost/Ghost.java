@@ -40,10 +40,10 @@ import nl.tudelft.jpacman.sprite.Sprite; import nl.tudelft.jpacman.Api; public a
 	}
 
 	@Override
-	public Sprite getSprite() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Ghost.java", "getSprite"); return sprites.get(getDirection());}
+	public Sprite getSprite() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Ghost.java", "getSprite", "lines 53:2 - 53:37"); return sprites.get(getDirection());}
 
 	@Override
-	public long getInterval() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Ghost.java", "getInterval"); return this.moveInterval + new Random().nextInt(this.intervalVariation);}
+	public long getInterval() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Ghost.java", "getInterval", "lines 58:2 - 58:74"); return this.moveInterval + new Random().nextInt(this.intervalVariation);}
 
 	/**
 	 * Determines a possible move in a random direction.
@@ -51,15 +51,11 @@ import nl.tudelft.jpacman.sprite.Sprite; import nl.tudelft.jpacman.Api; public a
 	 * @return A direction in which the ghost can move, or <code>null</code> if
 	 *         the ghost is shut in by inaccessible squares.
 	 */
-	protected Direction randomMove() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Ghost.java", "randomMove"); Square square = getSquare(); List<Direction> directions = new ArrayList<>();
-		for (Direction d : Direction.values()) {
+	protected Direction randomMove() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Ghost.java", "randomMove", "lines 68:2 - 68:30"); Square square = getSquare(); Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Ghost.java", "randomMove", "lines 69:2 - 69:49"); List<Direction> directions = new ArrayList<>(); Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Ghost.java", "randomMove", "lines 70:2 - 74:3"); for (Direction d : Direction.values()) {
 			if (square.getSquareAt(d).isAccessibleTo(this)) {
 				directions.add(d);
 			}
-		}
-		if (directions.isEmpty()) {
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Ghost.java", "randomMove", "lines 75:2 - 77:3"); if (directions.isEmpty()) {
 			return null;
-		}
-		int i = new Random().nextInt(directions.size());
-		return directions.get(i);}
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Ghost.java", "randomMove", "lines 78:2 - 78:50"); int i = new Random().nextInt(directions.size()); Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Ghost.java", "randomMove", "lines 79:2 - 79:27"); return directions.get(i);}
 }

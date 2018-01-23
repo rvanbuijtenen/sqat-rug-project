@@ -46,7 +46,7 @@ import nl.tudelft.jpacman.sprite.Sprite; import nl.tudelft.jpacman.Api; public c
 	 * 
 	 * @return <code>true</code> iff the player is alive.
 	 */
-	public boolean isAlive() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Player.java", "isAlive"); return alive;}
+	public boolean isAlive() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Player.java", "isAlive", "lines 59:2 - 59:15"); return alive;}
 
 	/**
 	 * Sets whether this player is alive or not.
@@ -54,24 +54,23 @@ import nl.tudelft.jpacman.sprite.Sprite; import nl.tudelft.jpacman.Api; public c
 	 * @param isAlive
 	 *            <code>true</code> iff this player is alive.
 	 */
-	public void setAlive(boolean isAlive) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Player.java", "setAlive"); if (isAlive) {
+	public void setAlive(boolean isAlive) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Player.java", "setAlive", "lines 69:2 - 71:3"); if (isAlive) {
 			deathSprite.setAnimating(false);
-		} if (!isAlive) {
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/level/Player.java", "setAlive", "lines 72:2 - 74:3"); if (!isAlive) {
 			deathSprite.restart();
-		}
-		this.alive = isAlive;}
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/level/Player.java", "setAlive", "lines 75:2 - 75:23"); this.alive = isAlive;}
 
 	/**
 	 * Returns the amount of points accumulated by this player.
 	 * 
 	 * @return The amount of points accumulated by this player.
 	 */
-	public int getScore() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Player.java", "getScore"); return score;}
+	public int getScore() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Player.java", "getScore", "lines 84:2 - 84:15"); return score;}
 
 	@Override
-	public Sprite getSprite() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Player.java", "getSprite"); if (isAlive()) {
+	public Sprite getSprite() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Player.java", "getSprite", "lines 89:2 - 91:3"); if (isAlive()) {
 			return sprites.get(getDirection());
-		} return deathSprite;}
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/level/Player.java", "getSprite", "lines 92:2 - 92:21"); return deathSprite;}
 
 	/**
 	 * Adds points to the score of this player.
@@ -80,5 +79,5 @@ import nl.tudelft.jpacman.sprite.Sprite; import nl.tudelft.jpacman.Api; public c
 	 *            The amount of points to add to the points this player already
 	 *            has.
 	 */
-	public void addPoints(int points) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Player.java", "addPoints"); score += points;}
+	public void addPoints(int points) {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Player.java", "addPoints", "lines 103:2 - 103:18"); score += points;}
 }

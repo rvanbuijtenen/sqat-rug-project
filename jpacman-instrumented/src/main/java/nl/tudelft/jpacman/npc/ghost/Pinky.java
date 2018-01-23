@@ -45,20 +45,12 @@ import nl.tudelft.jpacman.sprite.Sprite; import nl.tudelft.jpacman.Api; public c
 	 * </p>
 	 */
 	@Override
-	public Direction nextMove() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Pinky.java", "nextMove"); Unit player = Navigation.findNearest(Player.class, getSquare()); if (player == null) {
+	public Direction nextMove() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Pinky.java", "nextMove", "lines 90:2 - 90:66"); Unit player = Navigation.findNearest(Player.class, getSquare()); Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Pinky.java", "nextMove", "lines 91:2 - 93:3"); if (player == null) {
 			return randomMove();
-		}
-
-		Direction targetDirection = player.getDirection();
-		Square destination = player.getSquare();
-		for (int i = 0; i < SQUARES_AHEAD; i++) {
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Pinky.java", "nextMove", "lines 95:2 - 95:52"); Direction targetDirection = player.getDirection(); Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Pinky.java", "nextMove", "lines 96:2 - 96:42"); Square destination = player.getSquare(); Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Pinky.java", "nextMove", "lines 97:2 - 99:3"); for (int i = 0; i < SQUARES_AHEAD; i++) {
 			destination = destination.getSquareAt(targetDirection);
-		}
-
-		List<Direction> path = Navigation.shortestPath(getSquare(),
-				destination, this);
-		if (path != null && !path.isEmpty()) {
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Pinky.java", "nextMove", "lines 101:2 - 102:23"); List<Direction> path = Navigation.shortestPath(getSquare(),
+				destination, this); Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Pinky.java", "nextMove", "lines 103:2 - 105:3"); if (path != null && !path.isEmpty()) {
 			return path.get(0);
-		}
-		return randomMove();}
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Pinky.java", "nextMove", "lines 106:2 - 106:22"); return randomMove();}
 }

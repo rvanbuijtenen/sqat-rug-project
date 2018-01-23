@@ -43,15 +43,11 @@ import nl.tudelft.jpacman.sprite.Sprite; import nl.tudelft.jpacman.Api; public c
 	 * </p>
 	 */
 	@Override
-	public Direction nextMove() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Blinky.java", "nextMove"); Square target = Navigation.findNearest(Player.class, getSquare())
-				.getSquare(); if (target == null) {
+	public Direction nextMove() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Blinky.java", "nextMove", "lines 82:2 - 83:17"); Square target = Navigation.findNearest(Player.class, getSquare())
+				.getSquare(); Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Blinky.java", "nextMove", "lines 85:2 - 87:3"); if (target == null) {
 			return randomMove();
-		}
-		
-		List<Direction> path = Navigation.shortestPath(getSquare(), target,
-				this);
-		if (path != null && !path.isEmpty()) {
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Blinky.java", "nextMove", "lines 89:2 - 90:10"); List<Direction> path = Navigation.shortestPath(getSquare(), target,
+				this); Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Blinky.java", "nextMove", "lines 91:2 - 93:3"); if (path != null && !path.isEmpty()) {
 			return path.get(0);
-		}
-		return randomMove();}
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/Blinky.java", "nextMove", "lines 94:2 - 94:22"); return randomMove();}
 }

@@ -20,7 +20,7 @@ package nl.tudelft.jpacman.npc.ghost; import nl.tudelft.jpacman.sprite.PacManSpr
 	 * @see Blinky
 	 * @return A new Blinky.
 	 */
-	public Ghost createBlinky() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/GhostFactory.java", "createBlinky"); return new Blinky(sprites.getGhostSprite(GhostColor.RED));}
+	public Ghost createBlinky() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/GhostFactory.java", "createBlinky", "lines 33:2 - 33:60"); return new Blinky(sprites.getGhostSprite(GhostColor.RED));}
 
 	/**
 	 * Creates a new Pinky / Speedy, the pink Ghost.
@@ -28,7 +28,7 @@ package nl.tudelft.jpacman.npc.ghost; import nl.tudelft.jpacman.sprite.PacManSpr
 	 * @see Pinky
 	 * @return A new Pinky.
 	 */
-	public Ghost createPinky() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/GhostFactory.java", "createPinky"); return new Pinky(sprites.getGhostSprite(GhostColor.PINK));}
+	public Ghost createPinky() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/GhostFactory.java", "createPinky", "lines 43:2 - 43:60"); return new Pinky(sprites.getGhostSprite(GhostColor.PINK));}
 
 	/**
 	 * Creates a new Inky / Bashful, the cyan Ghost.
@@ -36,7 +36,7 @@ package nl.tudelft.jpacman.npc.ghost; import nl.tudelft.jpacman.sprite.PacManSpr
 	 * @see Inky
 	 * @return A new Inky.
 	 */
-	public Ghost createInky() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/GhostFactory.java", "createInky"); return new Inky(sprites.getGhostSprite(GhostColor.CYAN));}
+	public Ghost createInky() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/GhostFactory.java", "createInky", "lines 53:2 - 53:59"); return new Inky(sprites.getGhostSprite(GhostColor.CYAN));}
 
 	/**
 	 * Creates a new Clyde / Pokey, the orange Ghost.
@@ -44,5 +44,5 @@ package nl.tudelft.jpacman.npc.ghost; import nl.tudelft.jpacman.sprite.PacManSpr
 	 * @see Clyde
 	 * @return A new Clyde.
 	 */
-	public Ghost createClyde() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/GhostFactory.java", "createClyde"); return new Clyde(sprites.getGhostSprite(GhostColor.ORANGE));}
+	public Ghost createClyde() {Api.hit("/src/main/java/nl/tudelft/jpacman/npc/ghost/GhostFactory.java", "createClyde", "lines 63:2 - 63:62"); return new Clyde(sprites.getGhostSprite(GhostColor.ORANGE));}
 }

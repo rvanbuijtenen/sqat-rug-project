@@ -25,7 +25,7 @@ import nl.tudelft.jpacman.level.Player; import nl.tudelft.jpacman.Api; public cl
 			// this lambda breaks cobertura 2.7 ...
 			// player) -> String.format("Score: %3d", player.getScore());
 			new ScoreFormatter() {
-				public String format(Player p) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/ScorePanel.java", "format"); return String.format("Score: %3d", p.getScore());}
+				public String format(Player p) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/ScorePanel.java", "format", "lines 40:5 - 40:54"); return String.format("Score: %3d", p.getScore());}
 			};
 
 	/**
@@ -59,7 +59,7 @@ import nl.tudelft.jpacman.level.Player; import nl.tudelft.jpacman.Api; public cl
 	/**
 	 * Refreshes the scores of the players.
 	 */
-	protected void refresh() {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/ScorePanel.java", "refresh"); for (Map.Entry<Player, JLabel> entry : scoreLabels.entrySet()) {
+	protected void refresh() {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/ScorePanel.java", "refresh", "lines 76:2 - 84:3"); for (Map.Entry<Player, JLabel> entry : scoreLabels.entrySet()) {
 			Player p = entry.getKey();
 			String score = "";
 			if (!p.isAlive()) {
@@ -86,5 +86,5 @@ import nl.tudelft.jpacman.level.Player; import nl.tudelft.jpacman.Api; public cl
 	 * Let the score panel use a dedicated score formatter.
 	 * @param sf Score formatter to be used.
 	 */
-	public void setScoreFormatter(ScoreFormatter sf) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/ScorePanel.java", "setScoreFormatter"); assert sf != null; scoreFormatter = sf;}
+	public void setScoreFormatter(ScoreFormatter sf) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/ScorePanel.java", "setScoreFormatter", "lines 105:2 - 105:20"); assert sf != null; Api.hit("/src/main/java/nl/tudelft/jpacman/ui/ScorePanel.java", "setScoreFormatter", "lines 106:2 - 106:22"); scoreFormatter = sf;}
 }

@@ -23,11 +23,11 @@ import nl.tudelft.jpacman.level.PlayerFactory; import nl.tudelft.jpacman.Api; pu
 	 *            The level to create a game for.
 	 * @return A new single player game.
 	 */
-	public Game createSinglePlayerGame(Level level) {Api.hit("/src/main/java/nl/tudelft/jpacman/game/GameFactory.java", "createSinglePlayerGame"); return new SinglePlayerGame(playerFact.createPacMan(), level);}
+	public Game createSinglePlayerGame(Level level) {Api.hit("/src/main/java/nl/tudelft/jpacman/game/GameFactory.java", "createSinglePlayerGame", "lines 36:2 - 36:64"); return new SinglePlayerGame(playerFact.createPacMan(), level);}
 
 	/**
 	 * Returns the player factory associated with this game factory.
 	 * @return the player factory associated with this game factory.
 	 */
-	protected PlayerFactory getPlayerFactory() {Api.hit("/src/main/java/nl/tudelft/jpacman/game/GameFactory.java", "getPlayerFactory"); return playerFact;}
+	protected PlayerFactory getPlayerFactory() {Api.hit("/src/main/java/nl/tudelft/jpacman/game/GameFactory.java", "getPlayerFactory", "lines 44:2 - 44:20"); return playerFact;}
 }

@@ -25,8 +25,8 @@ import nl.tudelft.jpacman.sprite.Sprite; import nl.tudelft.jpacman.Api; public c
 	 * Returns the point value of this pellet.
 	 * @return The point value of this pellet.
 	 */
-	public int getValue() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Pellet.java", "getValue"); return value;}
+	public int getValue() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Pellet.java", "getValue", "lines 38:2 - 38:15"); return value;}
 	
 	@Override
-	public Sprite getSprite() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Pellet.java", "getSprite"); return image;}
+	public Sprite getSprite() {Api.hit("/src/main/java/nl/tudelft/jpacman/level/Pellet.java", "getSprite", "lines 43:2 - 43:15"); return image;}
 }

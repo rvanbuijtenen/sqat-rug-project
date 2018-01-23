@@ -33,7 +33,7 @@ import nl.tudelft.jpacman.sprite.Sprite; import nl.tudelft.jpacman.Api; public a
 	 *            The direction of the adjacent square.
 	 * @return The adjacent square in the given direction.
 	 */
-	public Square getSquareAt(Direction direction) {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Square.java", "getSquareAt"); return neighbours.get(direction);}
+	public Square getSquareAt(Direction direction) {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Square.java", "getSquareAt", "lines 47:2 - 47:35"); return neighbours.get(direction);}
 
 	/**
 	 * Links this square to a neighbour in the given direction. Note that this
@@ -44,7 +44,7 @@ import nl.tudelft.jpacman.sprite.Sprite; import nl.tudelft.jpacman.Api; public a
 	 * @param direction
 	 *            The direction the new neighbour is in, as seen from this cell.
 	 */
-	public void link(Square neighbour, Direction direction) {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Square.java", "link"); neighbours.put(direction, neighbour); assert invariant();}
+	public void link(Square neighbour, Direction direction) {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Square.java", "link", "lines 60:2 - 60:39"); neighbours.put(direction, neighbour); Api.hit("/src/main/java/nl/tudelft/jpacman/board/Square.java", "link", "lines 61:2 - 61:21"); assert invariant();}
 
 	/**
 	 * Returns an immutable list of units occupying this square, in the order in
@@ -53,7 +53,7 @@ import nl.tudelft.jpacman.sprite.Sprite; import nl.tudelft.jpacman.Api; public a
 	 * @return An immutable list of units occupying this square, in the order in
 	 *         which they occupied this square (i.e. oldest first.)
 	 */
-	public List<Unit> getOccupants() {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Square.java", "getOccupants"); return ImmutableList.copyOf(occupants);}
+	public List<Unit> getOccupants() {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Square.java", "getOccupants", "lines 72:2 - 72:41"); return ImmutableList.copyOf(occupants);}
 
 	/**
 	 * Adds a new occupant to this square.
@@ -61,9 +61,7 @@ import nl.tudelft.jpacman.sprite.Sprite; import nl.tudelft.jpacman.Api; public a
 	 * @param occupant
 	 *            The unit to occupy this square.
 	 */
-	void put(Unit occupant) {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Square.java", "put"); assert occupant != null; assert !occupants.contains(occupant);
-		
-		occupants.add(occupant);}
+	void put(Unit occupant) {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Square.java", "put", "lines 82:2 - 82:26"); assert occupant != null; Api.hit("/src/main/java/nl/tudelft/jpacman/board/Square.java", "put", "lines 83:2 - 83:39"); assert !occupants.contains(occupant); Api.hit("/src/main/java/nl/tudelft/jpacman/board/Square.java", "put", "lines 85:2 - 85:26"); occupants.add(occupant);}
 
 	/**
 	 * Removes the unit from this square if it was present.
@@ -71,7 +69,7 @@ import nl.tudelft.jpacman.sprite.Sprite; import nl.tudelft.jpacman.Api; public a
 	 * @param occupant
 	 *            The unit to be removed from this square.
 	 */
-	void remove(Unit occupant) {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Square.java", "remove"); assert occupant != null; occupants.remove(occupant);}
+	void remove(Unit occupant) {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Square.java", "remove", "lines 95:2 - 95:26"); assert occupant != null; Api.hit("/src/main/java/nl/tudelft/jpacman/board/Square.java", "remove", "lines 96:2 - 96:29"); occupants.remove(occupant);}
 
 	/**
 	 * Verifies that all occupants on this square have indeed listed this square
@@ -80,11 +78,11 @@ import nl.tudelft.jpacman.sprite.Sprite; import nl.tudelft.jpacman.Api; public a
 	 * @return <code>true</code> iff all occupants of this square have this
 	 *         square listed as the square they are currently occupying.
 	 */
-	protected final boolean invariant() {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Square.java", "invariant"); for (Unit occupant : occupants) {
+	protected final boolean invariant() {Api.hit("/src/main/java/nl/tudelft/jpacman/board/Square.java", "invariant", "lines 107:2 - 111:3"); for (Unit occupant : occupants) {
 			if (occupant.getSquare() != this) {
 				return false;
 			}
-		} return true;}
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/board/Square.java", "invariant", "lines 112:2 - 112:14"); return true;}
 
 	/**
 	 * Determines whether the unit is allowed to occupy this square.

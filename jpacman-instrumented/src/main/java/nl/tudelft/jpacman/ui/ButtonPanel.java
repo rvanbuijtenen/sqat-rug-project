@@ -26,7 +26,7 @@ import javax.swing.JPanel; import nl.tudelft.jpacman.Api; class ButtonPanel exte
 			button.addActionListener(new ActionListener() {
 
 				@Override
-				public void actionPerformed(ActionEvent e) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/ButtonPanel.java", "actionPerformed"); buttons.get(caption).doAction(); parent.requestFocusInWindow();}
+				public void actionPerformed(ActionEvent e) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/ButtonPanel.java", "actionPerformed", "lines 46:5 - 46:37"); buttons.get(caption).doAction(); Api.hit("/src/main/java/nl/tudelft/jpacman/ui/ButtonPanel.java", "actionPerformed", "lines 47:5 - 47:35"); parent.requestFocusInWindow();}
 			});
 			add(button);
 		}

@@ -51,11 +51,10 @@ import nl.tudelft.jpacman.ui.ScorePanel.ScoreFormatter; import nl.tudelft.jpacma
 	 *            The game to build the UI for.
 	 * @return A new Pac-Man UI with the set keys and buttons.
 	 */
-	public PacManUI build(final Game game) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "build"); assert game != null; if (defaultButtons) {
+	public PacManUI build(final Game game) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "build", "lines 64:2 - 64:22"); assert game != null; Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "build", "lines 66:2 - 69:3"); if (defaultButtons) {
 			addStartButton(game);
 			addStopButton(game);
-		}
-		return new PacManUI(game, buttons, keyMappings, scoreFormatter);}
+		} Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "build", "lines 70:2 - 70:66"); return new PacManUI(game, buttons, keyMappings, scoreFormatter);}
 
 	/**
 	 * Adds a button with the caption {@value #STOP_CAPTION} that stops the
@@ -64,9 +63,9 @@ import nl.tudelft.jpacman.ui.ScorePanel.ScoreFormatter; import nl.tudelft.jpacma
 	 * @param game
 	 *            The game to stop.
 	 */
-	private void addStopButton(final Game game) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "doAction"); assert game != null; buttons.put(STOP_CAPTION, new Action() {
+	private void addStopButton(final Game game) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "doAction", "lines 81:2 - 81:22"); assert game != null; Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "doAction", "lines 83:2 - 88:5"); buttons.put(STOP_CAPTION, new Action() {
 			@Override
-			public void doAction() {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "doAction"); game.stop();}
+			public void doAction() {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "doAction", "lines 86:4 - 86:16"); game.stop();}
 		});}
 
 	/**
@@ -76,9 +75,9 @@ import nl.tudelft.jpacman.ui.ScorePanel.ScoreFormatter; import nl.tudelft.jpacma
 	 * @param game
 	 *            The game to start.
 	 */
-	private void addStartButton(final Game game) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "doAction"); assert game != null; buttons.put(START_CAPTION, new Action() {
+	private void addStartButton(final Game game) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "doAction", "lines 99:2 - 99:22"); assert game != null; Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "doAction", "lines 101:2 - 106:5"); buttons.put(START_CAPTION, new Action() {
 			@Override
-			public void doAction() {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "doAction"); game.start();}
+			public void doAction() {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "doAction", "lines 104:4 - 104:17"); game.start();}
 		});}
 
 	/**
@@ -90,10 +89,7 @@ import nl.tudelft.jpacman.ui.ScorePanel.ScoreFormatter; import nl.tudelft.jpacma
 	 *            The action to perform when the key is pressed.
 	 * @return The builder.
 	 */
-	public PacManUiBuilder addKey(Integer keyCode, Action action) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "addKey"); assert keyCode != null; assert action != null;
-
-		keyMappings.put(keyCode, action);
-		return this;}
+	public PacManUiBuilder addKey(Integer keyCode, Action action) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "addKey", "lines 119:2 - 119:25"); assert keyCode != null; Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "addKey", "lines 120:2 - 120:24"); assert action != null; Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "addKey", "lines 122:2 - 122:35"); keyMappings.put(keyCode, action); Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "addKey", "lines 123:2 - 123:14"); return this;}
 
 	/**
 	 * Adds a button to the UI.
@@ -104,11 +100,7 @@ import nl.tudelft.jpacman.ui.ScorePanel.ScoreFormatter; import nl.tudelft.jpacma
 	 *            The action to execute when the button is clicked.
 	 * @return The builder.
 	 */
-	public PacManUiBuilder addButton(String caption, Action action) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "addButton"); assert caption != null; assert !caption.isEmpty();
-		assert action != null;
-
-		buttons.put(caption, action);
-		return this;}
+	public PacManUiBuilder addButton(String caption, Action action) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "addButton", "lines 136:2 - 136:25"); assert caption != null; Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "addButton", "lines 137:2 - 137:28"); assert !caption.isEmpty(); Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "addButton", "lines 138:2 - 138:24"); assert action != null; Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "addButton", "lines 140:2 - 140:31"); buttons.put(caption, action); Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "addButton", "lines 141:2 - 141:14"); return this;}
 
 	/**
 	 * Adds a start and stop button to the UI. The actual actions for these
@@ -116,9 +108,7 @@ import nl.tudelft.jpacman.ui.ScorePanel.ScoreFormatter; import nl.tudelft.jpacma
 	 * 
 	 * @return The builder.
 	 */
-	public PacManUiBuilder withDefaultButtons() {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "withDefaultButtons"); defaultButtons = true; buttons.put(START_CAPTION, null);
-		buttons.put(STOP_CAPTION, null);
-		return this;}
+	public PacManUiBuilder withDefaultButtons() {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "withDefaultButtons", "lines 151:2 - 151:24"); defaultButtons = true; Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "withDefaultButtons", "lines 152:2 - 152:35"); buttons.put(START_CAPTION, null); Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "withDefaultButtons", "lines 153:2 - 153:34"); buttons.put(STOP_CAPTION, null); Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "withDefaultButtons", "lines 154:2 - 154:14"); return this;}
 	
 	/**
 	 * Provide formatter for the score.
@@ -128,5 +118,5 @@ import nl.tudelft.jpacman.ui.ScorePanel.ScoreFormatter; import nl.tudelft.jpacma
 	 * 
 	 * @return The builder.
 	 */
-	public PacManUiBuilder withScoreFormatter(ScoreFormatter sf) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "withScoreFormatter"); scoreFormatter = sf; return this;}
+	public PacManUiBuilder withScoreFormatter(ScoreFormatter sf) {Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "withScoreFormatter", "lines 166:2 - 166:22"); scoreFormatter = sf; Api.hit("/src/main/java/nl/tudelft/jpacman/ui/PacManUiBuilder.java", "withScoreFormatter", "lines 167:2 - 167:14"); return this;}
 }
