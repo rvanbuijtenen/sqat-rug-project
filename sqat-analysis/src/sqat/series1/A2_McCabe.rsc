@@ -101,7 +101,7 @@ void answerQuestions(CC dist, CCSloc s){
 	println("The Spearman Correlation is: <SpearmansCorrelation(s)>");
   	
   	println( "\n\nwhat if you separate out the test sources?\n" );
-	s = getSlocForCC(cc(jpacmanASTs()), false);
+	s = getSlocForCC(cc(jpacmanASTs()), falsne);
 	println("The covariance is: <covariance(s)>");
 	println("The (linear) Pearson Correlation is <PearsonsCorrelation(s)>");
 	println("The Spearman Correlation is: <SpearmansCorrelation(s)>");

@@ -102,7 +102,7 @@ Bonus:
 */
 
 set[Message] checkStyle() {
-  set[Declaration] decls = createAstsFromEclipseProject(|project://jpacman-framework/src/main/java/nl/tudelft/jpacman|, true);  
+  set[Declaration] decls = createAstsFromEclipseProject(|project://jpacman-style-violations/src/main/java/nl/tudelft/jpacman|, true);  
   return visitDeclarations(decls);
 }
 
@@ -215,7 +215,7 @@ set[Message] privateClass(Declaration decl) {
 		case c:\class(str name, list[Type] extends, list[Type] implements, list[Declaration] body):{
 			if(onlyPrivateConstructors(body)) {
 				if(final() notin c.modifiers) {
-					messages += {warning("A method that only has private constructors should be declared using the FINAL modifier", c.src)};
+					messages += {warning("A class that only has private constructors should be declared using the FINAL modifier", c.src)};
 				}
 			}		
 		}
@@ -273,4 +273,6 @@ set[Message] checkParameterStyle(list[Declaration] parameters) {
 /* Styles to check:
  * - Number of parameters does not exceed 7
  * - File length does not exceed 150 lines
- * - Class with only private constructors must be final */
+ * - Class with only private constructors must be final
+ * - If a method has more than 4 parameters, then these
+ *   parameters should each be listed on a separate line */
