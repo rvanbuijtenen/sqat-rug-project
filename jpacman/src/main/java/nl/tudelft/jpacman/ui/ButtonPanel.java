@@ -11,13 +11,6 @@ import javax.swing.JPanel;
 /**
  * A panel containing a button for every registered action.
  * 
- 
- 
- 
- 
- 
- 
- 
  * @author Jeroen Roosen 
  */
 class ButtonPanel extends JPanel {

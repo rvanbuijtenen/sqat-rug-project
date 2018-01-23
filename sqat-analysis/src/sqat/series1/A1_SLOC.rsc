@@ -33,18 +33,18 @@ Sanity checks:
 - and to ensure that consecutive newlines are counted as one.
 - compare you results to external tools sloc and/or cloc.pl
 
-./node_modules/.bin/cloc jpacman/src/main/java
+cloc jpacman/src/main/java/nl/tudelft/jpacman/
       44 text files.
       44 unique files.                              
        0 files ignored.
 
-github.com/AlDanial/cloc v 1.74  T=0.09 s (466.1 files/s, 47068.6 lines/s)
+http://cloc.sourceforge.net v 1.60  T=0.08 s (543.2 files/s, 54925.2 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Java                            44            555           1987           1901
+Java                            44            554           1987           1908
 -------------------------------------------------------------------------------
-SUM:                            44            555           1987           1901
+SUM:                            44            554           1987           1908
 -------------------------------------------------------------------------------
 
 Bonus:
@@ -53,22 +53,16 @@ Bonus:
   (https://en.wikipedia.org/wiki/Treemapping) 
 */
 
-alias SLOC = map[loc file, int sloc];
-SLOC sloc(loc project, bool isTest) {
-	if(!isTest) {
-		loc src = project + "/src/main/java/nl/tudelft/jpacman";
-		loc testSrc = project + "src/test/java/nl/tudelft/jpacman";
-		SLOC result = ();
-		SLOC testResult = ();
-		result = (f: countLOC(readFileLines(f))| f <- files(src));
-	 	testResult = (f: countLOC(readFileLines(f))| f <- files(testSrc));
-		answerQuestions(result, testResult);
-		return result;
-	}
-	return (f: countLOC(readFileLines(f))| f <- files(project));
-}
 
-void answerQuestions(SLOC result, SLOC testResult) {
+/* If sloc is run within the context of a test case, we do not
+ * need to distinguish test cases from regular file. */ 
+alias SLOC = map[loc file, int sloc];
+
+SLOC sloc(loc project) = (f: countLOC(readFileLines(f))| f <- files(project));
+
+void answerQuestions(loc project) {
+	SLOC result = sloc(project + "/src/main/java/nl/tudelft/jpacman");
+	SLOC testResult = sloc(project + "src/test/java/nl/tudelft/jpacman");
 	<filename, length> = maxLOC(result);
 	println("The largest file in JPacman is: <filename> with a length of <length> lines\n");
 	
@@ -85,7 +79,7 @@ void answerQuestions(SLOC result, SLOC testResult) {
 }
 
 test bool testSloc()
-	= sloc(|project://jpacman-framework/src/syntaxtest/|, true)
+	= sloc(|project://jpacman-framework/src/syntaxtest/|)
 	== (|project://jpacman-framework/src/syntaxtest/LongClass.java|:31,
 	 		  |project://jpacman-framework/src/syntaxtest/Main.java|:6);
 
@@ -153,7 +147,7 @@ tuple[loc, int] maxLOC(SLOC filelist) {
 }
 
 test bool testMaxLOC()
-	= maxLOC(sloc(|project://jpacman-framework/src/syntaxtest/|, true))
+	= maxLOC(sloc(|project://jpacman-framework/src/syntaxtest/|))
 	== <|project://jpacman-framework/src/syntaxtest/LongClass.java|, 31>;
 
 public int totalLOC(SLOC filelist) {
@@ -161,6 +155,6 @@ public int totalLOC(SLOC filelist) {
 }
 
 test bool testTotalLOC()
-	= totalLOC(sloc(|project://jpacman-framework/src/syntaxtest/|, true))
+	= totalLOC(sloc(|project://jpacman-framework/src/syntaxtest/|))
 	== 37;
 

@@ -1,14 +1,18 @@
 module sqat::series1::A2_McCabe
 
+
+import Java17ish;
 import lang::java::jdt::m3::AST;
 import IO;
 import ParseTree;
 import lang::java::m3::Core;
 import Type;
 import List;
+import util::FileSystem;
 import vis::Figure;
 import vis::Render;
-
+import sqat::series1::A1_SLOC;
+import analysis::statistics::Correlation;
 /*
 Construct a distribution of method cylcomatic complexity. 
 (that is: a map[int, int] where the key is the McCabe complexity, and the value the frequency it occurs)
@@ -45,21 +49,41 @@ Bonus
 
 */
 void main() {
-	dists = ccDist(cc(jpacmanASTs()));
-	println(dists);
-	answerQuestions();
-
+	CC dists = cc(jpacmanASTs());
+	CCSloc s = getSlocForCC(dists, true);
+	answerQuestions(dists, s);
 }
 
-void answerQuestions(){
+CCSloc getSlocForCC(CC c, bool includeTests) {
+	map[str, list[str]] trees = ();
+	for(f <- files(|project://jpacman-framework/src/main/java|)) {
+		trees[f.path] = readFileLines(f);
+	}
+	
+	if(includeTests) {
+		for(f <- files(|project://jpacman-framework/src/test/java|)) {
+			trees[f.path] = readFileLines(f);
+		}
+	}
+	
+	CCSloc ccsloc = [];
+	for(<method, complexity> <- c) {
+		if(method.path in trees) {
+			int s = countLOC(trees[method.path][method.begin.line-1 .. method.end.line]);
+			ccsloc += <complexity, s>;
+		}
+	}
+	return ccsloc;
+}
 
+void answerQuestions(CC dist, CCSloc s){
+	CCDist dist_histogram = ccDist(dist);
+	println("The full histogram of complexity is:");
+	println(dist_histogram);
 	print( "which method has the highest complexity?\n" );
-  	
 	int Complexity = 0;
 	loc method;
-	CC c = cc(jpacmanASTs());
-	for(<loc l, int cnt > <- c) {
-
+	for(<loc l, int cnt > <- dist) {
 		if(cnt > Complexity) {
 			Complexity = cnt;
 			method = l;
@@ -68,20 +92,25 @@ void answerQuestions(){
 	println(method);
 	println(Complexity);
   	
-  	print( "how does pacman fare w.r.t. the SIG maintainability McCabe thresholds?\n" );
-  	println( "The highest complexity is 8. Following the SIG, the risk evaluation is labeled as -without much risk-" );
-  	
+  	println("how does pacman fare w.r.t. the SIG maintainability McCabe thresholds?\n" );
+  	println("The highest complexity is 8. Following the SIG, the risk evaluation is labeled as -without much risk-" );
   		
-	print( "is code size correlated with McCabe in this case?\n" );
-  
+	println( "is code size correlated with McCabe in this case?\n" );
+  	println("The covariance is: <covariance(s)>");
+	println("The (linear) Pearson Correlation is <PearsonsCorrelation(s)>");
+	println("The Spearman Correlation is: <SpearmansCorrelation(s)>");
   	
-  	print( "what if you separate out the test sources?\n" );
-
+  	println( "\n\nwhat if you separate out the test sources?\n" );
+	s = getSlocForCC(cc(jpacmanASTs()), false);
+	println("The covariance is: <covariance(s)>");
+	println("The (linear) Pearson Correlation is <PearsonsCorrelation(s)>");
+	println("The Spearman Correlation is: <SpearmansCorrelation(s)>");
 }
 
 set[Declaration] jpacmanASTs() = createAstsFromEclipseProject(|project://jpacman-framework/src/main/java/nl/tudelft/jpacman|, true); 
 
 alias CC = rel[loc method, int cc];
+alias CCSloc = lrel[int cc, int sloc];
 
 // cc = 1 + for ---> 2 test cases
 CC cc(set[Declaration] decls) {	
